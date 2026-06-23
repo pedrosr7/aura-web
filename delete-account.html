@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delete your account — Aura</title>
+  <meta name="description" content="How to delete your Aura account and associated data, including in-app deletion and a request path that works after uninstalling. Aura is published by PAMPA ITER SL." />
+  <meta name="robots" content="index,follow" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg:'#0E0E0E', surface:'#1A1A1A', surface2:'#242424', border:'#2A2A2A',
+            primary:'#CCFF00', secondary:'#00E0FF', ink:'#ECECEC', ink2:'#9A9A9A',
+            ink3:'#7C7C7C', warning:'#F5C451',
+          },
+          fontFamily: {
+            sans: ['Inter','system-ui','sans-serif'],
+            mono: ['"JetBrains Mono"','ui-monospace','monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root { color-scheme: dark; }
+    html { scroll-behavior: smooth; }
+    body { background:#0E0E0E; }
+    .label { font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.22em; font-weight:600; }
+    .btn-primary { background:#CCFF00; color:#0E0E0E; transition:transform .2s, box-shadow .25s, background .2s; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 40px -8px rgba(204,255,0,.45); background:#d6ff26; }
+    .btn-ghost { border:1px solid #2A2A2A; color:#ECECEC; transition:border-color .2s, background .2s; }
+    .btn-ghost:hover { border-color:#4a4a4a; background:#161616; }
+    .step-num { font-family:'JetBrains Mono',monospace; font-weight:800; }
+  </style>
+</head>
+
+<body class="font-sans text-ink antialiased">
+
+  <!-- ===== HEADER ===== -->
+  <header class="border-b border-border">
+    <div class="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2.5">
+        <img src="assets/aura_logo.png" alt="Aura" class="h-7 w-7 rounded-md" />
+        <span class="font-mono font-bold tracking-wide">AURA</span>
+      </a>
+      <a href="index.html" class="label text-[11px] text-ink2 hover:text-ink transition-colors">← Home</a>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-6 py-14 md:py-20">
+
+    <p class="label text-[11px] text-primary mb-4">Account &amp; data</p>
+    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">Delete your Aura account</h1>
+    <p class="mt-4 text-ink2 leading-relaxed max-w-2xl">
+      You can delete your Aura account and its associated data at any time. There are two ways to do it —
+      from inside the app (fastest), or by sending us a request if you can no longer access the app.
+      Aura is published by <span class="text-ink">PAMPA ITER SL</span>.
+    </p>
+
+    <!-- ===== OPTION 1: IN-APP ===== -->
+    <section class="mt-12">
+      <div class="rounded-2xl border border-border bg-surface p-6 md:p-8">
+        <p class="label text-[11px] text-ink3 mb-3">Option 1 — in the app (recommended)</p>
+        <h2 class="text-xl font-bold mb-5">From your phone</h2>
+        <ol class="space-y-4">
+          <li class="flex gap-4">
+            <span class="step-num text-primary">1</span>
+            <span class="text-ink2 leading-relaxed">Open <span class="text-ink">Aura</span> and go to the <span class="text-ink">Profile</span> tab.</span>
+          </li>
+          <li class="flex gap-4">
+            <span class="step-num text-primary">2</span>
+            <span class="text-ink2 leading-relaxed">In the <span class="text-ink">Account</span> section, tap <span class="text-ink">Delete account</span>.</span>
+          </li>
+          <li class="flex gap-4">
+            <span class="step-num text-primary">3</span>
+            <span class="text-ink2 leading-relaxed">Confirm. Your account is locked immediately and permanently deleted after <span class="text-ink">30 days</span>.</span>
+          </li>
+        </ol>
+        <p class="mt-6 text-sm text-ink3 leading-relaxed border-t border-border pt-5">
+          Changed your mind? Just log back in within 30 days and your account is restored. After 30 days the deletion is final.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== OPTION 2: REQUEST ===== -->
+    <section class="mt-6">
+      <div class="rounded-2xl border border-border bg-surface p-6 md:p-8">
+        <p class="label text-[11px] text-ink3 mb-3">Option 2 — request by email</p>
+        <h2 class="text-xl font-bold mb-3">Can't access the app?</h2>
+        <p class="text-ink2 leading-relaxed">
+          If you've uninstalled Aura or can't sign in, email us from the address on your account and we'll delete it for you.
+          We complete deletion requests within <span class="text-ink">30 days</span>.
+        </p>
+        <a href="mailto:info@pampaiter.com?subject=Account%20deletion%20request&body=I%20want%20to%20delete%20my%20Aura%20account%20and%20its%20data.%0A%0AAccount%20email%3A%20"
+           class="btn-primary inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-xl font-bold text-sm">
+          Request account deletion
+        </a>
+        <p class="mt-4 text-sm text-ink3">Or write to <a href="mailto:info@pampaiter.com" class="text-secondary hover:underline">info@pampaiter.com</a> with the subject “Account deletion request”.</p>
+      </div>
+    </section>
+
+    <!-- ===== WHAT GETS DELETED ===== -->
+    <section class="mt-12 grid md:grid-cols-2 gap-4">
+      <div class="rounded-2xl border border-border bg-surface p-6">
+        <p class="label text-[11px] text-primary mb-3">Deleted</p>
+        <ul class="space-y-2 text-ink2 text-sm leading-relaxed">
+          <li>Your profile (name, email, photo, body weight)</li>
+          <li>All workouts, session logs and block scores</li>
+          <li>Personal records and training goals</li>
+          <li>AI usage history and preferences</li>
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-border bg-surface p-6">
+        <p class="label text-[11px] text-ink3 mb-3">Kept (legally required)</p>
+        <ul class="space-y-2 text-ink2 text-sm leading-relaxed">
+          <li>Minimal billing / subscription records, retained for the period required by law and anonymized where possible.</li>
+          <li>Records under an active legal hold or dispute.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SUBSCRIPTION WARNING ===== -->
+    <section class="mt-6">
+      <div class="rounded-2xl border p-6 md:p-7" style="border-color:rgba(245,196,81,.35); background:rgba(245,196,81,.06);">
+        <p class="label text-[11px] mb-2" style="color:#F5C451;">Important — subscriptions</p>
+        <p class="text-ink2 leading-relaxed text-sm">
+          Deleting your Aura account does <span class="text-ink">not</span> cancel an active App Store or Google Play subscription —
+          those are managed by the store, not by us. To stop being billed, cancel your subscription in the store
+          <span class="text-ink">before or after</span> deleting your account:
+        </p>
+        <div class="flex flex-wrap gap-3 mt-5">
+          <a href="https://apps.apple.com/account/subscriptions" class="btn-ghost px-5 py-2.5 rounded-xl text-sm font-semibold">Apple — manage subscriptions</a>
+          <a href="https://play.google.com/store/account/subscriptions" class="btn-ghost px-5 py-2.5 rounded-xl text-sm font-semibold">Google Play — manage subscriptions</a>
+        </div>
+      </div>
+    </section>
+
+    <p class="mt-12 text-sm text-ink3 leading-relaxed">
+      For more on how we handle your data, see our <a href="privacy.html" class="text-secondary hover:underline">privacy policy</a>.
+    </p>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="border-t border-border">
+    <div class="max-w-3xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-ink3">
+      <p>© 2026 PAMPA ITER SL. All rights reserved.</p>
+      <a href="mailto:info@pampaiter.com" class="hover:text-ink transition-colors">info@pampaiter.com</a>
+    </div>
+  </footer>
+
+</body>
+</html>

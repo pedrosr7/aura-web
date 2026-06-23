@@ -1,0 +1,7 @@
+# macOS
+.DS_Store
+
+# Internal handoff & build tooling — not part of the published site
+WEB_HANDOFF.md
+appstore-build.py
+appstore-screenshots.html
