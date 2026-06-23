@@ -5,10 +5,14 @@ real brand (neon yellow `#CCFF00` on dark `#0E0E0E`, JetBrains Mono headings, Ta
 
 ```
 aura-web/
-├── index.html        # the whole site (Tailwind via CDN + inline CSS/JS)
+├── index.html              # landing / early-access (the marketing page)
+├── privacy.html            # privacy policy   (EN) · privacy.es.html (ES)
+├── terms.html              # terms of service (EN) · terms.es.html (ES)
+├── support.html            # support + FAQ    (EN) · support.es.html (ES)
+├── delete-account.html     # account deletion (EN) · delete-account.es.html (ES)
 └── assets/
     ├── aura_logo.png
-    └── captures/      # real in-app screenshots used on the page
+    └── captures/           # real in-app screenshots used on the landing page
         ├── cap-pulse.png       # hero — daily home
         ├── cap-planning.png    # showcase — weekly plan
         ├── cap-newsession.png  # showcase — new session
@@ -17,8 +21,23 @@ aura-web/
         └── cap-insights.png    # showcase — session review
 ```
 
-> The older `screen-hub/plan/log.png` files are no longer referenced — the page
-> now uses the real captures above.
+Every content page has an EN/ES pair with a language toggle in the header.
+The older `screen-hub/plan/log.png` files are no longer referenced.
+`WEB_HANDOFF.md` and the `appstore-*` files are internal tooling and are
+**excluded from the repo** via `.gitignore`.
+
+## Store URLs
+
+GitHub Pages serves clean paths (`/terms` → `terms.html`), so use these in
+App Store Connect / Play Console:
+
+| Purpose | URL |
+|---|---|
+| Marketing    | `https://aura.pampaiter.com` |
+| Support      | `https://aura.pampaiter.com/support` |
+| Privacy      | `https://aura.pampaiter.com/privacy` |
+| Terms / EULA | `https://aura.pampaiter.com/terms` |
+| Delete account | `https://aura.pampaiter.com/delete-account` |
 
 ## Two things to wire up before launch
 
@@ -38,12 +57,15 @@ aura-web/
 npx serve aura-web
 ```
 
-## Deploy (GitHub Pages, same flow as pampaiter.com)
+## Deploy — DONE (GitHub Pages)
 
-Recommended URL: `aura.pampaiter.com` (subdomain).
+Live at **https://aura.pampaiter.com**, served from `pedrosr7/aura-web` (this folder),
+branch `main` / root. Domain verified; the `CNAME` file points the custom domain and
+Namecheap has `CNAME  aura  pedrosr7.github.io`.
 
-1. New GitHub repo `aura-web`, push this folder.
-2. Settings → Pages → Deploy from branch → `main` / root.
-3. Add a `CNAME` file containing `aura.pampaiter.com`.
-4. In Namecheap → Advanced DNS, add: `CNAME  aura  pedrosr7.github.io`.
-5. Settings → Pages → Custom domain → `aura.pampaiter.com` → Enforce HTTPS.
+Remaining one-off: **enforce HTTPS** once GitHub finishes provisioning the certificate
+(after DNS fully propagates):
+
+```bash
+gh api -X PUT repos/pedrosr7/aura-web/pages -f https_enforced=true
+```
