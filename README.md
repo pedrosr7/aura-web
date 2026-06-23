@@ -23,6 +23,8 @@ aura-web/
 
 Every content page has an EN/ES pair with a language toggle in the header.
 The older `screen-hub/plan/log.png` files are no longer referenced.
+Screenshots are localized: `assets/captures/*.png` (Spanish app UI) feed `index.es.html`;
+`assets/captures/en/*.png` (English app UI) feed `index.html`.
 `WEB_HANDOFF.md` and the `appstore-*` files are internal tooling and are
 **excluded from the repo** via `.gitignore`.
 
