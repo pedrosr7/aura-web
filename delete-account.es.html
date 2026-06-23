@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Borra tu cuenta — Aura</title>
+  <meta name="description" content="Cómo borrar tu cuenta de Aura y los datos asociados, incluido el borrado in-app y una vía de solicitud que funciona tras desinstalar. Aura es editada por PAMPA ITER SL." />
+  <meta name="robots" content="index,follow" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg:'#0E0E0E', surface:'#1A1A1A', surface2:'#242424', border:'#2A2A2A',
+            primary:'#CCFF00', secondary:'#00E0FF', ink:'#ECECEC', ink2:'#9A9A9A',
+            ink3:'#7C7C7C', warning:'#F5C451',
+          },
+          fontFamily: {
+            sans: ['Inter','system-ui','sans-serif'],
+            mono: ['"JetBrains Mono"','ui-monospace','monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root { color-scheme: dark; }
+    html { scroll-behavior: smooth; }
+    body { background:#0E0E0E; }
+    .label { font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.22em; font-weight:600; }
+    .btn-primary { background:#CCFF00; color:#0E0E0E; transition:transform .2s, box-shadow .25s, background .2s; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 40px -8px rgba(204,255,0,.45); background:#d6ff26; }
+    .btn-ghost { border:1px solid #2A2A2A; color:#ECECEC; transition:border-color .2s, background .2s; }
+    .btn-ghost:hover { border-color:#4a4a4a; background:#161616; }
+    .step-num { font-family:'JetBrains Mono',monospace; font-weight:800; }
+  </style>
+</head>
+
+<body class="font-sans text-ink antialiased">
+
+  <!-- ===== HEADER ===== -->
+  <header class="border-b border-border">
+    <div class="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2.5">
+        <img src="assets/aura_logo.png" alt="Aura" class="h-7 w-7 rounded-md" />
+        <span class="font-mono font-bold tracking-wide">AURA</span>
+      </a>
+      <div class="flex items-center gap-5">
+        <span class="label text-[11px]"><a href="delete-account.html" class="text-ink2 hover:text-ink transition-colors">EN</a> <span class="text-ink3">·</span> <span class="text-primary">ES</span></span>
+        <a href="index.html" class="label text-[11px] text-ink2 hover:text-ink transition-colors">← Inicio</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-6 py-14 md:py-20">
+
+    <p class="label text-[11px] text-primary mb-4">Cuenta y datos</p>
+    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">Borra tu cuenta de Aura</h1>
+    <p class="mt-4 text-ink2 leading-relaxed max-w-2xl">
+      Puedes borrar tu cuenta de Aura y sus datos asociados en cualquier momento. Hay dos formas de hacerlo:
+      desde dentro de la app (la más rápida) o enviándonos una solicitud si ya no puedes acceder a la app.
+      Aura es editada por <span class="text-ink">PAMPA ITER SL</span>.
+    </p>
+
+    <!-- ===== OPCIÓN 1: IN-APP ===== -->
+    <section class="mt-12">
+      <div class="rounded-2xl border border-border bg-surface p-6 md:p-8">
+        <p class="label text-[11px] text-ink3 mb-3">Opción 1 — en la app (recomendado)</p>
+        <h2 class="text-xl font-bold mb-5">Desde tu teléfono</h2>
+        <ol class="space-y-4">
+          <li class="flex gap-4">
+            <span class="step-num text-primary">1</span>
+            <span class="text-ink2 leading-relaxed">Abre <span class="text-ink">Aura</span> y ve a la pestaña <span class="text-ink">Perfil</span>.</span>
+          </li>
+          <li class="flex gap-4">
+            <span class="step-num text-primary">2</span>
+            <span class="text-ink2 leading-relaxed">En la sección <span class="text-ink">Cuenta</span>, toca <span class="text-ink">Borrar cuenta</span>.</span>
+          </li>
+          <li class="flex gap-4">
+            <span class="step-num text-primary">3</span>
+            <span class="text-ink2 leading-relaxed">Confirma. Tu cuenta se bloquea al instante y se borra definitivamente a los <span class="text-ink">30 días</span>.</span>
+          </li>
+        </ol>
+        <p class="mt-6 text-sm text-ink3 leading-relaxed border-t border-border pt-5">
+          ¿Cambiaste de idea? Vuelve a iniciar sesión dentro de 30 días y tu cuenta se restaura. Pasados los 30 días, el borrado es definitivo.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== OPCIÓN 2: SOLICITUD ===== -->
+    <section class="mt-6">
+      <div class="rounded-2xl border border-border bg-surface p-6 md:p-8">
+        <p class="label text-[11px] text-ink3 mb-3">Opción 2 — solicitud por email</p>
+        <h2 class="text-xl font-bold mb-3">¿No puedes acceder a la app?</h2>
+        <p class="text-ink2 leading-relaxed">
+          Si has desinstalado Aura o no puedes iniciar sesión, escríbenos desde la dirección de email de tu cuenta y la borraremos por ti.
+          Completamos las solicitudes de borrado en un plazo de <span class="text-ink">30 días</span>.
+        </p>
+        <a href="mailto:info@pampaiter.com?subject=Solicitud%20de%20borrado%20de%20cuenta&body=Quiero%20borrar%20mi%20cuenta%20de%20Aura%20y%20sus%20datos.%0A%0AEmail%20de%20la%20cuenta%3A%20"
+           class="btn-primary inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-xl font-bold text-sm">
+          Solicitar borrado de cuenta
+        </a>
+        <p class="mt-4 text-sm text-ink3">O escribe a <a href="mailto:info@pampaiter.com" class="text-secondary hover:underline">info@pampaiter.com</a> con el asunto “Solicitud de borrado de cuenta”.</p>
+      </div>
+    </section>
+
+    <!-- ===== QUÉ SE BORRA ===== -->
+    <section class="mt-12 grid md:grid-cols-2 gap-4">
+      <div class="rounded-2xl border border-border bg-surface p-6">
+        <p class="label text-[11px] text-primary mb-3">Se borra</p>
+        <ul class="space-y-2 text-ink2 text-sm leading-relaxed">
+          <li>Tu perfil (nombre, email, foto, peso corporal)</li>
+          <li>Todos los entrenamientos, registros de sesión y puntuaciones de bloque</li>
+          <li>Récords personales y objetivos de entrenamiento</li>
+          <li>Historial de uso de IA y preferencias</li>
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-border bg-surface p-6">
+        <p class="label text-[11px] text-ink3 mb-3">Se conserva (obligación legal)</p>
+        <ul class="space-y-2 text-ink2 text-sm leading-relaxed">
+          <li>Registros mínimos de facturación / suscripción, conservados durante el periodo exigido por la ley y anonimizados cuando sea posible.</li>
+          <li>Registros sujetos a una obligación legal o disputa activa.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== AVISO DE SUSCRIPCIÓN ===== -->
+    <section class="mt-6">
+      <div class="rounded-2xl border p-6 md:p-7" style="border-color:rgba(245,196,81,.35); background:rgba(245,196,81,.06);">
+        <p class="label text-[11px] mb-2" style="color:#F5C451;">Importante — suscripciones</p>
+        <p class="text-ink2 leading-relaxed text-sm">
+          Borrar tu cuenta de Aura <span class="text-ink">no</span> cancela una suscripción activa de la App Store o Google Play —
+          esas las gestiona la tienda, no nosotros. Para dejar de pagar, cancela tu suscripción en la tienda
+          <span class="text-ink">antes o después</span> de borrar tu cuenta:
+        </p>
+        <div class="flex flex-wrap gap-3 mt-5">
+          <a href="https://apps.apple.com/account/subscriptions" class="btn-ghost px-5 py-2.5 rounded-xl text-sm font-semibold">Apple — gestionar suscripciones</a>
+          <a href="https://play.google.com/store/account/subscriptions" class="btn-ghost px-5 py-2.5 rounded-xl text-sm font-semibold">Google Play — gestionar suscripciones</a>
+        </div>
+      </div>
+    </section>
+
+    <p class="mt-12 text-sm text-ink3 leading-relaxed">
+      Para saber más sobre cómo tratamos tus datos, consulta nuestra <a href="privacy.es.html" class="text-secondary hover:underline">política de privacidad</a>.
+    </p>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="border-t border-border">
+    <div class="max-w-3xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-ink3">
+      <p>© 2026 PAMPA ITER SL. Todos los derechos reservados.</p>
+      <a href="mailto:info@pampaiter.com" class="hover:text-ink transition-colors">info@pampaiter.com</a>
+    </div>
+  </footer>
+
+</body>
+</html>

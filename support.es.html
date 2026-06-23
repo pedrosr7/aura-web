@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soporte — Aura</title>
+  <meta name="description" content="Ayuda con Aura: cancelar una suscripción, borrar tu cuenta, restaurar compras o contactar con soporte. Aura es operada por PAMPA ITER SL." />
+  <meta name="robots" content="index,follow" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg:'#0E0E0E', surface:'#1A1A1A', surface2:'#242424', border:'#2A2A2A',
+            primary:'#CCFF00', secondary:'#00E0FF', ink:'#ECECEC', ink2:'#9A9A9A', ink3:'#7C7C7C',
+          },
+          fontFamily: {
+            sans: ['Inter','system-ui','sans-serif'],
+            mono: ['"JetBrains Mono"','ui-monospace','monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root { color-scheme: dark; }
+    html { scroll-behavior: smooth; }
+    body { background:#0E0E0E; }
+    .label { font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.22em; font-weight:600; }
+    .btn-primary { background:#CCFF00; color:#0E0E0E; transition:transform .2s, box-shadow .25s, background .2s; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 40px -8px rgba(204,255,0,.45); background:#d6ff26; }
+    .faq h2 { font-size:1.1rem; font-weight:700; color:#ECECEC; margin:1.9rem 0 .5rem; }
+    .faq p { color:#9A9A9A; line-height:1.75; margin:.4rem 0; }
+    .faq strong { color:#ECECEC; font-weight:600; }
+    .faq a { color:#00E0FF; }
+    .faq a:hover { text-decoration:underline; }
+  </style>
+</head>
+
+<body class="font-sans text-ink antialiased">
+
+  <header class="border-b border-border">
+    <div class="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2.5">
+        <img src="assets/aura_logo.png" alt="Aura" class="h-7 w-7 rounded-md" />
+        <span class="font-mono font-bold tracking-wide">AURA</span>
+      </a>
+      <div class="flex items-center gap-5">
+        <span class="label text-[11px]"><a href="support.html" class="text-ink2 hover:text-ink transition-colors">EN</a> <span class="text-ink3">·</span> <span class="text-primary">ES</span></span>
+        <a href="index.html" class="label text-[11px] text-ink2 hover:text-ink transition-colors">← Inicio</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-6 py-14 md:py-20">
+
+    <p class="label text-[11px] text-primary mb-4">Ayuda</p>
+    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">Soporte</h1>
+    <p class="mt-4 text-ink2 leading-relaxed max-w-2xl">
+      ¿Necesitas ayuda? Escríbenos a <a href="mailto:info@pampaiter.com" class="text-secondary hover:underline">info@pampaiter.com</a>
+      y te respondemos. Aura es operada por <span class="text-ink">PAMPA ITER SL</span>.
+    </p>
+
+    <a href="mailto:info@pampaiter.com?subject=Soporte%20Aura"
+       class="btn-primary inline-flex items-center gap-2 mt-7 px-6 py-3 rounded-xl font-bold text-sm">
+      Escribir a soporte
+    </a>
+
+    <section class="faq mt-12 border-t border-border pt-4">
+      <h2>¿Cómo cancelo la suscripción?</h2>
+      <p>
+        Gestiónala en la <a href="https://apps.apple.com/account/subscriptions">App Store</a>
+        (Ajustes › [tu nombre] › Suscripciones) o
+        <a href="https://play.google.com/store/account/subscriptions">Google Play</a>
+        (Play Store › Pagos y suscripciones). Al cancelar se detiene la próxima renovación; el acceso dura hasta
+        el fin del periodo.
+      </p>
+
+      <h2>¿Cómo borro mi cuenta?</h2>
+      <p>
+        En Aura: <strong>Perfil › Cuenta › Borrar cuenta</strong>. Se bloquea al instante y se borra
+        definitivamente a los 30 días. Detalle: <a href="delete-account.es.html">borrado de cuenta</a>.
+      </p>
+
+      <h2>Borré mi cuenta por error</h2>
+      <p>Vuelve a entrar dentro de 30 días y se restaura.</p>
+
+      <h2>¿Cómo restauro mis compras?</h2>
+      <p><strong>Perfil › Restaurar compras.</strong></p>
+
+      <h2>¿Un bug o sugerencia?</h2>
+      <p>Escribe a <a href="mailto:info@pampaiter.com">info@pampaiter.com</a>.</p>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-border">
+    <div class="max-w-3xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-ink3">
+      <p>© 2026 PAMPA ITER SL. Todos los derechos reservados.</p>
+      <div class="flex items-center gap-6">
+        <a href="privacy.es.html" class="hover:text-ink transition-colors">Privacidad</a>
+        <a href="terms.es.html" class="hover:text-ink transition-colors">Términos</a>
+        <a href="mailto:info@pampaiter.com" class="hover:text-ink transition-colors">Contacto</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
