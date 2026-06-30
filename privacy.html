@@ -45,6 +45,7 @@
     .prose a:hover { text-decoration:underline; }
     .callout { border:1px solid rgba(0,224,255,.30); background:rgba(0,224,255,.05); border-radius:14px; padding:1rem 1.25rem; margin:1.5rem 0; }
     .callout p { color:#BFE9F2; }
+    .todo { color:#F5C451; }
   </style>
 </head>
 
@@ -67,7 +68,7 @@
 
     <p class="label text-[11px] text-primary mb-4">Legal</p>
     <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-ink">Privacy Policy</h1>
-    <p class="mt-4 text-ink3 text-sm">Last updated: 24 June 2026</p>
+    <p class="mt-4 text-ink3 text-sm">Last updated: 30 June 2026</p>
 
     <p class="mt-6">
       This Privacy Policy explains how <strong>PAMPA ITER SL</strong> ("Aura", "we", "us") collects, uses, shares
@@ -76,27 +77,33 @@
     </p>
 
     <h2>1. Data controller</h2>
+    <p>The data controller for the personal data described here is:</p>
+    <ul>
+      <li><strong>Entity:</strong> PAMPA ITER SL</li>
+      <li><strong>Tax ID (CIF):</strong> <span class="todo">[TO COMPLETE: B-XXXXXXXX]</span></li>
+      <li><strong>Registered office:</strong> <span class="todo">[TO COMPLETE: street, no., postcode, city, Spain]</span></li>
+      <li><strong>Email:</strong> <a href="mailto:info@pampaiter.com">info@pampaiter.com</a></li>
+    </ul>
     <p>
-      The data controller is <strong>PAMPA ITER SL</strong> (full company identification in our
-      <a href="legal.html">Legal Notice</a>). For any privacy question or to exercise your rights, contact
-      <a href="mailto:info@pampaiter.com">info@pampaiter.com</a>. We have not appointed a Data Protection Officer as
-      we are not legally required to; the contact above handles data-protection requests.
+      Full company identification is also in our <a href="legal.html">Legal Notice</a>. We have not appointed a Data
+      Protection Officer as we are not legally required to; the email above handles all data-protection requests.
     </p>
 
     <h2>2. Data we collect</h2>
     <ul>
       <li><strong>Account &amp; identity</strong> — your name, email address, profile photo and the account identifier provided when you sign in with Google or Apple.</li>
-      <li><strong>Fitness &amp; training data</strong> — body weight, training goals, the workouts you log (exercises, sets, reps, loads, times), personal records, and session feedback such as perceived effort.</li>
+      <li><strong>Fitness &amp; training data</strong> — body weight and its evolution, training goals, the workouts you log (exercises, sets, reps, loads, times), personal records, performance metrics, session feedback such as perceived effort, any injuries or limitations you record, and any photos (e.g. a whiteboard/WOD) you choose to scan.</li>
       <li><strong>Subscription data</strong> — plan tier, trial status and purchase events. Payments are processed by Apple or Google; <strong>we never receive or store your card details.</strong></li>
-      <li><strong>AI inputs</strong> — when you generate or import a workout or plan, your goal, profile and the content you submit (including photos of a whiteboard/WOD you choose to scan) are sent to our AI provider to produce the result.</li>
+      <li><strong>AI inputs</strong> — when you generate or import a workout or plan, your goal, profile and the content you submit are sent to our AI provider to produce the result (see section 5).</li>
       <li><strong>Technical &amp; usage data</strong> — device and app information, app language, usage analytics, and crash/error diagnostics.</li>
     </ul>
     <div class="callout">
       <p>
-        <strong>Health-related data.</strong> Some training data (e.g. body weight, training loads, perceived
-        effort) may, in certain contexts, be considered data concerning health — a "special category" under
-        Article 9 GDPR. Where it is, we process it <strong>only to provide the Service and on the basis of your
-        explicit consent</strong>, which you give in the app and can withdraw at any time (see sections 4 and 9).
+        <strong>Health-related data.</strong> Depending on the context, some of the data above — body weight and its
+        evolution, physical goals, performance, injuries or photos — may constitute <strong>data concerning health</strong>
+        (a "special category" under Article 9 GDPR). <strong>Where a processing operation involves health data within the
+        meaning of Article 9, we will first obtain your explicit consent</strong>, which you give in the app and can
+        withdraw at any time (see sections 4 and 9). We process such data only to provide the Service.
       </p>
     </div>
     <p>We do not knowingly collect precise location or contacts.</p>
@@ -113,7 +120,7 @@
     <h2>4. Legal bases (GDPR Art. 6 &amp; 9)</h2>
     <ul>
       <li><strong>Performance of a contract</strong> (Art. 6(1)(b)) — to provide the app, store your data and run your subscription.</li>
-      <li><strong>Explicit consent</strong> (Art. 9(2)(a) and 6(1)(a)) — for any training data that qualifies as health data, and for the AI processing of such data. You can withdraw consent at any time.</li>
+      <li><strong>Explicit consent</strong> (Art. 9(2)(a) and 6(1)(a)) — obtained in advance for any processing that involves health data, and for the AI processing of such data. You can withdraw consent at any time.</li>
       <li><strong>Legitimate interests</strong> (Art. 6(1)(f)) — to secure, maintain and improve the Service and prevent abuse, balanced against your rights.</li>
       <li><strong>Legal obligation</strong> (Art. 6(1)(c)) — to keep billing and tax records.</li>
     </ul>
@@ -121,14 +128,19 @@
     <h2>5. AI processing</h2>
     <p>
       Plan generation and workout import use a third-party large-language-model provider (Google's Gemini API). Only
-      the inputs needed for the feature you use are sent to produce your plan or read an imported workout. We do not
-      use your data to train third-party models. AI output is <strong>advisory only</strong>: we do not take
-      decisions producing legal or similarly significant effects about you based solely on automated processing
-      (Art. 22 GDPR).
+      the inputs needed for the feature you use are sent to produce your plan or read an imported workout. According
+      to Google, these inputs are <strong>not used to train its models</strong>; Google may temporarily retain a
+      request only as needed to provide and secure the service, for a limited period, after which it is deleted. AI
+      output is <strong>advisory only</strong>: we do not take decisions producing legal or similarly significant
+      effects about you based solely on automated processing (Art. 22 GDPR).
     </p>
 
     <h2>6. Who we share data with</h2>
-    <p>We share data only with processors that help us run Aura, each under a data-processing agreement (Art. 28 GDPR) that limits their use of it:</p>
+    <p>
+      We share data only with providers that help us run Aura. They act as <strong>processors under Article 28 GDPR</strong>,
+      or as independent controllers where the applicable rules and their own terms so determine (for example, Apple and
+      Google for certain sign-in and store operations):
+    </p>
     <ul>
       <li><strong>Sign-in:</strong> Apple and Google (authentication).</li>
       <li><strong>Subscriptions &amp; payments:</strong> RevenueCat (subscription management) and the Apple App Store / Google Play (payment processing).</li>
@@ -140,29 +152,44 @@
 
     <h2>7. International transfers</h2>
     <p>
-      Some of these providers process data outside the EEA, including in the United States. Where they do, transfers
-      rely on appropriate safeguards — the European Commission's Standard Contractual Clauses and, where applicable,
-      the EU–US Data Privacy Framework. You can request more detail at the contact above.
+      Some of these providers process data outside the EEA, including in the United States. <strong>Google LLC adheres
+      to the EU–US Data Privacy Framework</strong> where applicable; other transfers rely on the European Commission's
+      <strong>Standard Contractual Clauses</strong> together with any additional safeguards required. You can request
+      more detail at the contact above.
     </p>
 
     <h2>8. How long we keep it</h2>
     <ul>
       <li><strong>Account &amp; training data</strong> — while your account is active. When you delete your account it is locked immediately and permanently erased after a 30-day grace period (logging back in within that window restores it).</li>
-      <li><strong>Billing / tax records</strong> — retained for the period required by Spanish commercial and tax law (up to 6 years), then deleted or anonymized.</li>
-      <li><strong>Diagnostics</strong> — kept for a limited period and then deleted or aggregated.</li>
+      <li><strong>Billing / tax records</strong> — for the period required by Spanish commercial and tax law (up to 6 years), then deleted or anonymized.</li>
+      <li><strong>Crash / error diagnostics</strong> — approximately up to 90 days.</li>
+      <li><strong>Usage analytics</strong> — in aggregated/pseudonymized form, approximately up to 14 months.</li>
+      <li><strong>Backups</strong> — held on a rolling basis (approximately up to 90 days) and then overwritten.</li>
     </ul>
+    <p class="text-ink3 text-sm">The periods above are approximate and may vary slightly with each provider's defaults.</p>
 
     <h2>9. Your rights</h2>
     <p>
-      You have the right to access, rectify, erase, restrict and port your data, to object to certain processing, and
-      to <strong>withdraw consent</strong> at any time (without affecting prior processing). You can exercise these
-      by emailing <a href="mailto:info@pampaiter.com">info@pampaiter.com</a> or by using the in-app
-      <a href="delete-account.html">account deletion</a>. You also have the right to lodge a complaint with the
-      Spanish Data Protection Agency (<strong>AEPD</strong>, <a href="https://www.aepd.es">www.aepd.es</a>) or your
-      local supervisory authority.
+      You have the right to access, rectify, erase, restrict and port your data, to object to certain processing, to
+      <strong>withdraw consent</strong> at any time (without affecting prior processing), and <strong>not to be subject
+      to decisions based solely on automated processing</strong> that produce legal or similarly significant effects
+      (we do not carry out such decisions — see section 5). You can exercise these by emailing
+      <a href="mailto:info@pampaiter.com">info@pampaiter.com</a> or by using the in-app
+      <a href="delete-account.html">account deletion</a>. You also have the right to lodge a complaint with the Spanish
+      Data Protection Agency (<strong>AEPD</strong>, <a href="https://www.aepd.es">www.aepd.es</a>) or your local
+      supervisory authority.
     </p>
 
-    <h2>10. Security</h2>
+    <h2>10. Cookies &amp; similar technologies</h2>
+    <p>
+      Our website does not use non-essential cookies. Inside the app, our analytics and diagnostics providers
+      (Google Firebase Analytics / Crashlytics and the Google SDKs) may use device identifiers and similar
+      technologies to count usage and detect crashes. These are used only as described in this policy and never for
+      third-party advertising. If we later introduce cookies or trackers that require it, we will ask for your
+      consent and publish a dedicated cookie policy.
+    </p>
+
+    <h2>11. Security</h2>
     <p>
       We apply appropriate technical and organisational measures (Art. 32 GDPR), including encryption in transit,
       access controls, and regular backups designed to restore availability after an incident. No method of
@@ -170,7 +197,7 @@
       legally requires it, to notify the AEPD (within 72 hours) and affected users.
     </p>
 
-    <h2>11. Subscriptions</h2>
+    <h2>12. Subscriptions</h2>
     <p>
       Paid subscriptions are billed by Apple or Google, not by us. <strong>Deleting your Aura account does not cancel
       an active subscription</strong> — cancel it in your
@@ -178,19 +205,20 @@
       <a href="https://play.google.com/store/account/subscriptions">Google Play</a> account to stop being billed.
     </p>
 
-    <h2>12. Children</h2>
+    <h2>13. Children</h2>
     <p>
-      Aura is not directed to children and is intended for users aged 16 and over (or the minimum age of digital
-      consent in your country; 14 in Spain). We do not knowingly collect data from children below that age.
+      Aura is intended exclusively for users aged 16 and over. We do not knowingly collect data from children below
+      that age, and <strong>if we learn that we have collected a minor's data without the required authorisation, we
+      will delete it</strong>.
     </p>
 
-    <h2>13. Changes to this policy</h2>
+    <h2>14. Changes to this policy</h2>
     <p>
       We may update this policy. We will post the new version here and update the date above; material changes will
       be communicated in the app where appropriate.
     </p>
 
-    <h2>14. Contact</h2>
+    <h2>15. Contact</h2>
     <p>
       PAMPA ITER SL — <a href="mailto:info@pampaiter.com">info@pampaiter.com</a>. See our
       <a href="legal.html">Legal Notice</a> for full company identification.
