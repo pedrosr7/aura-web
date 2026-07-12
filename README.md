@@ -41,17 +41,17 @@ App Store Connect / Play Console:
 | Terms / EULA | `https://aura.pampaiter.com/terms` |
 | Delete account | `https://aura.pampaiter.com/delete-account` |
 
-## Two things to wire up before launch
+## Store links (Download section + hero)
 
-1. **Store links** — the App Store / Play Store buttons in the hero currently point to
-   `#early-access`. Once the app is live, search `data-store="ios"` / `data-store="android"`
-   in `index.html` and replace each `href="#early-access"` with the real store URL.
+The landing has a **Download** section (`#download`) plus hero store buttons.
 
-2. **Waitlist emails** — the form currently just shows a success message. To actually
-   collect emails, create a free form at <https://formspree.io>, then in `index.html`
-   find `var ENDPOINT = null;` and set it to your endpoint, e.g.
-   `var ENDPOINT = 'https://formspree.io/f/abcdwxyz';`
-   (Or point it at an Aura Ktor server route if you prefer to own the data.)
+- **Android — live:** links to `https://play.google.com/store/apps/details?id=com.pampa.aura`.
+- **iOS — "coming soon":** rendered as a non-clickable `<div data-store="ios">`. When the
+  App Store listing goes live, search `data-store="ios"` in `index.html` + `index.es.html`
+  and turn that `<div>` back into an `<a href="…app-store-url…" target="_blank" rel="noopener">`
+  (there are two per file: hero + Download section).
+- The old early-access **waitlist form was removed** (the app is published). The leftover
+  form JS is guarded with `if (form)` and is a no-op.
 
 ## Local preview
 
