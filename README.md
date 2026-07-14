@@ -46,10 +46,7 @@ App Store Connect / Play Console:
 The landing has a **Download** section (`#download`) plus hero store buttons.
 
 - **Android — live:** links to `https://play.google.com/store/apps/details?id=com.pampa.aura`.
-- **iOS — "coming soon":** rendered as a non-clickable `<div data-store="ios">`. When the
-  App Store listing goes live, search `data-store="ios"` in `index.html` + `index.es.html`
-  and turn that `<div>` back into an `<a href="…app-store-url…" target="_blank" rel="noopener">`
-  (there are two per file: hero + Download section).
+- **iOS — live:** links to `https://apps.apple.com/us/app/aura-ai-training-coach/id6773849897`.
 - The old early-access **waitlist form was removed** (the app is published). The leftover
   form JS is guarded with `if (form)` and is a no-op.
 
