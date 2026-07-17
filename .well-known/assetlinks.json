@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.pampa.aura",
+      "sha256_cert_fingerprints": [
+        "94:54:4B:03:8B:99:62:A5:F5:0F:79:14:67:CB:A1:02:02:A6:56:BB:13:33:0E:B4:F7:28:0B:70:91:1C:15:E9"
+      ]
+    }
+  }
+]

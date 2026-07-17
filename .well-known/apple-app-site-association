@@ -1,0 +1,20 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": [
+          "2RJBN4MWS8.com.pampa.aura.ios",
+          "2RJBN4MWS8.com.pampa.aura.ios.staging",
+          "2RJBN4MWS8.com.pampa.aura.ios.dev"
+        ],
+        "components": [
+          {
+            "/": "/share/*",
+            "comment": "Aura share-session import deeplink (V7)"
+          }
+        ]
+      }
+    ]
+  }
+}

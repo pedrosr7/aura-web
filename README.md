@@ -10,6 +10,9 @@ aura-web/
 ├── terms.html              # terms of service (EN) · terms.es.html (ES)
 ├── support.html            # support + FAQ    (EN) · support.es.html (ES)
 ├── delete-account.html     # account deletion (EN) · delete-account.es.html (ES)
+├── 404.html                # 404 + doubles as the /share/<token> deeplink landing
+├── .nojekyll               # REQUIRED — without it Jekyll hides .well-known/
+├── .well-known/            # app deeplink verification (Android + iOS)
 └── assets/
     ├── aura_logo.png
     └── captures/           # real in-app screenshots used on the landing page
@@ -27,6 +30,19 @@ Screenshots are localized: `assets/captures/*.png` (Spanish app UI) feed `index.
 `assets/captures/en/*.png` (English app UI) feed `index.html`.
 `WEB_HANDOFF.md` and the `appstore-*` files are internal tooling and are
 **excluded from the repo** via `.gitignore`.
+
+## App deeplinks (`/share/<token>`)
+
+`.well-known/` holds the Android + iOS verification files that let share links
+open the app instead of the browser; `404.html` is the fallback landing shown
+when the app isn't installed (GitHub Pages doesn't map dynamic paths, so the
+404 handler doubles as the `/share/<token>` page).
+
+⚠️ `.nojekyll` must stay — without it Jekyll excludes dot-directories and
+`.well-known/` 404s, silently breaking every deeplink.
+
+Setup + troubleshooting playbook: `agents/docs/share_deeplink_setup.md` in the
+**Aura** repo.
 
 ## Store URLs
 
