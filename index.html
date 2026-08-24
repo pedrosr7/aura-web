@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aura — AI training coach for CrossFit &amp; HYROX</title>
-  <meta name="description" content="Aura is the AI training coach for CrossFit, HYROX and strength athletes — it learns from every session and writes your weekly training plan automatically. Log, scan, progress. On iOS and Android." />
+  <title>Aura: HYROX &amp; WOD Timer — your box's WOD on your phone, in seconds</title>
+  <meta name="description" content="Aura is the training companion for the functional athlete. Scan your box's WOD from a photo, log it in seconds and track your progress: PRs, tonnage and insights. Built for CrossFit &amp; HYROX. On iOS and Android." />
 
   <link rel="canonical" href="https://aura.pampaiter.com/" />
   <link rel="alternate" hreflang="en" href="https://aura.pampaiter.com/" />
@@ -12,8 +12,8 @@
   <link rel="alternate" hreflang="x-default" href="https://aura.pampaiter.com/" />
   <meta name="theme-color" content="#0E0E0E" />
 
-  <meta property="og:title" content="Aura — AI training coach for CrossFit &amp; HYROX" />
-  <meta property="og:description" content="The AI coach that writes your weekly training plan for CrossFit, HYROX and strength. Log, scan, progress." />
+  <meta property="og:title" content="Aura: HYROX &amp; WOD Timer" />
+  <meta property="og:description" content="Scan your box's WOD from a photo, train and track your progress. Built for CrossFit &amp; HYROX." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://aura.pampaiter.com/" />
   <meta property="og:site_name" content="Aura" />
@@ -23,8 +23,8 @@
   <meta property="og:image:width" content="512" />
   <meta property="og:image:height" content="512" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Aura — AI training coach for CrossFit &amp; HYROX" />
-  <meta name="twitter:description" content="The AI coach that writes your weekly training plan for CrossFit, HYROX and strength." />
+  <meta name="twitter:title" content="Aura: HYROX &amp; WOD Timer" />
+  <meta name="twitter:description" content="Scan your box's WOD from a photo, train and track your progress. CrossFit &amp; HYROX." />
   <meta name="twitter:image" content="https://aura.pampaiter.com/assets/aura_icon.png" />
   <link rel="icon" type="image/png" href="assets/aura_icon.png" />
   <link rel="apple-touch-icon" href="assets/aura_icon.png" />
@@ -59,7 +59,6 @@
 
     .label { font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.22em; font-weight:600; }
 
-    /* Grain texture overlay */
     .grain::after {
       content:""; position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.035;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -75,26 +74,21 @@
     }
     .glow { filter:blur(90px); }
 
-    /* Scroll progress */
     #progress { position:fixed; top:0; left:0; height:2px; width:0; z-index:70; background:#CCFF00; box-shadow:0 0 12px #CCFF00; }
 
-    /* Buttons */
     .btn-primary { background:#CCFF00; color:#0E0E0E; transition:transform .2s, box-shadow .25s, background .2s; }
     .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 40px -8px rgba(204,255,0,.45); background:#d6ff26; }
     .btn-primary:active { transform:translateY(0) scale(.98); }
     .btn-ghost { border:1px solid #2A2A2A; color:#ECECEC; transition:border-color .2s, background .2s, transform .2s; }
     .btn-ghost:hover { border-color:#4a4a4a; background:#161616; transform:translateY(-2px); }
 
-    /* Phone */
     .phone { position:relative; border-radius:42px; background:#050505; padding:8px; border:1px solid #2A2A2A;
       box-shadow:0 2px 0 rgba(255,255,255,.04) inset, 0 40px 80px -24px rgba(0,0,0,.9); }
     .phone img { display:block; width:100%; border-radius:34px; }
 
-    /* Bento tiles */
     .tile { position:relative; background:linear-gradient(180deg,#181818,#141414); border:1px solid #232323;
       border-radius:22px; overflow:hidden; transition:border-color .3s, transform .3s; }
     .tile:hover { border-color:#3a3a3a; transform:translateY(-3px); }
-    /* Cursor spotlight reacts to container vars */
     .tile::before {
       content:""; position:absolute; inset:0; border-radius:22px; opacity:0; transition:opacity .35s; pointer-events:none;
       background:radial-gradient(420px circle at var(--mx) var(--my), rgba(204,255,0,.14), transparent 45%);
@@ -102,11 +96,11 @@
     [data-spotlight]:hover .tile::before { opacity:1; }
 
     .icon-chip { background:rgba(204,255,0,.08); border:1px solid rgba(204,255,0,.22); color:#CCFF00; }
+    .icon-chip-cy { background:rgba(0,224,255,.08); border:1px solid rgba(0,224,255,.22); color:#00E0FF; }
+    .pill { border:1px solid #2A2A2A; background:#161616; color:#C9C9C9; border-radius:999px; }
 
-    /* Reveal */
     .reveal { opacity:0; transform:translateY(22px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
     .reveal.in { opacity:1; transform:none; }
-    /* Clip reveal for headings */
     .clip { clip-path:inset(0 0 100% 0); transform:translateY(8px); opacity:.001; transition:clip-path .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1), opacity .5s; }
     .clip.in { clip-path:inset(0 0 -10% 0); transform:none; opacity:1; }
 
@@ -116,15 +110,12 @@
     .marquee-track { display:flex; gap:3rem; white-space:nowrap; animation:scrollx 30s linear infinite; }
     @keyframes scrollx { to { transform:translateX(-50%); } }
 
-    /* Tilt */
     .tilt-wrap { perspective:1200px; }
     .tilt { transition:transform .3s ease-out; transform-style:preserve-3d; will-change:transform; }
 
-    /* Typewriter caret */
-    .caret { display:inline-block; width:.6ch; background:#CCFF00; margin-left:2px; animation:blink 1s steps(1) infinite; }
+    .caret { display:inline-block; width:.6ch; background:#00E0FF; margin-left:2px; animation:blink 1s steps(1) infinite; }
     @keyframes blink { 50% { opacity:0; } }
 
-    /* Sparkline draw */
     .spark { stroke-dasharray:240; stroke-dashoffset:240; transition:stroke-dashoffset 1.4s ease .2s; }
     .reveal.in .spark { stroke-dashoffset:0; }
 
@@ -143,12 +134,12 @@
   {
     "@context": "https://schema.org",
     "@type": "MobileApplication",
-    "name": "Aura: AI Training Coach",
+    "name": "Aura",
     "operatingSystem": "iOS, Android",
     "applicationCategory": "HealthApplication",
     "url": "https://aura.pampaiter.com/",
     "inLanguage": "en",
-    "description": "AI training coach for CrossFit, HYROX and strength athletes that writes your weekly training plan automatically.",
+    "description": "The training companion for the functional athlete: scan your box's WOD from a photo, train and track your progress. CrossFit & HYROX.",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
     "publisher": { "@type": "Organization", "name": "PAMPA ITER SL", "url": "https://pampaiter.com" }
   }
@@ -168,8 +159,9 @@
           <span class="font-mono font-extrabold tracking-[0.18em] text-[15px]">AURA</span>
         </a>
         <div class="hidden md:flex items-center gap-8 text-sm text-ink2">
-          <a href="#features" class="hover:text-ink transition-colors">Features</a>
-          <a href="#how" class="hover:text-ink transition-colors">How it works</a>
+          <a href="#importar" class="hover:text-ink transition-colors">Import</a>
+          <a href="#progreso" class="hover:text-ink transition-colors">Progress</a>
+          <a href="#comunidad" class="hover:text-ink transition-colors">Community</a>
           <a href="#pricing" class="hover:text-ink transition-colors">Pricing</a>
         </div>
         <div class="flex items-center gap-4">
@@ -190,23 +182,20 @@
       <div data-stagger>
         <div class="reveal inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-3 py-1.5 mb-7">
           <span class="h-1.5 w-1.5 rounded-full bg-primary animate-pulse"></span>
-          <span class="label text-[11px] text-ink2">AI-powered training</span>
+          <span class="label text-[11px] text-ink2">CrossFit · HYROX · Functional training</span>
         </div>
-        <h1 class="font-mono font-extrabold leading-[1.02] text-[2.6rem] sm:text-6xl tracking-tight">
-          <span class="reveal block">Your coach</span>
-          <span class="reveal block">never stops.</span>
-          <span class="reveal block text-primary">You shouldn't.</span>
+        <h1 class="font-mono font-extrabold leading-[1.04] text-[2.3rem] sm:text-[3.4rem] tracking-tight">
+          <span class="reveal block">Your <span class="text-primary">WOD</span> in seconds.</span>
+          <span class="reveal block">Your <span class="text-primary">progress</span> forever.</span>
+          <span class="reveal block">Your <span class="text-primary">people</span> with you.</span>
         </h1>
         <p class="reveal mt-7 max-w-md text-lg text-ink2 leading-relaxed">
-          Aura is the AI training coach for CrossFit, HYROX and Hybrid athletes — it
-          learns from every session and writes your training plan automatically, every Sunday. Log it, scan it, progress.
+          Aura is the training companion for the functional athlete. Scan your box's WOD from a
+          photo, log it in seconds and track your real progress — with your coach and your people,
+          <span class="text-ink">not instead of them</span>.
         </p>
         <div class="reveal mt-9 flex flex-wrap items-center gap-3">
-          <a href="https://apps.apple.com/us/app/aura-ai-training-coach/id6773849897" target="_blank" rel="noopener" data-store="ios" class="cursor-pointer flex items-center gap-3 rounded-xl border border-border bg-surface hover:bg-surface2 transition-colors px-4 py-2.5">
-            <svg viewBox="0 0 24 24" class="h-7 w-7 fill-ink" aria-hidden="true"><path d="M17.05 12.04c-.03-2.5 2.04-3.7 2.13-3.76-1.16-1.7-2.97-1.93-3.61-1.96-1.54-.16-3 .9-3.78.9-.78 0-1.98-.88-3.25-.86-1.67.03-3.21.97-4.07 2.46-1.73 3-.44 7.46 1.25 9.9.82 1.2 1.8 2.54 3.08 2.49 1.24-.05 1.71-.8 3.21-.8 1.5 0 1.92.8 3.23.78 1.33-.03 2.18-1.22 3-2.42.94-1.39 1.33-2.73 1.35-2.8-.03-.01-2.59-1-2.62-3.93zM14.6 4.8c.69-.83 1.15-1.99 1.02-3.14-.99.04-2.18.66-2.89 1.49-.64.73-1.2 1.9-1.05 3.02 1.1.09 2.23-.56 2.92-1.37z"/></svg>
-            <span class="text-left leading-tight"><span class="block text-[10px] text-ink3">Download on the</span><span class="block text-sm font-semibold text-ink">App Store</span></span>
-          </a>
-          <a href="https://play.google.com/store/apps/details?id=com.pampa.aura" target="_blank" rel="noopener" data-store="android" class="cursor-pointer flex items-center gap-3 rounded-xl border border-border bg-surface hover:bg-surface2 transition-colors px-4 py-2.5">
+          <a href="https://play.google.com/store/apps/details?id=com.pampa.aura" target="_blank" rel="noopener" class="cursor-pointer flex items-center gap-3 rounded-xl border border-border bg-surface hover:bg-surface2 transition-colors px-4 py-2.5">
             <svg viewBox="0 0 24 24" class="h-7 w-7" aria-hidden="true">
               <path d="M3.6 2.2c-.3.2-.5.6-.5 1.1v17.4c0 .5.2.9.5 1.1l9.3-9.8L3.6 2.2z" fill="#00E0FF"/>
               <path d="M16.5 8.6 12.9 12l3.6 3.4 4.3-2.4c.7-.4.7-1.6 0-2L16.5 8.6z" fill="#CCFF00"/>
@@ -215,22 +204,25 @@
             </svg>
             <span class="text-left leading-tight"><span class="block text-[10px] text-ink3">Get it on</span><span class="block text-sm font-semibold text-ink">Google Play</span></span>
           </a>
+          <a href="https://apps.apple.com/us/app/aura-ai-training-coach/id6773849897" target="_blank" rel="noopener" class="cursor-pointer flex items-center gap-3 rounded-xl border border-border bg-surface hover:bg-surface2 transition-colors px-4 py-2.5">
+            <svg viewBox="0 0 24 24" class="h-7 w-7 fill-ink" aria-hidden="true"><path d="M17.05 12.04c-.03-2.5 2.04-3.7 2.13-3.76-1.16-1.7-2.97-1.93-3.61-1.96-1.54-.16-3 .9-3.78.9-.78 0-1.98-.88-3.25-.86-1.67.03-3.21.97-4.07 2.46-1.73 3-.44 7.46 1.25 9.9.82 1.2 1.8 2.54 3.08 2.49 1.24-.05 1.71-.8 3.21-.8 1.5 0 1.92.8 3.23.78 1.33-.03 2.18-1.22 3-2.42.94-1.39 1.33-2.73 1.35-2.8-.03-.01-2.59-1-2.62-3.93zM14.6 4.8c.69-.83 1.15-1.99 1.02-3.14-.99.04-2.18.66-2.89 1.49-.64.73-1.2 1.9-1.05 3.02 1.1.09 2.23-.56 2.92-1.37z"/></svg>
+            <span class="text-left leading-tight"><span class="block text-[10px] text-ink3">Download on the</span><span class="block text-sm font-semibold text-ink">App Store</span></span>
+          </a>
         </div>
-        <p class="reveal mt-4 label text-[10px] text-ink3">Now on Google Play &amp; the App Store</p>
+        <p class="reveal mt-4 label text-[10px] text-ink3">Free on Google Play and the App Store</p>
       </div>
 
-      <!-- Phone w/ tilt -->
       <div class="reveal relative mx-auto w-full max-w-[320px] tilt-wrap">
         <div class="glow absolute inset-0 -z-10 rounded-full bg-primary/15"></div>
         <div class="tilt" data-tilt>
-          <div class="phone"><img src="assets/captures/en/cap-pulse.png" alt="Aura home screen showing today's AI-generated session, your training streak and recent progress" loading="eager" /></div>
+          <div class="phone"><img src="assets/captures/en/cap-pulse.png" alt="Aura home screen with today's session" loading="eager" /></div>
         </div>
         <div class="floaty absolute -left-4 sm:-left-10 bottom-24 w-56 rounded-2xl border border-border bg-surface/90 backdrop-blur-xl p-4 shadow-2xl">
           <div class="flex items-center gap-2.5">
             <span class="icon-chip grid h-8 w-8 place-items-center rounded-lg">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M12 3l1.9 5.8H20l-4.9 3.6 1.9 5.8L12 14.6 7 18.2l1.9-5.8L4 8.8h6.1z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M3 8a2 2 0 0 1 2-2h1.5l1-2h5l1 2H19a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.5"/></svg>
             </span>
-            <div><p class="label text-[9px] text-ink3">Sunday 09:00</p><p class="text-sm font-semibold">New weekly plan ready</p></div>
+            <div><p class="label text-[9px] text-ink3">From a photo</p><p class="text-sm font-semibold">Imported in 1 tap</p></div>
           </div>
         </div>
       </div>
@@ -240,199 +232,196 @@
   <!-- ===== MARQUEE ===== -->
   <div class="border-y border-border bg-surface/40 py-4 overflow-hidden">
     <div class="marquee-track label text-sm text-ink3">
-      <span>AI-written plans</span><span class="text-primary">◆</span>
-      <span>Adaptive periodization</span><span class="text-primary">◆</span>
-      <span>Camera import</span><span class="text-primary">◆</span>
-      <span>Movement progression</span><span class="text-primary">◆</span>
-      <span>Hybrid calendar</span><span class="text-primary">◆</span>
-      <span>AI-written plans</span><span class="text-primary">◆</span>
-      <span>Adaptive periodization</span><span class="text-primary">◆</span>
-      <span>Camera import</span><span class="text-primary">◆</span>
-      <span>Movement progression</span><span class="text-primary">◆</span>
-      <span>Hybrid calendar</span><span class="text-primary">◆</span>
+      <span>Import by photo</span><span class="text-primary">◆</span>
+      <span>Import by link</span><span class="text-primary">◆</span>
+      <span>Log in seconds</span><span class="text-primary">◆</span>
+      <span>PRs forever</span><span class="text-primary">◆</span>
+      <span>The box whiteboard</span><span class="text-primary">◆</span>
+      <span>Share your WOD</span><span class="text-primary">◆</span>
+      <span>Import by photo</span><span class="text-primary">◆</span>
+      <span>Import by link</span><span class="text-primary">◆</span>
+      <span>Log in seconds</span><span class="text-primary">◆</span>
+      <span>PRs forever</span><span class="text-primary">◆</span>
+      <span>The box whiteboard</span><span class="text-primary">◆</span>
+      <span>Share your WOD</span><span class="text-primary">◆</span>
     </div>
   </div>
 
-  <!-- ===== FEATURES (BENTO) ===== -->
-  <section id="features" class="relative py-24 sm:py-32">
-    <div class="mx-auto max-w-7xl px-5 sm:px-8">
-      <div class="max-w-2xl mb-14">
-        <p class="reveal label text-xs text-primary mb-4">What Aura does</p>
-        <h2 class="clip text-4xl sm:text-5xl font-extrabold tracking-tight">Not another tracker.<br/>A coach that thinks.</h2>
-        <p class="reveal mt-5 text-lg text-ink2">Every feature feeds one goal: the right session, on the right day, written for you.</p>
+  <!-- ===== PILAR 1 · IMPORTAR ===== -->
+  <section id="importar" class="relative py-24 sm:py-28 border-t border-border overflow-hidden">
+    <div class="glow absolute top-1/3 -left-20 h-80 w-80 rounded-full bg-primary/8 -z-10"></div>
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-2 gap-16 items-center">
+      <div data-stagger>
+        <p class="reveal label text-xs text-primary mb-4">01 · Your WOD in seconds</p>
+        <h2 class="clip text-4xl sm:text-5xl font-extrabold tracking-tight">Your box's WOD,<br/>on your phone in seconds.</h2>
+        <p class="reveal mt-6 text-lg text-ink2 leading-relaxed max-w-lg">
+          Snap a photo of the whiteboard or paste the link your box sent you. Aura reads it,
+          understands it and gets it ready to train and log. Entry friction is enemy number one —
+          and here it's gone.
+        </p>
+        <p class="reveal mt-4 text-[15px] text-ink3 leading-relaxed max-w-lg">
+          It doesn't replace your coach: <span class="text-ink">it imports their programming</span>. You
+          follow the WOD they already give you; Aura digitizes it, sets the timers and saves it.
+        </p>
+        <div class="reveal mt-8 flex flex-wrap gap-2.5">
+          <span class="pill inline-flex items-center gap-2 px-4 py-2 text-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-primary"><path d="M3 8a2 2 0 0 1 2-2h1.5l1-2h5l1 2H19a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.5"/></svg>Whiteboard photo</span>
+          <span class="pill inline-flex items-center gap-2 px-4 py-2 text-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-primary"><path d="M9.5 14.5l5-5"/><path d="M11 6.5l1-1a3.5 3.5 0 0 1 5 5l-1 1"/><path d="M13 17.5l-1 1a3.5 3.5 0 0 1-5-5l1-1"/></svg>Shared link</span>
+          <span class="pill inline-flex items-center gap-2 px-4 py-2 text-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-primary"><circle cx="12" cy="13" r="8"/><path d="M12 9.5V13l2.5 1.5"/><path d="M9 2h6"/></svg>Timers ready</span>
+          <span class="pill inline-flex items-center gap-2 px-4 py-2 text-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-primary"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Quick log</span>
+        </div>
       </div>
-
-      <div data-spotlight data-stagger class="grid gap-4 md:grid-cols-2 lg:grid-cols-4 lg:auto-rows-[210px]">
-
-        <!-- A — AI coaching (hero tile, typewriter) -->
-        <article class="reveal tile p-7 md:col-span-2 lg:col-span-2 lg:row-span-2 flex flex-col">
-          <div class="flex items-center gap-2.5 mb-5">
-            <span class="relative flex h-2.5 w-2.5"><span class="absolute inline-flex h-full w-full rounded-full bg-success opacity-60 animate-ping"></span><span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-success"></span></span>
-            <span class="label text-[10px] text-ink3">Aura coach · online</span>
-          </div>
-          <h3 class="text-2xl font-bold mb-4">Live AI coaching</h3>
-          <div class="flex-1 flex flex-col justify-end gap-3">
-            <div class="self-start max-w-[90%] rounded-2xl rounded-bl-sm bg-surface2 border border-border px-4 py-3 text-[15px] text-ink min-h-[3.5rem]">
-              <span data-typewriter>&nbsp;</span><span class="caret" aria-hidden="true">&nbsp;</span>
-            </div>
-            <p class="text-ink3 text-[13px] leading-relaxed">Pulse reads your week and tells you what today should be — and exactly why.</p>
-          </div>
-        </article>
-
-        <!-- B — Weekly AI plans (wide) -->
-        <article class="reveal tile p-7 md:col-span-2 lg:col-span-2">
-          <span class="icon-chip grid h-11 w-11 place-items-center rounded-xl mb-5">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M12 3l1.9 5.8H20l-4.9 3.6 1.9 5.8L12 14.6 7 18.2l1.9-5.8L4 8.8h6.1z"/></svg>
-          </span>
-          <h3 class="text-lg font-bold mb-2">Weekly AI plans</h3>
-          <p class="text-ink2 text-[15px] leading-relaxed">A fresh, structured plan auto-generated every Sunday — built around your logs, not a template.</p>
-        </article>
-
-        <!-- C — Scan & import -->
-        <article class="reveal tile p-7 lg:col-span-1">
-          <span class="icon-chip grid h-11 w-11 place-items-center rounded-xl mb-5">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M3 8a2 2 0 0 1 2-2h1.5l1-2h5l1 2H19a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.5"/></svg>
-          </span>
-          <h3 class="text-lg font-bold mb-2">Scan &amp; import</h3>
-          <p class="text-ink2 text-[14px] leading-relaxed">Point your camera at any workout. Aura reads it and logs it.</p>
-        </article>
-
-        <!-- D — Mesocycles -->
-        <article class="reveal tile p-7 lg:col-span-1">
-          <span class="icon-chip grid h-11 w-11 place-items-center rounded-xl mb-5">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v4h-4"/></svg>
-          </span>
-          <h3 class="text-lg font-bold mb-2">Mesocycles</h3>
-          <p class="text-ink2 text-[14px] leading-relaxed">6-week cycles that progress load as you do.</p>
-        </article>
-
-        <!-- E — Movement progression (wide, sparkline) -->
-        <article class="reveal tile p-7 md:col-span-2 lg:col-span-2">
-          <div class="flex items-start justify-between gap-4">
-            <div>
-              <span class="icon-chip grid h-11 w-11 place-items-center rounded-xl mb-5">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M3 17l6-6 4 4 8-8"/><path d="M17 7h4v4"/></svg>
-              </span>
-              <h3 class="text-lg font-bold mb-2">Movement progression</h3>
-              <p class="text-ink2 text-[15px] leading-relaxed max-w-xs">Track every lift. See your estimated 1RM, tonnage and trend at a glance.</p>
-            </div>
-            <svg viewBox="0 0 120 60" class="hidden sm:block w-32 h-16 shrink-0" fill="none" aria-hidden="true">
-              <polyline class="spark" points="2,52 22,44 42,46 62,30 82,32 100,14 118,8" stroke="#CCFF00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </article>
-
-        <!-- F — Hybrid calendar (wide) -->
-        <article class="reveal tile p-7 md:col-span-2 lg:col-span-2">
-          <span class="icon-chip grid h-11 w-11 place-items-center rounded-xl mb-5">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
-          </span>
-          <h3 class="text-lg font-bold mb-2">Hybrid calendar</h3>
-          <p class="text-ink2 text-[15px] leading-relaxed">Box classes and solo sessions in one schedule. Train however you actually train.</p>
-        </article>
+      <div class="reveal relative mx-auto w-full max-w-[300px]">
+        <div class="glow absolute inset-0 -z-10 rounded-full bg-primary/12"></div>
+        <div class="phone"><img src="assets/captures/en/cap-newsession.png" alt="New session screen: generate with AI or import from a photo" loading="lazy" /></div>
+        <div class="floaty absolute -right-4 sm:-right-8 top-20 w-52 rounded-2xl border border-border bg-surface/90 backdrop-blur-xl p-4 shadow-2xl">
+          <p class="label text-[9px] text-ink3 mb-1">Whiteboard → App</p>
+          <p class="text-sm font-semibold leading-snug">"21-15-9 · Thruster + Pull-up" read and ready.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== STATS (count-up) ===== -->
-  <section class="relative py-20 border-y border-border overflow-hidden">
-    <div class="glow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-40 w-[36rem] rounded-full bg-primary/8 -z-10"></div>
-    <div class="mx-auto max-w-7xl px-5 sm:px-8">
-      <p class="reveal label text-xs text-primary mb-10 text-center">The numbers</p>
-      <div data-stagger class="grid grid-cols-2 lg:grid-cols-4 gap-8">
-        <div class="reveal text-center">
-          <p class="font-mono font-extrabold text-5xl sm:text-6xl text-ink"><span data-count="52">0</span></p>
-          <p class="label text-[10px] text-ink3 mt-3">Plans a year · auto-written</p>
+  <!-- ===== PILAR 2 · PROGRESO ===== -->
+  <section id="progreso" class="relative py-24 sm:py-28 border-t border-border overflow-hidden">
+    <div class="glow absolute top-1/3 -right-20 h-80 w-80 rounded-full bg-primary/8 -z-10"></div>
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-2 gap-16 items-center">
+      <div class="order-2 lg:order-1 reveal relative mx-auto w-full max-w-[300px]">
+        <div class="glow absolute inset-0 -z-10 rounded-full bg-primary/12"></div>
+        <div class="phone"><img src="assets/captures/en/cap-log.png" alt="Training log with weekly tonnage, training mix and sessions per week" loading="lazy" /></div>
+        <!-- coach line card (typewriter) -->
+        <div class="floaty absolute -left-6 sm:-left-12 bottom-16 w-60 rounded-2xl border border-border bg-surface/95 backdrop-blur-xl p-4 shadow-2xl">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-secondary opacity-60 animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-secondary"></span></span>
+            <span class="label text-[9px] text-ink3">Your coach</span>
+          </div>
+          <p class="text-[13px] text-ink leading-snug min-h-[2.5rem]"><span data-typewriter>&nbsp;</span><span class="caret" aria-hidden="true">&nbsp;</span></p>
         </div>
-        <div class="reveal text-center">
-          <p class="font-mono font-extrabold text-5xl sm:text-6xl text-ink"><span data-count="6">0</span></p>
-          <p class="label text-[10px] text-ink3 mt-3">Week mesocycles · adaptive</p>
+      </div>
+      <div class="order-1 lg:order-2" data-stagger>
+        <p class="reveal label text-xs text-primary mb-4">02 · Your progress forever</p>
+        <h2 class="clip text-4xl sm:text-5xl font-extrabold tracking-tight">Every PR, every kilo —<br/>saved forever.</h2>
+        <p class="reveal mt-6 text-lg text-ink2 leading-relaxed max-w-lg">
+          PRs, tonnage, estimated 1RM and the trend of every movement. And after each session, your
+          AI coach reads it and tells you what it meant. The log is the reason to come back.
+        </p>
+        <p class="reveal mt-4 text-[15px] text-ink3 leading-relaxed max-w-lg">
+          Your data is yours and grows with you — session after session, year after year.
+        </p>
+        <div class="reveal mt-8 flex items-center gap-6">
+          <div class="flex flex-wrap gap-2.5">
+            <span class="pill px-4 py-2 text-sm">PRs</span>
+            <span class="pill px-4 py-2 text-sm">Tonnage</span>
+            <span class="pill px-4 py-2 text-sm">Est. 1RM</span>
+            <span class="pill px-4 py-2 text-sm">AI insights</span>
+          </div>
         </div>
-        <div class="reveal text-center">
-          <p class="font-mono font-extrabold text-5xl sm:text-6xl text-primary">&lt;<span data-count="10">0</span>s</p>
-          <p class="label text-[10px] text-ink3 mt-3">To log a session · just scan</p>
+        <div class="reveal mt-8 tile p-6 max-w-lg flex items-center justify-between gap-4">
+          <div>
+            <p class="label text-[10px] text-ink3 mb-1">Back Squat · Est. 1RM</p>
+            <p class="font-mono font-extrabold text-3xl">120 <span class="text-lg text-ink3">kg</span> <span class="text-success text-base font-bold">+5</span></p>
+          </div>
+          <svg viewBox="0 0 120 60" class="w-32 h-16 shrink-0" fill="none" aria-hidden="true">
+            <polyline class="spark" points="2,52 22,46 42,44 62,32 82,30 100,16 118,8" stroke="#CCFF00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
-        <div class="reveal text-center">
-          <p class="font-mono font-extrabold text-5xl sm:text-6xl text-ink">24/7</p>
-          <p class="label text-[10px] text-ink3 mt-3">AI coach · never sleeps</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PILAR 3 · COMUNIDAD / PIZARRA ===== -->
+  <section id="comunidad" class="relative py-24 sm:py-28 border-t border-border overflow-hidden">
+    <div class="glow absolute top-1/4 left-1/3 h-80 w-[36rem] rounded-full bg-secondary/10 -z-10"></div>
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-2 gap-16 items-center">
+      <div data-stagger>
+        <p class="reveal label text-xs text-secondary mb-4">03 · Your people with you</p>
+        <h2 class="clip text-4xl sm:text-5xl font-extrabold tracking-tight">The WOD is better<br/>when everyone does it.</h2>
+        <p class="reveal mt-6 text-lg text-ink2 leading-relaxed max-w-lg">
+          This sport is community — the box whiteboard is its ritual. If someone shares a WOD with
+          you via a link, when you finish it you see who else did it and with what mark.
+        </p>
+        <p class="reveal mt-4 text-[15px] text-ink3 leading-relaxed max-w-lg">
+          <span class="text-secondary font-semibold">The box whiteboard, on your phone.</span> Not a
+          ranking of strangers: the people you train with. Social, always free.
+        </p>
+        <div class="reveal mt-8 flex flex-wrap gap-2.5">
+          <span class="pill px-4 py-2 text-sm">Share cards</span>
+          <span class="pill px-4 py-2 text-sm" style="border-color:rgba(0,224,255,.35);color:#00E0FF;">The Whiteboard</span>
         </div>
+      </div>
+      <div class="reveal relative mx-auto w-full max-w-[300px]">
+        <div class="glow absolute inset-0 -z-10 rounded-full bg-secondary/12"></div>
+        <div class="phone"><img src="assets/captures/en/cap-pizarra.png" alt="The Whiteboard: who at your box did today's WOD and with what mark" loading="lazy" /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PARA TU BOX ===== -->
+  <section id="box" class="relative py-24 sm:py-28 border-t border-border overflow-hidden">
+    <div class="grid-bg absolute inset-0 -z-10 opacity-60"></div>
+    <div class="mx-auto max-w-5xl px-5 sm:px-8">
+      <div class="max-w-2xl mb-14" data-stagger>
+        <p class="reveal label text-xs text-primary mb-4">For coaches &amp; boxes</p>
+        <h2 class="clip text-4xl sm:text-5xl font-extrabold tracking-tight">Programming for a box?<br/>Aura hands out your WOD.</h2>
+        <p class="reveal mt-6 text-lg text-ink2 leading-relaxed">
+          Share the day's WOD in the box WhatsApp. Each athlete imports it with a tap,
+          trains and logs it. You keep programming; Aura does the rest.
+        </p>
+      </div>
+      <div data-stagger class="grid md:grid-cols-3 gap-6">
+        <div class="reveal tile p-7">
+          <span class="font-mono font-extrabold text-6xl text-surface2">01</span>
+          <h3 class="text-lg font-bold mt-2 mb-2">You share the link</h3>
+          <p class="text-ink2 text-[15px] leading-relaxed">Paste the day's WOD in the box group. One link.</p>
+        </div>
+        <div class="reveal tile p-7">
+          <span class="font-mono font-extrabold text-6xl text-surface2">02</span>
+          <h3 class="text-lg font-bold mt-2 mb-2">Each athlete imports</h3>
+          <p class="text-ink2 text-[15px] leading-relaxed">One tap and they've got it: timers, movements and log.</p>
+        </div>
+        <div class="reveal tile p-7">
+          <span class="font-mono font-extrabold text-6xl text-primary/30">03</span>
+          <h3 class="text-lg font-bold mt-2 mb-2">They train and show up</h3>
+          <p class="text-ink2 text-[15px] leading-relaxed">Their marks gather on the WOD whiteboard. The box's, gone digital.</p>
+        </div>
+      </div>
+      <div class="mt-10">
+        <a href="mailto:info@pampaiter.com?subject=Aura%20para%20mi%20box" class="btn-ghost cursor-pointer inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold">
+          Got a box? Get in touch →
+        </a>
       </div>
     </div>
   </section>
 
   <!-- ===== SHOWCASE ===== -->
-  <section class="relative py-24 sm:py-28 overflow-hidden">
+  <section class="relative py-24 sm:py-28 overflow-hidden border-t border-border">
     <div class="glow absolute top-1/3 left-1/2 -translate-x-1/2 h-80 w-[40rem] rounded-full bg-primary/8 -z-10"></div>
     <div class="mx-auto max-w-7xl px-5 sm:px-8">
       <div class="text-center max-w-2xl mx-auto mb-16">
-        <p class="reveal label text-xs text-primary mb-4">Inside the app</p>
-        <h2 class="clip text-4xl sm:text-5xl font-extrabold tracking-tight">Built dark. Built fast.<br/>Built to be used at 6am.</h2>
-        <p class="reveal mt-5 text-lg text-ink2">From Sunday's plan to the post-session review — the whole training loop, in your pocket.</p>
+        <p class="reveal label text-xs text-primary mb-4">Inside</p>
+        <h2 class="clip text-4xl sm:text-5xl font-extrabold tracking-tight">Built dark. Built fast.<br/>Built for 6am.</h2>
+        <p class="reveal mt-5 text-lg text-ink2">From today's WOD to the session review — your whole training, in your pocket.</p>
       </div>
       <div data-stagger class="flex flex-wrap items-start justify-center gap-x-6 gap-y-12">
         <figure class="reveal w-[44%] sm:w-[160px] md:w-[176px] xl:w-[198px] xl:-translate-y-6">
-          <div class="phone"><img src="assets/captures/en/cap-planning.png" alt="Aura weekly plan: a structured week of strength and endurance sessions" loading="lazy" /></div>
-          <figcaption class="label text-[11px] text-ink3 text-center mt-5">Planning</figcaption>
+          <div class="phone"><img src="assets/captures/en/cap-pulse.png" alt="Pulse — daily home" loading="lazy" /></div>
+          <figcaption class="label text-[11px] text-ink3 text-center mt-5">Pulse</figcaption>
         </figure>
         <figure class="reveal w-[44%] sm:w-[160px] md:w-[176px] xl:w-[198px] xl:translate-y-1">
-          <div class="phone"><img src="assets/captures/en/cap-newsession.png" alt="Aura new session screen: generate with AI or import from a photo" loading="lazy" /></div>
+          <div class="phone"><img src="assets/captures/en/cap-newsession.png" alt="New session — import or generate" loading="lazy" /></div>
           <figcaption class="label text-[11px] text-ink3 text-center mt-5">New session</figcaption>
         </figure>
         <figure class="reveal w-[44%] sm:w-[160px] md:w-[176px] xl:w-[210px] xl:-translate-y-9 xl:scale-[1.04]">
-          <div class="phone"><img src="assets/captures/en/cap-coach.png" alt="Aura live workout timer running a Hyrox simulation chipper" loading="lazy" /></div>
-          <figcaption class="label text-[11px] text-ink3 text-center mt-5">Live session</figcaption>
+          <div class="phone"><img src="assets/captures/en/cap-coach.png" alt="Live session — timer" loading="lazy" /></div>
+          <figcaption class="label text-[11px] text-ink3 text-center mt-5">Live</figcaption>
         </figure>
         <figure class="reveal w-[44%] sm:w-[160px] md:w-[176px] xl:w-[198px] xl:translate-y-1">
-          <div class="phone"><img src="assets/captures/en/cap-log.png" alt="Aura training log with weekly tonnage, training mix and sessions per week" loading="lazy" /></div>
-          <figcaption class="label text-[11px] text-ink3 text-center mt-5">Training Log</figcaption>
+          <div class="phone"><img src="assets/captures/en/cap-planning.png" alt="Plan — week" loading="lazy" /></div>
+          <figcaption class="label text-[11px] text-ink3 text-center mt-5">Plan · Pro</figcaption>
         </figure>
         <figure class="reveal w-[44%] sm:w-[160px] md:w-[176px] xl:w-[198px] xl:-translate-y-6">
-          <div class="phone"><img src="assets/captures/en/cap-insights.png" alt="Aura post-session AI review highlighting a new PR, a watch-out and a volume trend" loading="lazy" /></div>
-          <figcaption class="label text-[11px] text-ink3 text-center mt-5">Session review</figcaption>
+          <div class="phone"><img src="assets/captures/en/cap-insights.png" alt="Session review — AI analysis" loading="lazy" /></div>
+          <figcaption class="label text-[11px] text-ink3 text-center mt-5">Review</figcaption>
         </figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== MANIFESTO ===== -->
-  <section class="relative py-28 sm:py-36 overflow-hidden border-t border-border">
-    <div class="grid-bg absolute inset-0 -z-10 opacity-60"></div>
-    <div class="mx-auto max-w-5xl px-5 sm:px-8 text-center">
-      <p class="reveal label text-xs text-primary mb-8">No blank pages</p>
-      <h2 class="clip font-mono font-extrabold text-3xl sm:text-5xl lg:text-6xl leading-[1.08] tracking-tight">
-        Every Sunday, while you sleep,<br/><span class="text-primary">your week gets written.</span>
-      </h2>
-      <p class="reveal mx-auto mt-8 max-w-xl text-lg text-ink2">
-        No more staring at a blank training log. Aura turns your history into your future —
-        one adaptive week at a time.
-      </p>
-      <a href="#download" class="reveal btn-primary cursor-pointer inline-block mt-10 rounded-full px-7 py-3.5 text-sm label">Download</a>
-    </div>
-  </section>
-
-  <!-- ===== HOW IT WORKS ===== -->
-  <section id="how" class="relative py-24 sm:py-32 border-t border-border">
-    <div class="mx-auto max-w-7xl px-5 sm:px-8">
-      <div class="max-w-2xl mb-16">
-        <p class="reveal label text-xs text-primary mb-4">How it works</p>
-        <h2 class="clip text-4xl sm:text-5xl font-extrabold tracking-tight">Three steps.<br/>Then it runs itself.</h2>
-      </div>
-      <div data-stagger class="grid md:grid-cols-3 gap-6">
-        <div class="reveal">
-          <span class="font-mono font-extrabold text-7xl text-surface2">01</span>
-          <h3 class="text-xl font-bold mt-2 mb-2">Log or scan</h3>
-          <p class="text-ink2 leading-relaxed">Snap a photo of your whiteboard or log your sets in seconds. Aura digitizes everything.</p>
-        </div>
-        <div class="reveal">
-          <span class="font-mono font-extrabold text-7xl text-surface2">02</span>
-          <h3 class="text-xl font-bold mt-2 mb-2">Aura learns</h3>
-          <p class="text-ink2 leading-relaxed">Every session feeds your movement progressions, recovery and weak points.</p>
-        </div>
-        <div class="reveal">
-          <span class="font-mono font-extrabold text-7xl text-primary/30">03</span>
-          <h3 class="text-xl font-bold mt-2 mb-2">Plan delivered</h3>
-          <p class="text-ink2 leading-relaxed">Every Sunday your AI coach writes the week ahead — adapted to exactly where you are.</p>
-        </div>
       </div>
     </div>
   </section>
@@ -442,51 +431,54 @@
     <div class="mx-auto max-w-7xl px-5 sm:px-8">
       <div class="text-center max-w-2xl mx-auto mb-14">
         <p class="reveal label text-xs text-primary mb-4">Pricing</p>
-        <h2 class="clip text-4xl sm:text-5xl font-extrabold tracking-tight">Start free.<br/>Upgrade when you're hooked.</h2>
-        <p class="reveal mt-5 text-lg text-ink2">PRO comes with a 7-day free trial. Cancel anytime.</p>
+        <h2 class="clip text-4xl sm:text-5xl font-extrabold tracking-tight">Start free.</h2>
+        <p class="reveal mt-5 text-lg text-ink2">Social, always free. Pro includes a 7-day trial. Cancel anytime.</p>
       </div>
       <div data-stagger class="grid lg:grid-cols-3 gap-5 max-w-5xl mx-auto items-start">
         <!-- FREE -->
         <div class="reveal tile rounded-3xl p-8">
           <p class="label text-xs text-ink3">Free</p>
+          <p class="text-sm text-ink mt-2 font-semibold">The full log + your people</p>
           <p class="mt-4 font-mono font-extrabold text-5xl">€0</p>
           <p class="text-ink3 text-sm mt-1">forever</p>
           <ul class="mt-8 space-y-3.5 text-[15px]">
-            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Workout logging &amp; history</li>
-            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>8 imports / month</li>
-            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>8 AI workouts / month</li>
-            <li class="flex gap-3 text-ink3"><svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>AI insights</li>
+            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Unlimited log &amp; history</li>
+            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Photo import (8/mo)</li>
+            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-secondary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Receive &amp; share WODs</li>
+            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-secondary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>The Whiteboard + share cards</li>
+            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>PRs &amp; tonnage</li>
           </ul>
-          <a href="#download" class="btn-ghost cursor-pointer mt-9 block text-center rounded-full px-5 py-3 text-sm font-semibold">Get started</a>
-        </div>
-        <!-- PRO -->
-        <div class="reveal relative rounded-3xl p-8 bg-gradient-to-b from-[#1d2200] to-[#141600] border border-primary/40 lg:-translate-y-3" style="box-shadow:0 0 60px -20px rgba(204,255,0,.35);">
-          <span class="absolute -top-3 left-1/2 -translate-x-1/2 label text-[10px] bg-primary text-bg px-3 py-1 rounded-full">Most popular</span>
-          <p class="label text-xs text-primary">Pro</p>
-          <p class="mt-4 font-mono font-extrabold text-5xl">€12.99<span class="text-xl text-ink3 font-bold">/mo</span></p>
-          <p class="text-primary text-sm mt-1">7 days free</p>
-          <p class="text-ink3 text-xs mt-1">or €89.99/year · <span class="text-primary">save ~42%</span></p>
-          <ul class="mt-8 space-y-3.5 text-[15px]">
-            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="font-semibold">Weekly AI training plans</span></li>
-            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>6-week adaptive mesocycles</li>
-            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>150 imports &amp; AI workouts / month</li>
-            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>AI insights + 2M tokens / month</li>
-          </ul>
-          <a href="#download" class="btn-primary cursor-pointer mt-9 block text-center rounded-full px-5 py-3 text-sm label">Start 7-day free trial</a>
+          <a href="#download" class="btn-ghost cursor-pointer mt-9 block text-center rounded-full px-5 py-3 text-sm font-semibold">Start free</a>
         </div>
         <!-- PLUS -->
         <div class="reveal tile rounded-3xl p-8">
           <p class="label text-xs text-secondary">Plus</p>
+          <p class="text-sm text-ink mt-2 font-semibold">Your coach gets you</p>
           <p class="mt-4 font-mono font-extrabold text-5xl">€4.99<span class="text-xl text-ink3 font-bold">/mo</span></p>
-          <p class="text-ink3 text-sm mt-1">billed monthly</p>
-          <p class="text-ink3 text-xs mt-1">or €34.99/year · <span class="text-secondary">save ~42%</span></p>
+          <p class="text-ink3 text-xs mt-1">or €34.99/yr · <span class="text-secondary">save ~42%</span></p>
           <ul class="mt-8 space-y-3.5 text-[15px]">
             <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Everything in Free</li>
-            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>80 imports / month</li>
-            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>80 AI workouts / month</li>
-            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>AI insights + 1M tokens / month</li>
+            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Daily coach line</li>
+            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Insights after each session</li>
+            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Recap + smart push</li>
+            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>80 imports/mo</li>
           </ul>
           <a href="#download" class="btn-ghost cursor-pointer mt-9 block text-center rounded-full px-5 py-3 text-sm font-semibold">Choose Plus</a>
+        </div>
+        <!-- PRO -->
+        <div class="reveal tile rounded-3xl p-8">
+          <p class="label text-xs text-primary">Pro</p>
+          <p class="text-sm text-ink mt-2 font-semibold">Your coach programs you</p>
+          <p class="mt-4 font-mono font-extrabold text-5xl">€12.99<span class="text-xl text-ink3 font-bold">/mo</span></p>
+          <p class="text-primary text-sm mt-1">7 days free</p>
+          <p class="text-ink3 text-xs mt-1">or €89.99/yr · <span class="text-primary">save ~42%</span></p>
+          <ul class="mt-8 space-y-3.5 text-[15px]">
+            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Everything in Plus</li>
+            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="font-semibold">Weekly AI plan</span></li>
+            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Adaptive periodization</li>
+            <li class="flex gap-3"><svg viewBox="0 0 24 24" class="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>150 imports/mo</li>
+          </ul>
+          <a href="#download" class="btn-primary cursor-pointer mt-9 block text-center rounded-full px-5 py-3 text-sm label">Try 7 days free</a>
         </div>
       </div>
     </div>
@@ -499,11 +491,9 @@
       <div class="reveal rounded-[2rem] border border-border bg-gradient-to-b from-surface to-[#121212] p-8 sm:p-14">
         <p class="label text-xs text-primary mb-5">Download</p>
         <h2 class="text-4xl sm:text-5xl font-extrabold tracking-tight">Get Aura.</h2>
-        <p class="mt-5 text-lg text-ink2 max-w-md mx-auto">
-          Available now on Android and iOS.
-        </p>
+        <p class="mt-5 text-lg text-ink2 max-w-md mx-auto">Free on Android and iOS. Your next WOD, in seconds.</p>
         <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
-          <a href="https://play.google.com/store/apps/details?id=com.pampa.aura" target="_blank" rel="noopener" data-store="android" class="cursor-pointer flex items-center gap-3 rounded-xl border border-border bg-surface hover:bg-surface2 transition-colors px-5 py-3">
+          <a href="https://play.google.com/store/apps/details?id=com.pampa.aura" target="_blank" rel="noopener" class="cursor-pointer flex items-center gap-3 rounded-xl border border-border bg-surface hover:bg-surface2 transition-colors px-5 py-3">
             <svg viewBox="0 0 24 24" class="h-7 w-7" aria-hidden="true">
               <path d="M3.6 2.2c-.3.2-.5.6-.5 1.1v17.4c0 .5.2.9.5 1.1l9.3-9.8L3.6 2.2z" fill="#00E0FF"/>
               <path d="M16.5 8.6 12.9 12l3.6 3.4 4.3-2.4c.7-.4.7-1.6 0-2L16.5 8.6z" fill="#CCFF00"/>
@@ -512,7 +502,7 @@
             </svg>
             <span class="text-left leading-tight"><span class="block text-[10px] text-ink3">Get it on</span><span class="block text-sm font-semibold text-ink">Google Play</span></span>
           </a>
-          <a href="https://apps.apple.com/us/app/aura-ai-training-coach/id6773849897" target="_blank" rel="noopener" data-store="ios" class="cursor-pointer flex items-center gap-3 rounded-xl border border-border bg-surface hover:bg-surface2 transition-colors px-5 py-3">
+          <a href="https://apps.apple.com/us/app/aura-ai-training-coach/id6773849897" target="_blank" rel="noopener" class="cursor-pointer flex items-center gap-3 rounded-xl border border-border bg-surface hover:bg-surface2 transition-colors px-5 py-3">
             <svg viewBox="0 0 24 24" class="h-7 w-7 fill-ink" aria-hidden="true"><path d="M17.05 12.04c-.03-2.5 2.04-3.7 2.13-3.76-1.16-1.7-2.97-1.93-3.61-1.96-1.54-.16-3 .9-3.78.9-.78 0-1.98-.88-3.25-.86-1.67.03-3.21.97-4.07 2.46-1.73 3-.44 7.46 1.25 9.9.82 1.2 1.8 2.54 3.08 2.49 1.24-.05 1.71-.8 3.21-.8 1.5 0 1.92.8 3.23.78 1.33-.03 2.18-1.22 3-2.42.94-1.39 1.33-2.73 1.35-2.8-.03-.01-2.59-1-2.62-3.93zM14.6 4.8c.69-.83 1.15-1.99 1.02-3.14-.99.04-2.18.66-2.89 1.49-.64.73-1.2 1.9-1.05 3.02 1.1.09 2.23-.56 2.92-1.37z"/></svg>
             <span class="text-left leading-tight"><span class="block text-[10px] text-ink3">Download on the</span><span class="block text-sm font-semibold text-ink">App Store</span></span>
           </a>
@@ -530,12 +520,11 @@
           <span class="font-mono font-extrabold tracking-[0.18em] text-[15px]">AURA</span>
         </a>
         <div class="flex flex-wrap items-center justify-center gap-x-7 gap-y-2 text-sm text-ink2">
-          <a href="#features" class="hover:text-ink transition-colors">Features</a>
+          <a href="#importar" class="hover:text-ink transition-colors">Import</a>
           <a href="#pricing" class="hover:text-ink transition-colors">Pricing</a>
           <a href="terms.html" class="hover:text-ink transition-colors">Terms</a>
           <a href="privacy.html" class="hover:text-ink transition-colors">Privacy</a>
           <a href="support.html" class="hover:text-ink transition-colors">Support</a>
-          <a href="delete-account.html" class="hover:text-ink transition-colors">Delete account</a>
           <a href="legal.html" class="hover:text-ink transition-colors">Legal notice</a>
           <a href="mailto:info@pampaiter.com" class="hover:text-ink transition-colors">Contact</a>
         </div>
@@ -551,7 +540,6 @@
     (function () {
       var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      /* ---- Scroll progress ---- */
       var bar = document.getElementById('progress');
       if (bar && !reduce) {
         var ticking = false;
@@ -566,39 +554,19 @@
         }, { passive: true });
       }
 
-      /* ---- Reveal + stagger + count-up (scroll-based, bulletproof) ---- */
       document.querySelectorAll('[data-stagger]').forEach(function (g) {
         g.querySelectorAll('.reveal').forEach(function (el, i) { el.style.transitionDelay = (i * 70) + 'ms'; });
       });
 
-      function runCount(el) {
-        var target = parseInt(el.getAttribute('data-count'), 10);
-        if (reduce) { el.textContent = target; return; }
-        var dur = 1300, start = null;
-        function step(ts) {
-          if (!start) start = ts;
-          var p = Math.min((ts - start) / dur, 1);
-          el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * target);
-          if (p < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      }
-
       var animated = Array.prototype.slice.call(document.querySelectorAll('.reveal, .clip'));
-      var counters = Array.prototype.slice.call(document.querySelectorAll('[data-count]'));
 
       if (reduce) {
         animated.forEach(function (el) { el.classList.add('in'); });
-        counters.forEach(runCount);
       } else {
         var check = function () {
           var vh = window.innerHeight;
           animated = animated.filter(function (el) {
             if (el.getBoundingClientRect().top < vh * 0.88) { el.classList.add('in'); return false; }
-            return true;
-          });
-          counters = counters.filter(function (el) {
-            if (el.getBoundingClientRect().top < vh * 0.85) { runCount(el); return false; }
             return true;
           });
         };
@@ -608,13 +576,13 @@
         window.addEventListener('resize', check);
       }
 
-      /* ---- Typewriter (coach) ---- */
+      /* ---- Coach line typewriter ---- */
       var tw = document.querySelector('[data-typewriter]');
       if (tw) {
         var lines = [
-          "Today: full body. You're well rested — push the squat.",
-          "Deload week. Volume down 30%. Trust the process.",
-          "New deadlift PR logged. Next block adapts automatically."
+          "Today you added +5 kg on Power Clean. Clean PR.",
+          "Deload week. Drop the volume, trust it.",
+          "3 sessions this week. Looking sharp."
         ];
         if (reduce) {
           tw.textContent = lines[0];
@@ -635,18 +603,6 @@
         }
       }
 
-      /* ---- Cursor spotlight on bento ---- */
-      var spot = document.querySelector('[data-spotlight]');
-      if (spot && !reduce && window.matchMedia('(pointer:fine)').matches) {
-        spot.addEventListener('pointermove', function (e) {
-          spot.querySelectorAll('.tile').forEach(function (t) {
-            var r = t.getBoundingClientRect();
-            t.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-            t.style.setProperty('--my', (e.clientY - r.top) + 'px');
-          });
-        });
-      }
-
       /* ---- Hero phone tilt ---- */
       var tilt = document.querySelector('[data-tilt]');
       if (tilt && !reduce && window.matchMedia('(pointer:fine)').matches) {
@@ -659,34 +615,6 @@
         });
         wrap.addEventListener('pointerleave', function () { tilt.style.transform = 'rotateY(0) rotateX(0)'; });
       }
-
-      /* ---- Waitlist form ---- */
-      var form = document.getElementById('waitlist-form');
-      var msg = document.getElementById('form-msg');
-      var input = document.getElementById('email');
-      // 👉 Create a free form at https://formspree.io and paste the endpoint here to collect emails.
-      var ENDPOINT = null;
-      function valid(x) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(x); }
-      if (form) form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var email = input.value.trim();
-        if (!valid(email)) {
-          msg.textContent = 'Please enter a valid email.';
-          msg.className = 'mt-4 text-sm h-5 text-[#FF6B6B]';
-          input.focus(); return;
-        }
-        function success() {
-          form.style.display = 'none';
-          msg.textContent = "You're on the list. We'll be in touch soon.";
-          msg.className = 'mt-4 text-sm h-5 text-primary font-semibold';
-        }
-        if (ENDPOINT) {
-          msg.textContent = 'Sending…'; msg.className = 'mt-4 text-sm h-5 text-ink2';
-          fetch(ENDPOINT, { method:'POST', headers:{'Accept':'application/json','Content-Type':'application/json'}, body:JSON.stringify({ email: email }) })
-            .then(function (r) { if (r.ok) success(); else throw new Error(); })
-            .catch(function () { msg.textContent = 'Something went wrong. Email info@pampaiter.com'; msg.className = 'mt-4 text-sm h-5 text-[#FF6B6B]'; });
-        } else { success(); }
-      });
     })();
   </script>
 </body>
