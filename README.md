@@ -31,6 +31,21 @@ Screenshots are localized: `assets/captures/*.png` (Spanish app UI) feed `index.
 `WEB_HANDOFF.md` and the `appstore-*` files are internal tooling and are
 **excluded from the repo** via `.gitignore`.
 
+## Capturas de tienda (App Store / Play)
+
+`appstore-build.py` (gitignored) genera las capturas compuestas de tienda
+**a partir de `assets/captures/`** — las mismas que muestra la web, así que
+tienda y web nunca se desincronizan. Salida en `~/Downloads/aura-screenshots/`:
+7 pantallas × ES/EN × 4 formatos (6.9" 1320×2868 · 6.5" 1242×2688 ·
+6.3" 1206×2622 · iPad 13" 2048×2732) = 56 PNGs.
+
+```bash
+python3 appstore-build.py
+```
+
+El orden y los titulares siguen el relato de la landing: hoy → importar →
+entrenar → progreso → la pizarra → tu coach → planning (Pro, al final).
+
 ## App deeplinks (`/share/<token>`)
 
 `.well-known/` holds the Android + iOS verification files that let share links
