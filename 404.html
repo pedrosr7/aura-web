@@ -93,9 +93,32 @@
     .foot { margin-top: 30px; font-size: 12px; color: var(--muted); }
     .foot a { color: var(--muted); }
     [hidden] { display: none !important; }
+    /* Fixed, so it stays out of the centred flex body instead of becoming a
+       sibling of the card. The body pads itself only while the bar is up. */
+    .appbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .appbar img { width: 28px; height: 28px; border-radius: 8px; flex: none; }
+    .appbar .txt { flex: 1; text-align: left; font-size: 13px; line-height: 1.3; }
+    .appbar a.open {
+      flex: none; background: var(--neon); color: var(--bg);
+      font-weight: 600; font-size: 13px; text-decoration: none;
+      padding: 8px 18px; border-radius: 10px;
+    }
+    body.has-appbar { padding-top: 78px; }
   </style>
 </head>
 <body>
+  <div class="appbar" id="appbar" hidden>
+    <img src="/assets/aura_icon.png" alt="" />
+    <span class="txt" id="appbar-txt"></span>
+    <a class="open" href="#" id="appbar-open"></a>
+  </div>
+
   <div class="card">
     <img class="logo" src="/assets/aura_icon.png" alt="Aura" />
 
@@ -106,7 +129,6 @@
       <p class="sub" id="s-sub">Instala Aura para añadirlo a tu semana. ¿Ya la tienes? Ábrela y pega este código en Nueva sesión.</p>
 
       <div class="stores">
-        <a class="btn btn-primary" id="s-open-app" href="#" hidden></a>
         <a class="btn btn-primary" id="s-store-primary" href="#"></a>
         <a class="btn btn-ghost" id="s-store-secondary" href="#"></a>
       </div>
@@ -137,6 +159,11 @@
 
   <script>
     (function () {
+      // OFF until the release carrying the aura:// scheme is live in BOTH
+      // stores. Flipped on its own, with no other change: until then the bar
+      // would send people to a scheme no installed app answers.
+      var APP_SCHEME_LIVE = false;
+
       var IOS_URL = "https://apps.apple.com/us/app/aura-ai-training-coach/id6773849897";
       var ANDROID_URL = "https://play.google.com/store/apps/details?id=com.pampa.aura";
 
@@ -152,8 +179,7 @@
         sub: "Instala Aura para añadirlo a tu semana. ¿Ya la tienes? Ábrela y pega este código en Nueva sesión.",
         codeHint: "Tu código de entrenamiento — pégalo en Aura → Nueva sesión → “¿Te compartieron un entrenamiento?”",
         copy: "Copiar", copied: "Copiado ✓",
-        openApp: "Abrir en Aura",
-        subWithApp: "¿Ya tienes Aura? Ábrela con el botón. Si no, instálala para añadir el entrenamiento a tu semana.",
+        barText: "¿Ya tienes Aura?", barOpen: "Abrir",
         appStore: "Descargar en App Store", playStore: "Descargar en Google Play",
         nfTitle: "Página no encontrada", nfSub: "La página que buscas no existe.", nfHome: "Ir al inicio"
       } : {
@@ -162,8 +188,7 @@
         sub: "Install Aura to add it to your week. Already have it? Open it and paste this code in New session.",
         codeHint: "Your workout code — paste it in Aura → New session → “Got a shared workout?”",
         copy: "Copy", copied: "Copied ✓",
-        openApp: "Open in Aura",
-        subWithApp: "Already have Aura? Open it with the button. If not, install it to add the workout to your week.",
+        barText: "Already have Aura?", barOpen: "Open",
         appStore: "Download on the App Store", playStore: "Get it on Google Play",
         nfTitle: "Page not found", nfSub: "The page you're looking for doesn't exist.", nfHome: "Go home"
       };
@@ -200,19 +225,20 @@
         primary.href = first.url; primary.textContent = first.text;
         secondary.href = second.url; secondary.textContent = second.text;
 
-        // Embedded browsers (Instagram, WhatsApp) keep the https App Link to
-        // themselves, so the OS never gets it. A custom scheme is the only way
-        // out of the webview — and it has to be user-initiated, since a silent
-        // redirect just errors for anyone without the app.
-        if (isIOS || isAndroid) {
-          var openApp = document.getElementById("s-open-app");
-          openApp.href = "aura://share/" + token;
-          openApp.textContent = t.openApp;
-          openApp.hidden = false;
-          // Keep one primary action: with the app button up, the stores are
-          // the fallback for whoever doesn't have it yet.
-          primary.className = "btn btn-ghost";
-          document.getElementById("s-sub").textContent = t.subWithApp;
+        // Embedded browsers (Instagram, WhatsApp) keep the https link to
+        // themselves, so the OS never sees it and the Universal Link never
+        // fires. A custom scheme is the only way out of that webview, and it
+        // has to be user-initiated: a silent redirect errors for anyone
+        // without the app, which is most of this page's visitors. Hence a bar
+        // out of the page flow rather than a third button competing with the
+        // stores — the two answer different questions.
+        if (APP_SCHEME_LIVE && (isIOS || isAndroid)) {
+          document.getElementById("appbar-txt").textContent = t.barText;
+          var open = document.getElementById("appbar-open");
+          open.href = "aura://share/" + token;
+          open.textContent = t.barOpen;
+          document.getElementById("appbar").hidden = false;
+          document.body.classList.add("has-appbar");
         }
 
         document.getElementById("share").hidden = false;
