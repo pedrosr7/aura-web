@@ -12,6 +12,10 @@
           {
             "/": "/share/*",
             "comment": "Aura share-session import deeplink (V7)"
+          },
+          {
+            "/": "/team/*",
+            "comment": "Coach team invite: joins the coach's roster"
           }
         ]
       }

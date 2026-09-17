@@ -83,6 +83,8 @@
       color: var(--neon); background: #0A0A0A; border: 1px solid var(--border);
       border-radius: 10px; padding: 12px 14px; overflow-x: auto; white-space: nowrap;
     }
+    /* A whole link is too long for one line on a phone; a token is not. */
+    .code.wrap { white-space: normal; word-break: break-all; }
     button.copy {
       font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
       background: transparent; border: 1px solid var(--border); color: var(--fg);
@@ -142,6 +144,26 @@
       </div>
     </div>
 
+    <!-- ── Team landing (shown for /team/<token>) ────────────────────── -->
+    <div id="team" hidden>
+      <div class="label" id="t-label">Invitación de equipo</div>
+      <h1 id="t-title">Tu coach te invita a su equipo</h1>
+      <p class="sub" id="t-sub">Instala Aura y vuelve a abrir este link para unirte. ¿Ya la tienes? Ábrela y pega el link en Nueva sesión.</p>
+
+      <div class="stores">
+        <a class="btn btn-primary" id="t-store-primary" href="#"></a>
+        <a class="btn btn-ghost" id="t-store-secondary" href="#"></a>
+      </div>
+
+      <div class="code-box">
+        <div class="hint" id="t-code-hint">Tu link de equipo — pégalo en Aura → Nueva sesión → “Pegar un link compartido”</div>
+        <div class="code-row">
+          <span class="code wrap" id="t-code"></span>
+          <button class="copy" id="t-copy">Copiar</button>
+        </div>
+      </div>
+    </div>
+
     <!-- ── Generic 404 (any other unmatched path) ───────────────────── -->
     <div id="notfound" hidden>
       <div class="label">Error 404</div>
@@ -181,6 +203,10 @@
         copy: "Copiar", copied: "Copiado ✓",
         barText: "¿Ya tienes Aura?", barOpen: "Abrir",
         appStore: "Descargar en App Store", playStore: "Descargar en Google Play",
+        teamLabel: "Invitación de equipo",
+        teamTitle: "Tu coach te invita a su equipo",
+        teamSub: "Instala Aura y vuelve a abrir este link para unirte. ¿Ya la tienes? Ábrela y pega el link en Nueva sesión.",
+        teamCodeHint: "Tu link de equipo — pégalo en Aura → Nueva sesión → “Pegar un link compartido”",
         nfTitle: "Página no encontrada", nfSub: "La página que buscas no existe.", nfHome: "Ir al inicio"
       } : {
         label: "Shared workout",
@@ -190,12 +216,57 @@
         copy: "Copy", copied: "Copied ✓",
         barText: "Already have Aura?", barOpen: "Open",
         appStore: "Download on the App Store", playStore: "Get it on Google Play",
+        teamLabel: "Team invite",
+        teamTitle: "Your coach invited you to their team",
+        teamSub: "Install Aura, then open this link again to join. Already have it? Open it and paste the link in New session.",
+        teamCodeHint: "Your team link — paste it in Aura → New session → “Paste a shared link”",
         nfTitle: "Page not found", nfSub: "The page you're looking for doesn't exist.", nfHome: "Go home"
       };
 
-      // Extract a share token from /share/<token> (strip query/fragment).
+      function copyOnClick(buttonId, value) {
+        var button = document.getElementById(buttonId);
+        button.textContent = t.copy;
+        button.addEventListener("click", function () {
+          navigator.clipboard && navigator.clipboard.writeText(value).then(function () {
+            button.textContent = t.copied;
+            setTimeout(function () { button.textContent = t.copy; }, 2000);
+          });
+        });
+      }
+
+      // Emphasize the visitor's own platform store first.
+      function fillStores(primaryId, secondaryId) {
+        var primary = document.getElementById(primaryId);
+        var secondary = document.getElementById(secondaryId);
+        var appStore = { url: IOS_URL, text: t.appStore };
+        var playStore = { url: ANDROID_URL, text: t.playStore };
+        var first = isAndroid ? playStore : appStore;
+        var second = isAndroid ? appStore : playStore;
+        primary.href = first.url; primary.textContent = first.text;
+        secondary.href = second.url; secondary.textContent = second.text;
+      }
+
+      // Embedded browsers (Instagram, WhatsApp) keep the https link to
+      // themselves, so the OS never sees it and the Universal Link never
+      // fires. A custom scheme is the only way out of that webview, and it
+      // has to be user-initiated: a silent redirect errors for anyone
+      // without the app, which is most of this page's visitors. Hence a bar
+      // out of the page flow rather than a third button competing with the
+      // stores — the two answer different questions.
+      function showAppBar(schemeUrl) {
+        if (!APP_SCHEME_LIVE || !(isIOS || isAndroid)) return;
+        document.getElementById("appbar-txt").textContent = t.barText;
+        var open = document.getElementById("appbar-open");
+        open.href = schemeUrl;
+        open.textContent = t.barOpen;
+        document.getElementById("appbar").hidden = false;
+        document.body.classList.add("has-appbar");
+      }
+
+      // Extract a share or team token from its path (strip query/fragment).
       var path = location.pathname || "";
       var m = path.match(/\/share\/([A-Za-z0-9_-]{8,})/);
+      var team = path.match(/\/team\/([A-Za-z0-9_-]{8,})/);
 
       if (m) {
         var token = m[1];
@@ -205,43 +276,24 @@
         document.getElementById("s-sub").textContent = t.sub;
         document.getElementById("s-code-hint").textContent = t.codeHint;
         document.getElementById("s-code").textContent = token;
-
-        var copyBtn = document.getElementById("s-copy");
-        copyBtn.textContent = t.copy;
-        copyBtn.addEventListener("click", function () {
-          navigator.clipboard && navigator.clipboard.writeText(token).then(function () {
-            copyBtn.textContent = t.copied;
-            setTimeout(function () { copyBtn.textContent = t.copy; }, 2000);
-          });
-        });
-
-        // Emphasize the visitor's own platform store first.
-        var primary = document.getElementById("s-store-primary");
-        var secondary = document.getElementById("s-store-secondary");
-        var appStore = { url: IOS_URL, text: t.appStore };
-        var playStore = { url: ANDROID_URL, text: t.playStore };
-        var first = isAndroid ? playStore : appStore;
-        var second = isAndroid ? appStore : playStore;
-        primary.href = first.url; primary.textContent = first.text;
-        secondary.href = second.url; secondary.textContent = second.text;
-
-        // Embedded browsers (Instagram, WhatsApp) keep the https link to
-        // themselves, so the OS never sees it and the Universal Link never
-        // fires. A custom scheme is the only way out of that webview, and it
-        // has to be user-initiated: a silent redirect errors for anyone
-        // without the app, which is most of this page's visitors. Hence a bar
-        // out of the page flow rather than a third button competing with the
-        // stores — the two answer different questions.
-        if (APP_SCHEME_LIVE && (isIOS || isAndroid)) {
-          document.getElementById("appbar-txt").textContent = t.barText;
-          var open = document.getElementById("appbar-open");
-          open.href = "aura://share/" + token;
-          open.textContent = t.barOpen;
-          document.getElementById("appbar").hidden = false;
-          document.body.classList.add("has-appbar");
-        }
-
+        copyOnClick("s-copy", token);
+        fillStores("s-store-primary", "s-store-secondary");
+        showAppBar("aura://share/" + token);
         document.getElementById("share").hidden = false;
+      } else if (team) {
+        var teamToken = team[1];
+        document.documentElement.lang = isEs ? "es" : "en";
+        document.getElementById("t-label").textContent = t.teamLabel;
+        document.getElementById("t-title").textContent = t.teamTitle;
+        document.getElementById("t-sub").textContent = t.teamSub;
+        document.getElementById("t-code-hint").textContent = t.teamCodeHint;
+        document.getElementById("t-code").textContent = "aura.pampaiter.com/team/" + teamToken;
+        // The whole link, not the token: the app reads a bare token as a
+        // shared workout, so only the /team/ path makes it a team invite.
+        copyOnClick("t-copy", "https://aura.pampaiter.com/team/" + teamToken);
+        fillStores("t-store-primary", "t-store-secondary");
+        showAppBar("aura://team/" + teamToken);
+        document.getElementById("team").hidden = false;
       } else {
         document.getElementById("nf-title").textContent = t.nfTitle;
         document.getElementById("nf-sub").textContent = t.nfSub;
