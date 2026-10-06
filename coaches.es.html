@@ -28,7 +28,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -41,7 +41,7 @@
             ink3:'#7C7C7C', success:'#00FF66',
           },
           fontFamily: {
-            sans: ['Inter','system-ui','sans-serif'],
+            sans: ['-apple-system','BlinkMacSystemFont','"Segoe UI"','Roboto','"Helvetica Neue"','Arial','sans-serif'],
             mono: ['"JetBrains Mono"','ui-monospace','monospace'],
           },
         },
@@ -50,260 +50,343 @@
   </script>
 
   <style>
-    :root { color-scheme: dark; }
+    /* --h1-fit: the longest headline line in mono characters, so each line fits on one row at any width. */
+    :root { color-scheme: dark; --h1-fit: 11.4; --ease: cubic-bezier(.2,.7,.2,1); }
     html { scroll-behavior: smooth; }
     body { background:#0E0E0E; }
+    section[id] { scroll-margin-top:84px; }
     .label { font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.22em; font-weight:600; }
-    .grain::after {
-      content:""; position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.035;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    .wrap { max-width:1120px; margin:0 auto; padding:0 20px; }
+    .narrow { max-width:720px; }
+    .eyebrow { font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:#9A9A9A; }
+    .h1, .h2 { font-family:'JetBrains Mono',monospace; font-weight:800; color:#ECECEC; }
+    .h1 { margin-top:18px; font-size:clamp(22px, calc((100vw - 40px) / var(--h1-fit)), 76px); line-height:1.08; letter-spacing:-.02em; }
+    .h1 > span { display:block; }
+    .h2 { margin-top:14px; font-size:clamp(24px, 3.6vw, 44px); line-height:1.15; letter-spacing:-.015em; }
+    .lede { margin:20px auto 0; max-width:32ch; font-size:clamp(17px, 1.5vw, 20px); line-height:1.5; color:#9A9A9A; }
+    .fine { margin-top:14px; font-size:14px; color:#9A9A9A; }
+    .micro { margin-top:8px; font-size:12px; color:#7C7C7C; }
+    .u { color:#ECECEC; text-decoration:underline; text-underline-offset:3px; text-decoration-color:#5A5A5A; }
+    .u:hover { text-decoration-color:#ECECEC; }
+
+    .nav-wrap { position:fixed; top:0; left:0; right:0; z-index:50; padding:12px 16px 0; }
+    .nav { max-width:1120px; margin:0 auto; height:56px; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:0 10px 0 12px; border-radius:18px; border:1px solid rgba(255,255,255,.08); background:rgba(14,14,14,.72); -webkit-backdrop-filter:saturate(180%) blur(20px); backdrop-filter:saturate(180%) blur(20px); }
+    .nav-logo { display:flex; align-items:center; gap:10px; font-family:'JetBrains Mono',monospace; font-weight:800; font-size:15px; letter-spacing:.18em; }
+    .nav-logo span { display:none; }
+    .nav-links { display:none; gap:28px; font-size:14px; color:#9A9A9A; }
+    .nav-links a:hover, .lang a:hover { color:#ECECEC; }
+    .nav-end { display:flex; align-items:center; gap:14px; }
+    .lang { display:flex; gap:6px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; letter-spacing:.2em; color:#7C7C7C; }
+    .lang [aria-current] { color:#ECECEC; }
+    /* One neon thing per screen: the bar's button lights up only while no other start button is in view. */
+    .nav-cta { display:inline-flex; align-items:center; height:36px; padding:0 16px; border-radius:999px; border:1px solid #3A3A3A; color:#ECECEC; font-size:14px; font-weight:600; white-space:nowrap; transition:background-color .25s, border-color .25s, color .25s, transform .1s ease-out; }
+    .nav-cta.is-lit { background:#CCFF00; border-color:#CCFF00; color:#0E0E0E; }
+    @media (min-width:420px) { .nav-logo span { display:inline; } }
+    @media (min-width:768px) { .nav-links { display:flex; } }
+    @media (prefers-reduced-transparency: reduce) { .nav { background:#121212; -webkit-backdrop-filter:none; backdrop-filter:none; } }
+    /* Over the light sections the bar turns to light glass, so it never reads as a muddy grey. */
+    .nav { transition:background-color .25s, border-color .25s; }
+    .nav-logo img, .nav-logo span, .nav-links a, .lang { transition:color .25s, filter .25s; }
+    .on-light .nav { background:rgba(255,255,255,.72); border-color:rgba(0,0,0,.08); }
+    .on-light .nav-logo { color:#1D1D1F; }
+    .on-light .nav-logo img { filter:invert(1); }
+    .on-light .nav-links { color:#6E6E73; }
+    .on-light .nav-links a:hover, .on-light .lang a:hover, .on-light .lang [aria-current] { color:#1D1D1F; }
+    .on-light .lang { color:#6E6E73; }
+    .on-light .nav-cta { color:#1D1D1F; border-color:#C7C7CC; }
+    .on-light .nav-cta.is-lit { background:#0E0E0E; border-color:#0E0E0E; color:#CCFF00; }
+    @media (prefers-reduced-transparency: reduce) { .on-light .nav { background:#FFFFFF; } }
+
+    .cta { display:inline-flex; align-items:center; justify-content:center; min-height:52px; margin-top:30px; padding:0 30px; border-radius:999px; background:#CCFF00; color:#0E0E0E; font-size:17px; font-weight:600; transition:background-color .2s, transform .1s ease-out; }
+    .cta:hover { background:#d6ff26; }
+    .cta:active, .nav-cta:active, .pp:active, .store:active { transform:scale(.97); }
+
+    .hero { padding:clamp(128px, 18vh, 184px) 0 8px; text-align:center; }
+
+    /* The phone is sized from the viewport height so the clip and its caption fit on one screen. */
+    .tour { padding:72px 0 72px; --phone-w:min(300px, max(190px, calc((100vh - 216px) * .4618 + 9px))); }
+    @supports (height:100svh) { .tour { --phone-w:min(300px, max(190px, calc((100svh - 216px) * .4618 + 9px))); } }
+    .tour-grid { display:grid; grid-template-columns:minmax(0, 1fr); grid-template-areas:"stage" "list"; }
+    .tour-head { text-align:center; }
+    .tour-head .micro { margin-top:12px; }
+    /* A graphite stage, so the dark phone stands out from the black page. */
+    .tour-panel { margin:28px -12px 0; padding:14px 12px 18px; border-radius:28px; background:#1A1A1C; }
+    .stage { grid-area:stage; display:flex; flex-direction:column; align-items:center; }
+    .phone { width:var(--phone-w); padding:7px; border-radius:calc(var(--phone-w) * .14); background:#050505; border:1px solid #2A2A2A; box-shadow:0 2px 0 rgba(255,255,255,.04) inset, 0 40px 80px -30px rgba(0,0,0,.9); }
+    .screen { position:relative; aspect-ratio:750 / 1624; border-radius:calc(var(--phone-w) * .12); overflow:hidden; background:#161616; cursor:pointer; touch-action:pan-y; -webkit-tap-highlight-color:transparent; -webkit-user-select:none; user-select:none; }
+    .screen video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .3s ease; pointer-events:none; }
+    .screen video.is-on { opacity:1; }
+    .stage-ctrl { width:var(--phone-w); display:flex; align-items:center; gap:10px; margin-top:14px; }
+    .segs { flex:1; display:flex; gap:4px; }
+    .seg { flex:1; height:32px; padding:0; border:0; background:none; cursor:pointer; display:flex; align-items:center; }
+    .seg i { position:relative; display:block; width:100%; height:3px; border-radius:2px; background:rgba(255,255,255,.18); overflow:hidden; }
+    .seg i::after { content:""; position:absolute; inset:0; background:#ECECEC; transform:scaleX(var(--p, 0)); transform-origin:left center; }
+    .pp { flex:none; width:32px; height:32px; display:grid; place-items:center; border-radius:50%; border:1px solid #3A3A3A; color:#ECECEC; transition:border-color .2s, transform .1s ease-out; }
+    .pp:hover { border-color:#5A5A5A; }
+    .pp svg { width:14px; height:14px; }
+    /* The captions share one cell, so a two-line title never moves what is below. */
+    .chapters { grid-area:list; display:grid; width:min(100%, 380px); margin:10px auto 0; padding:0; list-style:none; text-align:center; }
+    .chapter { grid-area:1 / 1; opacity:0; visibility:hidden; transition:opacity .3s ease, visibility .3s; }
+    .chapter.is-on { opacity:1; visibility:visible; }
+    .chapter-btn { display:block; width:100%; padding:0; border:0; background:none; color:inherit; text-align:inherit; pointer-events:none; }
+    .chapter-num { display:block; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#9A9A9A; }
+    .chapter-title { display:block; margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:800; line-height:1.25; letter-spacing:-.01em; color:#ECECEC; transition:color .2s; }
+    .chapter-more, .chapter-bar { display:none; }
+    @media (min-width:1024px) {
+      .tour { --phone-w:min(330px, max(240px, calc((100vh - 250px) * .4618 + 9px))); padding-top:104px; }
+      .tour-grid { grid-template-columns:minmax(0, 1fr) auto; grid-template-areas:"list stage"; align-items:center; column-gap:88px; }
+      .tour-head { text-align:left; }
+      .tour-panel { margin:40px 0 0; padding:56px 64px; border-radius:36px; }
+      .segs { visibility:hidden; }
+      .chapters { display:block; width:auto; margin:0; text-align:left; }
+      .chapter, .chapter.is-on { position:relative; opacity:1; visibility:visible; transition:none; border-top:1px solid #2C2C2E; }
+      .chapter:last-child { border-bottom:1px solid #2C2C2E; }
+      .chapter-btn { padding:20px 0; cursor:pointer; pointer-events:auto; }
+      .chapter-title { font-size:22px; color:#7A7A7E; }
+      .chapter-btn:hover .chapter-title { color:#B5B5B5; }
+      .chapter.is-on .chapter-title { color:#ECECEC; }
+      .chapter-more { display:grid; grid-template-rows:0fr; transition:grid-template-rows .45s var(--ease); }
+      .chapter.is-on .chapter-more { grid-template-rows:1fr; }
+      .chapter-more > div { overflow:hidden; }
+      .chapter-desc { max-width:46ch; padding-bottom:22px; font-size:17px; line-height:1.55; color:#9A9A9A; }
+      .chapter-bar { display:block; position:absolute; left:0; right:0; bottom:-1px; height:2px; overflow:hidden; }
+      .chapter.is-on .chapter-bar::after { content:""; position:absolute; inset:0; background:#ECECEC; transform:scaleX(var(--p, 0)); transform-origin:left center; }
     }
-    .grid-bg {
-      background-image:
-        linear-gradient(to right, rgba(255,255,255,.035) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,.035) 1px, transparent 1px);
-      background-size:64px 64px;
-      -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
-              mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
-    }
-    .glow { filter:blur(90px); }
-    #progress { position:fixed; top:0; left:0; height:2px; width:0; z-index:70; background:#CCFF00; box-shadow:0 0 12px #CCFF00; }
-    .btn-primary { background:#CCFF00; color:#0E0E0E; transition:transform .2s, box-shadow .25s, background .2s; }
-    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 40px -8px rgba(204,255,0,.45); background:#d6ff26; }
-    .btn-primary:active { transform:translateY(0) scale(.98); }
-    .btn-ghost { border:1px solid #2A2A2A; color:#ECECEC; transition:border-color .2s, background .2s, transform .2s; }
-    .btn-ghost:hover { border-color:#4a4a4a; background:#161616; transform:translateY(-2px); }
-    .phone { position:relative; border-radius:42px; background:#050505; padding:8px; border:1px solid #2A2A2A;
-      box-shadow:0 2px 0 rgba(255,255,255,.04) inset, 0 40px 80px -24px rgba(0,0,0,.9); }
-    .phone video { display:block; width:100%; height:auto; aspect-ratio:750 / 1624; border-radius:34px; background:#0E0E0E; }
-    .tile { position:relative; background:linear-gradient(180deg,#181818,#141414); border:1px solid #232323; border-radius:22px; }
-    .icon-chip { background:rgba(204,255,0,.08); border:1px solid rgba(204,255,0,.22); color:#CCFF00; }
-    .reveal { opacity:0; transform:translateY(22px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
-    .reveal.in { opacity:1; transform:none; }
+
+    .light { background:#F5F5F7; color:#1D1D1F; }
+    .light .eyebrow, .light .lede, .light .fine, .light .micro { color:#6E6E73; }
+    .light .h2 { color:#1D1D1F; }
+    .light .u { color:#1D1D1F; text-decoration-color:#AEAEB2; }
+    .light .u:hover { text-decoration-color:#1D1D1F; }
+    .light a:focus-visible, .light button:focus-visible, .light summary:focus-visible { outline-color:#1D1D1F; }
+    /* Neon would vanish on a light background, so there the button turns black with neon letters. */
+    .cta-ink { background:#0E0E0E; color:#CCFF00; }
+    .cta-ink:hover { background:#2A2A2C; }
+    .pricing { padding:96px 0 48px; text-align:center; }
+    .plans { max-width:560px; margin:36px auto 0; padding:0; list-style:none; text-align:left; border:1px solid #E5E5EA; border-radius:20px; background:#FFFFFF; overflow:hidden; }
+    .plan { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 20px; }
+    .plan + .plan { border-top:1px solid #E5E5EA; }
+    .plan-name { font-size:17px; font-weight:600; color:#1D1D1F; }
+    .plan-tag { margin-top:4px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:#6E6E73; }
+    .tag { display:inline-block; padding:3px 8px; border-radius:999px; background:#0E0E0E; color:#CCFF00; }
+    .plan-price { flex:none; text-align:right; }
+    .price { font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:#1D1D1F; }
+    .per { font-size:13px; color:#6E6E73; }
+    .each { display:block; margin-top:3px; font-size:12px; color:#6E6E73; }
+    .plan-talk { font-size:15px; font-weight:600; color:#1D1D1F; white-space:nowrap; }
+    .plan-talk:hover { text-decoration:underline; text-underline-offset:3px; }
+
+    .tile { position:relative; background:#FFFFFF; border:1px solid #E5E5EA; border-radius:20px; }
     details > summary { cursor:pointer; list-style:none; }
     details > summary::-webkit-details-marker { display:none; }
     details[open] .faq-plus { transform:rotate(45deg); }
     .faq-plus { transition:transform .25s; }
+
+    .final { padding:96px 0 104px; text-align:center; }
+    .stores { margin-top:32px; display:flex; flex-wrap:wrap; justify-content:center; gap:12px; }
+    .store { display:flex; align-items:center; gap:12px; padding:10px 18px; border-radius:14px; border:1px solid #2A2A2A; background:#1A1A1A; transition:background-color .2s, transform .1s ease-out; }
+    .store:hover { background:#242424; }
+
+    .reveal { opacity:0; transform:translateY(22px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+    .reveal.in { opacity:1; transform:none; }
     a:focus-visible, button:focus-visible, summary:focus-visible { outline:2px solid #CCFF00; outline-offset:3px; border-radius:6px; }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior:auto; }
       .reveal { opacity:1 !important; transform:none !important; transition:none; }
-      #progress { display:none; }
-      .faq-plus { transition:none; }
+      .screen video, .chapter, .chapter-more, .chapter-title, .nav, .nav-cta, .faq-plus { transition:none; }
     }
   </style>
 </head>
 
-<body class="grain bg-bg text-ink font-sans antialiased selection:bg-primary selection:text-bg overflow-x-hidden">
+<body class="bg-bg text-ink font-sans antialiased selection:bg-primary selection:text-bg overflow-x-hidden">
 
-  <div id="progress"></div>
-
-  <header class="fixed top-0 inset-x-0 z-50">
-    <div class="mx-auto max-w-7xl px-5 sm:px-8">
-      <nav class="mt-3 flex items-center justify-between rounded-2xl border border-border/80 bg-bg/70 backdrop-blur-xl px-4 py-3">
-        <a href="index.es.html" class="flex items-center gap-2.5" aria-label="Aura, inicio">
-          <img src="assets/aura_logo.png" alt="Aura" class="h-8 w-8" />
-          <span class="hidden min-[420px]:inline font-mono font-extrabold tracking-[0.18em] text-[15px]">AURA</span>
-        </a>
-        <div class="hidden md:flex items-center gap-8 text-sm text-ink2">
-          <a href="#como" class="hover:text-ink transition-colors">Cómo funciona</a>
-          <a href="#faq" class="hover:text-ink transition-colors">Preguntas</a>
-        </div>
-        <div class="flex items-center gap-3 sm:gap-4">
-          <span class="label text-[11px] whitespace-nowrap"><a href="coaches.html" class="text-ink2 hover:text-ink transition-colors">EN</a> <span class="text-ink3">·</span> <span class="text-primary">ES</span></span>
-          <a href="mailto:info@pampaiter.com?subject=Aura%20para%20coaches" class="btn-primary cursor-pointer rounded-full px-3 sm:px-4 py-2 text-xs label whitespace-nowrap">Escríbeme</a>
-        </div>
-      </nav>
-    </div>
+  <header class="nav-wrap">
+    <nav class="nav" aria-label="Principal">
+      <a href="index.es.html" class="nav-logo" aria-label="Aura, inicio">
+        <img src="assets/aura_logo.png" alt="" class="h-8 w-8" />
+        <span>AURA</span>
+      </a>
+      <div class="nav-links">
+        <a href="#como">Cómo funciona</a>
+        <a href="#precios">Precios</a>
+        <a href="#faq">Preguntas</a>
+      </div>
+      <div class="nav-end">
+        <span class="lang"><a href="coaches.html" hreflang="en" lang="en">EN</a><span aria-hidden="true">·</span><span aria-current="page">ES</span></span>
+        <a href="#empezar" class="nav-cta" data-start>Empezar</a>
+      </div>
+    </nav>
   </header>
 
   <main>
-  <section id="top" class="relative pt-36 sm:pt-44 pb-16 overflow-hidden">
-    <div class="grid-bg absolute inset-0 -z-10"></div>
-    <div class="glow absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-primary/20 -z-10"></div>
-    <div class="glow absolute top-40 right-10 h-72 w-72 rounded-full bg-secondary/10 -z-10"></div>
+  <section id="top" class="hero">
+    <div class="wrap">
+      <p class="reveal eyebrow">Para coaches · CrossFit · Híbrido</p>
+      <h1 class="h1">
+        <span class="reveal">Programa la semana.</span>
+        <span class="reveal">Les llega sola.</span>
+        <span class="reveal">Mira cómo cayó.</span>
+      </h1>
+      <p class="reveal lede">Escribes la semana como siempre. Tus atletas la entrenan con su reloj y sus cargas.</p>
+      <div class="reveal"><a href="#empezar" class="cta" data-start data-cta>Empezar gratis</a></div>
+      <p class="reveal fine">Gratis hasta 3 atletas · iOS y Android</p>
+    </div>
+  </section>
 
-    <div class="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-2 gap-16 items-center">
-      <div>
-        <div class="reveal inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-3 py-1.5 mb-7">
-          <span class="h-1.5 w-1.5 rounded-full bg-primary animate-pulse"></span>
-          <span class="label text-[11px] text-ink2">Para coaches · CrossFit · Híbrido</span>
+  <section id="como" class="tour">
+    <div class="wrap">
+      <div class="tour-head">
+        <p class="reveal eyebrow">Cómo funciona</p>
+        <h2 class="reveal h2">Cinco pasos, de invitar a ver cómo cayó.</h2>
+        <p class="reveal micro">Pantallas reales de la app, con datos de ejemplo. El aviso del paso 4 es una recreación del que envía Aura.</p>
+      </div>
+
+      <div class="tour-panel">
+        <div class="tour-grid">
+          <div id="stage" class="reveal stage" role="group" aria-roledescription="carrusel" aria-label="Cómo funciona, en cinco clips">
+            <div class="phone">
+              <div class="screen">
+                <video class="is-on" muted playsinline preload="none" poster="assets/coach/es/1-invite.jpg" aria-label="Un coach invita a su equipo con un link y los atletas van apareciendo en su lista"><source src="assets/coach/es/1-invite.mp4" type="video/mp4" /></video>
+                <video muted playsinline preload="none" data-poster="assets/coach/es/2-groups.jpg" aria-label="Un coach crea el grupo RX marcando a cinco atletas y queda con tres grupos"><source src="assets/coach/es/2-groups.mp4" type="video/mp4" /></video>
+                <video muted playsinline preload="none" data-poster="assets/coach/es/3-program.jpg" aria-label="Un coach escribe la sesión del lunes en el chat y Aura la convierte en una sesión de cuatro bloques"><source src="assets/coach/es/3-program.mp4" type="video/mp4" /></video>
+                <video muted playsinline preload="none" data-poster="assets/coach/es/4-arrives.jpg" aria-label="Un atleta recibe el aviso de su coach, abre la sesión y ve 60 kilos en la primera serie"><source src="assets/coach/es/4-arrives.mp4" type="video/mp4" /></video>
+                <video muted playsinline preload="none" data-poster="assets/coach/es/5-landed.jpg" aria-label="El resumen de un grupo: cuántos entrenaron, el RPE por bloque y la lista de cosas a vigilar"><source src="assets/coach/es/5-landed.mp4" type="video/mp4" /></video>
+              </div>
+            </div>
+            <div class="stage-ctrl">
+              <div class="segs">
+                <button type="button" class="seg" aria-label="Paso 1: invita" aria-current="step"><i></i></button>
+                <button type="button" class="seg" aria-label="Paso 2: agrupa"><i></i></button>
+                <button type="button" class="seg" aria-label="Paso 3: programa"><i></i></button>
+                <button type="button" class="seg" aria-label="Paso 4: les llega"><i></i></button>
+                <button type="button" class="seg" aria-label="Paso 5: cómo cayó"><i></i></button>
+              </div>
+              <button type="button" class="pp" aria-label="Reproducir" data-l-play="Reproducir" data-l-pause="Pausa" data-l-replay="Volver a ver"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5.5v13a1 1 0 0 0 1.5.86l10.2-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg></button>
+            </div>
+          </div>
+
+          <ol id="chapters" class="reveal chapters" aria-live="off">
+            <li class="chapter is-on">
+              <button type="button" class="chapter-btn"><span class="chapter-num">01 · Invita</span><span class="chapter-title">Un link. Tu equipo entra.</span></button>
+              <div class="chapter-more"><div><p class="chapter-desc">Compártelo por donde ya habláis: WhatsApp, Instagram, el grupo del box. Quien lo abre entra en tu equipo y tú ves cómo van llegando.</p></div></div>
+              <span class="chapter-bar" aria-hidden="true"></span>
+            </li>
+            <li class="chapter">
+              <button type="button" class="chapter-btn"><span class="chapter-num">02 · Agrupa</span><span class="chapter-title">RX, Scaled, Masters… o uno a uno.</span></button>
+              <div class="chapter-more"><div><p class="chapter-desc">Crea los grupos que ya tienes en la cabeza y marca quién está en cada uno. Programar para un grupo pesa igual que programar para un atleta.</p></div></div>
+              <span class="chapter-bar" aria-hidden="true"></span>
+            </li>
+            <li class="chapter">
+              <button type="button" class="chapter-btn"><span class="chapter-num">03 · Programa</span><span class="chapter-title">Escríbelo como siempre. Aura lo monta.</span></button>
+              <div class="chapter-more"><div><p class="chapter-desc">Pega el texto, díctalo o hazle una foto a la pizarra. Aura lo lee y lo convierte en bloques, relojes y cargas. Tú decides cuándo lo ven.</p></div></div>
+              <span class="chapter-bar" aria-hidden="true"></span>
+            </li>
+            <li class="chapter">
+              <button type="button" class="chapter-btn"><span class="chapter-num">04 · Les llega</span><span class="chapter-title">Aviso al instante. Sus kg, ya calculados.</span></button>
+              <div class="chapter-more"><div><p class="chapter-desc">En cuanto la sesión está a la vista, el atleta recibe el aviso y la ve en su Pulse. Las cargas salen de su propio PR: el 75 % de 80 kg son 60 kg, sin calculadora.</p></div></div>
+              <span class="chapter-bar" aria-hidden="true"></span>
+            </li>
+            <li class="chapter">
+              <button type="button" class="chapter-btn"><span class="chapter-num">05 · Cómo cayó</span><span class="chapter-title">Quién la hizo y qué mirar primero.</span></button>
+              <div class="chapter-more"><div><p class="chapter-desc">Por día y por semana: cuántos entrenaron, cuánto les costó y qué bloque se fue de las manos. «A vigilar» te dice por dónde empezar.</p></div></div>
+              <span class="chapter-bar" aria-hidden="true"></span>
+            </li>
+          </ol>
         </div>
-        <h1 class="font-mono font-extrabold leading-[1.04] text-[2.3rem] sm:text-[3.4rem] tracking-tight">
-          <span class="reveal block">Programa la <span class="text-primary">semana</span>.</span>
-          <span class="reveal block">Les llega <span class="text-primary">sola</span>.</span>
-          <span class="reveal block">Mira <span class="text-primary">cómo cayó</span>.</span>
-        </h1>
-        <p class="reveal mt-7 max-w-md text-lg text-ink2 leading-relaxed">Aura es donde tus atletas entrenan lo que tú programas: con su reloj, las cargas calculadas desde su PR y su histórico. Escribes la semana como siempre; Aura la monta.</p>
-        <div class="reveal mt-9 flex flex-wrap items-center gap-3">
-          <a href="mailto:info@pampaiter.com?subject=Aura%20para%20coaches" class="btn-primary cursor-pointer rounded-xl px-6 py-3.5 text-sm font-semibold">Probarlo con mi equipo</a>
-          <a href="#como" class="btn-ghost cursor-pointer rounded-xl px-6 py-3.5 text-sm font-semibold">Ver cómo funciona</a>
-        </div>
-        <p class="reveal mt-4 label text-[10px] text-ink3">Gratis hasta 3 atletas · iOS y Android</p>
-      </div>
-
-      <div class="reveal relative mx-auto w-full max-w-[300px]">
-        <div class="glow absolute inset-0 -z-10 rounded-full bg-primary/15"></div>
-        <div class="phone"><video autoplay muted playsinline loop preload="auto" poster="assets/coach/es/1-invite.jpg" aria-label="Las cinco fases de la semana de un coach en Aura, de invitar a ver cómo cayó" data-clip><source src="assets/coach/es/all.mp4" type="video/mp4" /></video></div>
-        <p class="mt-4 text-center text-xs text-ink3">Pantallas reales de la app, con datos de ejemplo.</p>
       </div>
     </div>
   </section>
 
-  <section id="como" class="relative pt-10">
-    <div class="mx-auto max-w-7xl px-5 sm:px-8">
-      <p class="reveal label text-[11px] text-primary">Cómo funciona</p>
-      <h2 class="reveal font-mono font-extrabold text-3xl sm:text-5xl leading-tight mt-4 max-w-2xl">Cinco pasos, de invitar a ver cómo cayó.</h2>
+  <section id="precios" class="pricing light">
+    <div class="wrap narrow">
+      <p class="reveal eyebrow">Precios</p>
+      <h2 class="reveal h2">A 20 atletas te cuesta menos que la cuota de uno.</h2>
+      <p class="reveal lede">Tus atletas no pagan: entran con tu link y la planificación les llega incluida, sin PRO.</p>
+      <ul class="reveal plans">
+        <li class="plan">
+          <div><p class="plan-name">Hasta 3 atletas</p><p class="plan-tag">Empiezas aquí</p></div>
+          <p class="plan-price"><span class="price">Gratis</span></p>
+        </li>
+        <li class="plan">
+          <div><p class="plan-name">Hasta 20 atletas</p><p class="plan-tag"><span class="tag">Recomendado</span></p></div>
+          <p class="plan-price"><span class="price">19,99 €</span><span class="per"> /mes</span><span class="each">desde 1 € por atleta</span></p>
+        </li>
+        <li class="plan">
+          <div><p class="plan-name">Hasta 60 atletas</p></div>
+          <p class="plan-price"><span class="price">39,99 €</span><span class="per"> /mes</span><span class="each">desde 0,67 € por atleta</span></p>
+        </li>
+        <li class="plan">
+          <div><p class="plan-name">Hasta 200 atletas</p></div>
+          <p class="plan-price"><span class="price">79,99 €</span><span class="per"> /mes</span><span class="each">desde 0,40 € por atleta</span></p>
+        </li>
+        <li class="plan">
+          <div><p class="plan-name">Más de 200 atletas</p></div>
+          <p class="plan-price"><a href="mailto:info@pampaiter.com?subject=Aura%20para%20coaches" class="plan-talk">Escríbeme ›</a></p>
+        </li>
+      </ul>
+      <div class="reveal"><a href="#empezar" class="cta cta-ink" data-start data-cta>Empezar gratis</a></div>
+      <p class="reveal fine">Cancela cuando quieras.</p>
+      <p class="reveal micro">Precios en euros, con IVA. Se contratan desde la app.</p>
     </div>
-
-  <section id="paso-1" class="relative py-16 sm:py-24">
-    <div class="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
-      <div class="reveal">
-        <p class="label text-[11px] text-primary">01 · Invita</p>
-        <h3 class="font-mono font-extrabold text-[1.9rem] sm:text-4xl leading-tight mt-4">Un link. Tu equipo entra.</h3>
-        <p class="mt-5 max-w-lg text-lg text-ink2 leading-relaxed">Compártelo por donde ya habláis: WhatsApp, Instagram, el grupo del box. Quien lo abre entra en tu equipo y tú ves cómo van llegando.</p>
-        <ul class="mt-7 space-y-3 max-w-lg">
-            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Un solo link para todo el equipo</span></li>
-            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Te avisa cuando alguien se une</span></li>
-            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Ves quién ha entrado y cuándo</span></li>
-        </ul>
-      </div>
-      <div class="reveal mx-auto w-full max-w-[290px]">
-        <div class="phone"><video muted playsinline loop preload="none" poster="assets/coach/es/1-invite.jpg" aria-label="Un coach invita a su equipo con un link y los atletas van apareciendo en su lista" data-clip><source src="assets/coach/es/1-invite.mp4" type="video/mp4" /></video></div>
-      </div>
-    </div>
-  </section>
-  <section id="paso-2" class="relative py-16 sm:py-24">
-    <div class="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
-      <div class="reveal">
-        <p class="label text-[11px] text-primary">02 · Agrupa</p>
-        <h3 class="font-mono font-extrabold text-[1.9rem] sm:text-4xl leading-tight mt-4">RX, Scaled, Masters… o uno a uno.</h3>
-        <p class="mt-5 max-w-lg text-lg text-ink2 leading-relaxed">Crea los grupos que ya tienes en la cabeza y marca quién está en cada uno. Programar para un grupo pesa igual que programar para un atleta.</p>
-        <ul class="mt-7 space-y-3 max-w-lg">
-            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Cada grupo con su propia semana</span></li>
-            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Un atleta puede estar en varios grupos</span></li>
-            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Seguimiento 1:1 cuando lo necesitas</span></li>
-        </ul>
-      </div>
-      <div class="reveal mx-auto w-full max-w-[290px] lg:order-first">
-        <div class="phone"><video muted playsinline loop preload="none" poster="assets/coach/es/2-groups.jpg" aria-label="Un coach crea el grupo RX marcando a cinco atletas y queda con tres grupos" data-clip><source src="assets/coach/es/2-groups.mp4" type="video/mp4" /></video></div>
-      </div>
-    </div>
-  </section>
-  <section id="paso-3" class="relative py-16 sm:py-24">
-    <div class="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
-      <div class="reveal">
-        <p class="label text-[11px] text-primary">03 · Programa</p>
-        <h3 class="font-mono font-extrabold text-[1.9rem] sm:text-4xl leading-tight mt-4">Escríbelo como siempre. Aura lo monta.</h3>
-        <p class="mt-5 max-w-lg text-lg text-ink2 leading-relaxed">Pega el texto, díctalo o hazle una foto a la pizarra. Aura lo lee y lo convierte en bloques, relojes y cargas. Tú decides cuándo lo ven.</p>
-        <ul class="mt-7 space-y-3 max-w-lg">
-            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Texto, voz o foto</span></li>
-            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Bloques y relojes: AMRAP, EMOM, For Time…</span></li>
-            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Al guardar, o la víspera a la hora que elijas</span></li>
-        </ul>
-      </div>
-      <div class="reveal mx-auto w-full max-w-[290px]">
-        <div class="phone"><video muted playsinline loop preload="none" poster="assets/coach/es/3-program.jpg" aria-label="Un coach escribe la sesión del lunes en el chat y Aura la convierte en una sesión de cuatro bloques" data-clip><source src="assets/coach/es/3-program.mp4" type="video/mp4" /></video></div>
-      </div>
-    </div>
-  </section>
-  <section id="paso-4" class="relative py-16 sm:py-24">
-    <div class="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
-      <div class="reveal">
-        <p class="label text-[11px] text-primary">04 · Les llega</p>
-        <h3 class="font-mono font-extrabold text-[1.9rem] sm:text-4xl leading-tight mt-4">Aviso al instante. Sus kg, ya calculados.</h3>
-        <p class="mt-5 max-w-lg text-lg text-ink2 leading-relaxed">En cuanto la sesión está a la vista, el atleta recibe el aviso y la ve en su Pulse. Las cargas salen de su propio PR: el 75 % de 80 kg son 60 kg, sin calculadora.</p>
-        <ul class="mt-7 space-y-3 max-w-lg">
-            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Reloj y registro según el tipo de bloque</span></li>
-            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Su histórico y sus PRs, siempre con él</span></li>
-            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>La planificación va incluida: tus atletas no pagan PRO</span></li>
-        </ul>
-      </div>
-      <div class="reveal mx-auto w-full max-w-[290px] lg:order-first">
-        <div class="phone"><video muted playsinline loop preload="none" poster="assets/coach/es/4-arrives.jpg" aria-label="Un atleta recibe el aviso de su coach, abre la sesión y ve 60 kilos en la primera serie" data-clip><source src="assets/coach/es/4-arrives.mp4" type="video/mp4" /></video></div>
-        <p class="mt-4 text-center text-xs text-ink3">El aviso es una recreación del que envía Aura.</p>
-      </div>
-    </div>
-  </section>
-  <section id="paso-5" class="relative py-16 sm:py-24">
-    <div class="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
-      <div class="reveal">
-        <p class="label text-[11px] text-primary">05 · Cómo cayó</p>
-        <h3 class="font-mono font-extrabold text-[1.9rem] sm:text-4xl leading-tight mt-4">Quién la hizo y qué mirar primero.</h3>
-        <p class="mt-5 max-w-lg text-lg text-ink2 leading-relaxed">Por día y por semana: cuántos entrenaron, cuánto les costó y qué bloque se fue de las manos. «A vigilar» te dice por dónde empezar.</p>
-        <ul class="mt-7 space-y-3 max-w-lg">
-            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>RPE y sensación por bloque</span></li>
-            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Cargas del grupo, de la más baja a la más alta</span></li>
-            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>La semana frente a la anterior</span></li>
-        </ul>
-      </div>
-      <div class="reveal mx-auto w-full max-w-[290px]">
-        <div class="phone"><video muted playsinline loop preload="none" poster="assets/coach/es/5-landed.jpg" aria-label="El resumen de un grupo: cuántos entrenaron, el RPE por bloque y la lista de cosas a vigilar" data-clip><source src="assets/coach/es/5-landed.mp4" type="video/mp4" /></video></div>
-      </div>
-    </div>
-  </section>
   </section>
 
-  <section id="faq" class="relative py-20 sm:py-28">
+  <section id="faq" class="light relative py-20 sm:py-28">
     <div class="mx-auto max-w-3xl px-5 sm:px-8">
-      <p class="reveal label text-[11px] text-primary">Preguntas</p>
-      <h2 class="reveal font-mono font-extrabold text-3xl sm:text-4xl leading-tight mt-4">Lo que suelen preguntar.</h2>
+      <p class="reveal eyebrow text-center">Preguntas</p>
+      <h2 class="reveal h2 text-center">Lo que suelen preguntar.</h2>
       <div class="reveal mt-10 space-y-3">
         <details class="tile px-5 py-4">
-          <summary class="flex items-center justify-between gap-4 text-ink font-semibold">
+          <summary class="flex items-center justify-between gap-4 text-[#1D1D1F] font-semibold">
             <span>¿Mis atletas tienen que pagar?</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="faq-plus h-5 w-5 text-primary shrink-0" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="faq-plus h-5 w-5 text-[#6E6E73] shrink-0" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
           </summary>
-          <p class="mt-3 text-ink2 leading-relaxed">No. Entran con tu link y tienen la planificación incluida, sin pagar PRO.</p>
+          <p class="mt-3 text-[#6E6E73] leading-relaxed">No. Entran con tu link y tienen la planificación incluida, sin pagar PRO.</p>
         </details>
         <details class="tile px-5 py-4">
-          <summary class="flex items-center justify-between gap-4 text-ink font-semibold">
+          <summary class="flex items-center justify-between gap-4 text-[#1D1D1F] font-semibold">
             <span>¿Cuánto me cuesta a mí?</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="faq-plus h-5 w-5 text-primary shrink-0" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="faq-plus h-5 w-5 text-[#6E6E73] shrink-0" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
           </summary>
-          <p class="mt-3 text-ink2 leading-relaxed">Hasta 3 atletas es gratis. Para equipos más grandes hay planes por número de atletas. Si tienes un grupo grande y quieres probarlo en serio, escríbeme.</p>
+          <p class="mt-3 text-[#6E6E73] leading-relaxed">Hasta 3 atletas, nada. Después, 19,99 € al mes hasta 20 atletas, 39,99 € hasta 60 y 79,99 € hasta 200. Si tienes más, escríbeme y lo hablamos.</p>
         </details>
         <details class="tile px-5 py-4">
-          <summary class="flex items-center justify-between gap-4 text-ink font-semibold">
+          <summary class="flex items-center justify-between gap-4 text-[#1D1D1F] font-semibold">
             <span>¿Qué necesito para empezar?</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="faq-plus h-5 w-5 text-primary shrink-0" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="faq-plus h-5 w-5 text-[#6E6E73] shrink-0" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
           </summary>
-          <p class="mt-3 text-ink2 leading-relaxed">La app en iOS o Android. Al crear la cuenta eliges «Entreno a otros» y ya tienes tu link de equipo.</p>
+          <p class="mt-3 text-[#6E6E73] leading-relaxed">La app en iOS o Android. Al crear la cuenta eliges «Entreno a otros» y ya tienes tu link de equipo.</p>
         </details>
         <details class="tile px-5 py-4">
-          <summary class="flex items-center justify-between gap-4 text-ink font-semibold">
+          <summary class="flex items-center justify-between gap-4 text-[#1D1D1F] font-semibold">
             <span>¿Puedo seguir escribiendo la semana como ahora?</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="faq-plus h-5 w-5 text-primary shrink-0" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="faq-plus h-5 w-5 text-[#6E6E73] shrink-0" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
           </summary>
-          <p class="mt-3 text-ink2 leading-relaxed">Sí. Pega el texto, díctalo o haz una foto y Aura lo monta. Puedes ajustar cualquier bloque en el editor.</p>
+          <p class="mt-3 text-[#6E6E73] leading-relaxed">Sí. Pega el texto, díctalo o haz una foto y Aura lo monta. Puedes ajustar cualquier bloque en el editor.</p>
         </details>
       </div>
     </div>
   </section>
 
-  <section id="contact" class="relative py-20 sm:py-28 overflow-hidden">
-    <div class="glow absolute left-1/2 -translate-x-1/2 top-10 h-72 w-72 rounded-full bg-primary/15 -z-10"></div>
-    <div class="mx-auto max-w-3xl px-5 sm:px-8 text-center">
-      <h2 class="reveal font-mono font-extrabold text-3xl sm:text-5xl leading-tight">¿Lo probamos con tu equipo?</h2>
-      <p class="reveal mt-6 text-lg text-ink2 leading-relaxed">Empieza gratis con hasta 3 atletas. Si tienes un grupo más grande, escríbeme y lo montamos juntos.</p>
-      <div class="reveal mt-9 flex flex-wrap items-center justify-center gap-3">
-        <a href="mailto:info@pampaiter.com?subject=Aura%20para%20coaches" class="btn-primary cursor-pointer rounded-xl px-6 py-3.5 text-sm font-semibold">Escríbeme</a>
+  <section id="empezar" class="final">
+    <div class="wrap narrow">
+      <h2 class="reveal h2">¿Lo probamos con tu equipo?</h2>
+      <p class="reveal lede">Empieza gratis con hasta 3 atletas: descarga Aura y, al crear la cuenta, elige «Entreno a otros».</p>
+      <div id="stores" class="reveal stores">
+        <a href="https://play.google.com/store/apps/details?id=com.pampa.aura" target="_blank" rel="noopener" class="store" data-store="android">
+          <svg viewBox="0 0 24 24" class="h-7 w-7" aria-hidden="true">
+            <path d="M3.6 2.2c-.3.2-.5.6-.5 1.1v17.4c0 .5.2.9.5 1.1l9.3-9.8L3.6 2.2z" fill="#00E0FF"/>
+            <path d="M16.5 8.6 12.9 12l3.6 3.4 4.3-2.4c.7-.4.7-1.6 0-2L16.5 8.6z" fill="#CCFF00"/>
+            <path d="M3.6 2.2 12.9 12l3.6-3.4L5.1 2.4c-.6-.3-1.1-.4-1.5-.2z" fill="#fff"/>
+            <path d="M3.6 21.8c.4.2.9.1 1.5-.2l11.4-6.2L12.9 12 3.6 21.8z" fill="#9A9A9A"/>
+          </svg>
+          <span class="text-left leading-tight"><span class="block text-[10px] text-ink3">Descarga en</span><span class="block text-sm font-semibold text-ink">Google Play</span></span>
+        </a>
+        <a href="https://apps.apple.com/us/app/aura-ai-training-coach/id6773849897" target="_blank" rel="noopener" class="store" data-store="ios">
+          <svg viewBox="0 0 24 24" class="h-7 w-7 fill-ink" aria-hidden="true"><path d="M17.05 12.04c-.03-2.5 2.04-3.7 2.13-3.76-1.16-1.7-2.97-1.93-3.61-1.96-1.54-.16-3 .9-3.78.9-.78 0-1.98-.88-3.25-.86-1.67.03-3.21.97-4.07 2.46-1.73 3-.44 7.46 1.25 9.9.82 1.2 1.8 2.54 3.08 2.49 1.24-.05 1.71-.8 3.21-.8 1.5 0 1.92.8 3.23.78 1.33-.03 2.18-1.22 3-2.42.94-1.39 1.33-2.73 1.35-2.8-.03-.01-2.59-1-2.62-3.93zM14.6 4.8c.69-.83 1.15-1.99 1.02-3.14-.99.04-2.18.66-2.89 1.49-.64.73-1.2 1.9-1.05 3.02 1.1.09 2.23-.56 2.92-1.37z"/></svg>
+          <span class="text-left leading-tight"><span class="block text-[10px] text-ink3">Descarga en la</span><span class="block text-sm font-semibold text-ink">App Store</span></span>
+        </a>
       </div>
-      <div class="reveal mt-8 flex flex-wrap items-center justify-center gap-3">
-        <a href="https://play.google.com/store/apps/details?id=com.pampa.aura" target="_blank" rel="noopener" class="cursor-pointer flex items-center gap-3 rounded-xl border border-border bg-surface hover:bg-surface2 transition-colors px-4 py-2.5">
-            <svg viewBox="0 0 24 24" class="h-7 w-7" aria-hidden="true">
-              <path d="M3.6 2.2c-.3.2-.5.6-.5 1.1v17.4c0 .5.2.9.5 1.1l9.3-9.8L3.6 2.2z" fill="#00E0FF"/>
-              <path d="M16.5 8.6 12.9 12l3.6 3.4 4.3-2.4c.7-.4.7-1.6 0-2L16.5 8.6z" fill="#CCFF00"/>
-              <path d="M3.6 2.2 12.9 12l3.6-3.4L5.1 2.4c-.6-.3-1.1-.4-1.5-.2z" fill="#fff"/>
-              <path d="M3.6 21.8c.4.2.9.1 1.5-.2l11.4-6.2L12.9 12 3.6 21.8z" fill="#9A9A9A"/>
-            </svg>
-            <span class="text-left leading-tight"><span class="block text-[10px] text-ink3">Descarga en</span><span class="block text-sm font-semibold text-ink">Google Play</span></span>
-          </a>
-          <a href="https://apps.apple.com/us/app/aura-ai-training-coach/id6773849897" target="_blank" rel="noopener" class="cursor-pointer flex items-center gap-3 rounded-xl border border-border bg-surface hover:bg-surface2 transition-colors px-4 py-2.5">
-            <svg viewBox="0 0 24 24" class="h-7 w-7 fill-ink" aria-hidden="true"><path d="M17.05 12.04c-.03-2.5 2.04-3.7 2.13-3.76-1.16-1.7-2.97-1.93-3.61-1.96-1.54-.16-3 .9-3.78.9-.78 0-1.98-.88-3.25-.86-1.67.03-3.21.97-4.07 2.46-1.73 3-.44 7.46 1.25 9.9.82 1.2 1.8 2.54 3.08 2.49 1.24-.05 1.71-.8 3.21-.8 1.5 0 1.92.8 3.23.78 1.33-.03 2.18-1.22 3-2.42.94-1.39 1.33-2.73 1.35-2.8-.03-.01-2.59-1-2.62-3.93zM14.6 4.8c.69-.83 1.15-1.99 1.02-3.14-.99.04-2.18.66-2.89 1.49-.64.73-1.2 1.9-1.05 3.02 1.1.09 2.23-.56 2.92-1.37z"/></svg>
-            <span class="text-left leading-tight"><span class="block text-[10px] text-ink3">Descarga en la</span><span class="block text-sm font-semibold text-ink">App Store</span></span>
-          </a>
-      </div>
+      <p class="reveal fine">¿Dudas? <a href="mailto:info@pampaiter.com?subject=Aura%20para%20coaches" class="u">Escríbeme</a>.</p>
     </div>
   </section>
   </main>
@@ -335,19 +418,7 @@
   <script>
     (function () {
       var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      var bar = document.getElementById('progress');
-      if (bar && !reduce) {
-        var ticking = false;
-        window.addEventListener('scroll', function () {
-          if (ticking) return; ticking = true;
-          requestAnimationFrame(function () {
-            var h = document.documentElement;
-            bar.style.width = ((h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100) + '%';
-            ticking = false;
-          });
-        }, { passive: true });
-      }
+      var saveData = !!(navigator.connection && navigator.connection.saveData);
 
       var animated = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
       var check = function () {
@@ -362,21 +433,165 @@
       window.addEventListener('scroll', function () { if (q) return; q = true; requestAnimationFrame(function () { check(); q = false; }); }, { passive: true });
       window.addEventListener('resize', check);
 
-      /* A clip plays only while it is on screen, so five of them never run at once. */
-      var clips = Array.prototype.slice.call(document.querySelectorAll('video[data-clip]'));
-      if (reduce) {
-        clips.forEach(function (v) { v.removeAttribute('autoplay'); v.pause(); v.setAttribute('controls', ''); });
-      } else if ('IntersectionObserver' in window) {
-        var io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (e) {
-            var v = e.target;
-            if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
-            else { v.pause(); }
+      /* On a phone the start buttons go straight to its store; elsewhere they scroll to both badges. */
+      var ua = navigator.userAgent || '';
+      var ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+      var android = /Android/.test(ua);
+      var stores = document.getElementById('stores');
+      var mine = stores && (ios ? stores.querySelector('[data-store="ios"]') : android ? stores.querySelector('[data-store="android"]') : null);
+      if (mine) {
+        Array.prototype.forEach.call(document.querySelectorAll('[data-start]'), function (a) { a.href = mine.href; });
+        Array.prototype.forEach.call(stores.querySelectorAll('a'), function (a) { a.removeAttribute('target'); });
+        stores.insertBefore(mine, stores.firstChild);
+      }
+
+      var pill = document.querySelector('.nav-cta');
+      var ctas = Array.prototype.slice.call(document.querySelectorAll('[data-cta]'));
+      if (pill && 'IntersectionObserver' in window) {
+        var showing = ctas.map(function () { return false; });
+        var watch = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) { showing[ctas.indexOf(e.target)] = e.isIntersecting; });
+          pill.classList.toggle('is-lit', showing.indexOf(true) === -1);
+        });
+        ctas.forEach(function (c) { watch.observe(c); });
+      }
+
+      var bar = document.querySelector('.nav-wrap');
+      var lights = Array.prototype.slice.call(document.querySelectorAll('section.light'));
+      if (bar && lights.length && 'IntersectionObserver' in window) {
+        var under = lights.map(function () { return false; });
+        var band = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) { under[lights.indexOf(e.target)] = e.isIntersecting; });
+          bar.classList.toggle('on-light', under.indexOf(true) !== -1);
+        }, { rootMargin: '0px 0px -94% 0px' });
+        lights.forEach(function (l) { band.observe(l); });
+      }
+
+      var stage = document.getElementById('stage');
+      if (stage) tour(stage);
+
+      /* Five clips on one phone, like stories: each plays to the end and hands over to the next. */
+      function tour(stage) {
+        var screen = stage.querySelector('.screen');
+        var vids = Array.prototype.slice.call(screen.querySelectorAll('video'));
+        var segs = Array.prototype.slice.call(stage.querySelectorAll('.seg'));
+        var list = document.getElementById('chapters');
+        var chs = Array.prototype.slice.call(list.querySelectorAll('.chapter'));
+        var pp = stage.querySelector('.pp');
+        var icons = {
+          play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5.5v13a1 1 0 0 0 1.5.86l10.2-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>',
+          pause: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>',
+          replay: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4.5V9h4.5"/></svg>'
+        };
+        var n = vids.length, i = 0, raf = 0;
+        var held = reduce || saveData;
+        var seen = false, done = false;
+
+        function prime(k) {
+          var v = vids[k];
+          if (!v || v.getAttribute('data-primed')) return;
+          v.setAttribute('data-primed', '1');
+          if (v.getAttribute('data-poster')) v.setAttribute('poster', v.getAttribute('data-poster'));
+          v.preload = 'auto';
+          v.load();
+        }
+        function progress(k, p) {
+          if (segs[k]) segs[k].style.setProperty('--p', p);
+          if (chs[k]) chs[k].style.setProperty('--p', p);
+        }
+        function tick() {
+          var v = vids[i];
+          if (v.duration) progress(i, Math.min(1, v.currentTime / v.duration));
+          if (!v.paused && !v.ended) raf = requestAnimationFrame(tick);
+        }
+        function icon() {
+          var v = vids[i], playing = !v.paused && !v.ended;
+          var state = done ? 'replay' : playing ? 'pause' : 'play';
+          if (pp.getAttribute('data-state') === state) return;
+          pp.setAttribute('data-state', state);
+          pp.innerHTML = icons[state];
+          pp.setAttribute('aria-label', pp.getAttribute('data-l-' + state));
+        }
+        /* Only a refusal holds the tour (Low Power Mode on iPhone); a play cut short by the next tap does not. */
+        function play() {
+          prime(i); prime(i + 1);
+          var p = vids[i].play();
+          if (p && p.catch) p.catch(function (err) { if (err && err.name === 'NotAllowedError') held = true; icon(); });
+        }
+        function show(k, byUser) {
+          vids[i].pause();
+          i = Math.max(0, k) % n;
+          done = false;
+          if (byUser) held = false;
+          list.setAttribute('aria-live', byUser ? 'polite' : 'off');
+          vids.forEach(function (v, j) { v.classList.toggle('is-on', j === i); });
+          chs.forEach(function (c, j) { c.classList.toggle('is-on', j === i); });
+          segs.forEach(function (s, j) {
+            if (j === i) s.setAttribute('aria-current', 'step'); else s.removeAttribute('aria-current');
+            progress(j, j < i ? 1 : 0);
           });
-        }, { threshold: 0.45 });
-        clips.forEach(function (v) { io.observe(v); });
-      } else {
-        clips.forEach(function (v) { v.setAttribute('controls', ''); });
+          prime(i);
+          try { vids[i].currentTime = 0; } catch (e) {}
+          if (!held && (seen || byUser)) play();
+          icon();
+        }
+
+        vids.forEach(function (v, j) {
+          v.addEventListener('playing', function () { if (j !== i) return; cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); icon(); });
+          v.addEventListener('pause', function () { if (j === i) icon(); });
+          v.addEventListener('ended', function () {
+            if (j !== i) return;
+            progress(j, 1);
+            if (j < n - 1) show(j + 1, false); else { done = true; icon(); }
+          });
+        });
+
+        pp.addEventListener('click', function () {
+          if (done) { show(0, true); return; }
+          if (vids[i].paused) { held = false; play(); } else { held = true; vids[i].pause(); }
+        });
+        segs.forEach(function (s, j) { s.addEventListener('click', function () { show(j, true); }); });
+        chs.forEach(function (c, j) { c.querySelector('.chapter-btn').addEventListener('click', function () { show(j, true); }); });
+        stage.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowRight') { show(i + 1, true); e.preventDefault(); }
+          if (e.key === 'ArrowLeft') { show(i - 1, true); e.preventDefault(); }
+        });
+
+        /* Tap the left third to go back, anywhere else to go on; a sideways swipe does the same. */
+        var x0 = 0, y0 = 0, down = false;
+        screen.addEventListener('pointerdown', function (e) { down = true; x0 = e.clientX; y0 = e.clientY; });
+        screen.addEventListener('pointercancel', function () { down = false; });
+        screen.addEventListener('pointerup', function (e) {
+          if (!down) return;
+          down = false;
+          var dx = e.clientX - x0, dy = e.clientY - y0;
+          if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) { show(dx < 0 ? i + 1 : i - 1, true); return; }
+          if (Math.abs(dx) < 10 && Math.abs(dy) < 10) {
+            var r = screen.getBoundingClientRect();
+            show(e.clientX - r.left < r.width / 3 ? i - 1 : i + 1, true);
+          }
+        });
+
+        if ('IntersectionObserver' in window) {
+          var near = new IntersectionObserver(function (entries) {
+            if (entries[0].isIntersecting) { prime(0); near.disconnect(); }
+          }, { rootMargin: '600px 0px' });
+          near.observe(stage);
+          new IntersectionObserver(function (entries) {
+            var r = entries[0].intersectionRatio;
+            seen = r >= 0.5;
+            if (seen) { if (!held && !done) play(); }
+            else if (r < 0.25) vids[i].pause();
+          }, { threshold: [0, 0.25, 0.5] }).observe(screen);
+        } else {
+          held = true;
+          prime(0);
+        }
+        document.addEventListener('visibilitychange', function () {
+          if (document.hidden) vids[i].pause();
+          else if (seen && !held && !done) play();
+        });
+        icon();
       }
     })();
   </script>
