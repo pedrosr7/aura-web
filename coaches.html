@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aura for coaches: program the week and it lands on their phone</title>
+  <meta name="description" content="Aura for CrossFit and hybrid coaches: invite your team with a link, program the week by group or 1:1, and your athletes train it with their clock and their loads. You see how it landed." />
+
+  <link rel="canonical" href="https://aura.pampaiter.com/coaches.html" />
+  <link rel="alternate" hreflang="en" href="https://aura.pampaiter.com/coaches.html" />
+  <link rel="alternate" hreflang="es" href="https://aura.pampaiter.com/coaches.es.html" />
+  <link rel="alternate" hreflang="x-default" href="https://aura.pampaiter.com/coaches.html" />
+  <meta name="theme-color" content="#0E0E0E" />
+
+  <meta property="og:title" content="Aura for coaches" />
+  <meta property="og:description" content="Invite your team with a link, program the week and see how it landed. For CrossFit and hybrid coaches." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aura.pampaiter.com/coaches.html" />
+  <meta property="og:site_name" content="Aura" />
+  <meta property="og:locale" content="en" />
+  <meta property="og:locale:alternate" content="es_ES" />
+  <meta property="og:image" content="https://aura.pampaiter.com/assets/aura_icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Aura for coaches" />
+  <meta name="twitter:description" content="Invite your team with a link, program the week and see how it landed. For CrossFit and hybrid coaches." />
+  <link rel="icon" type="image/png" href="assets/aura_icon.png" />
+  <link rel="apple-touch-icon" href="assets/aura_icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg:'#0E0E0E', surface:'#1A1A1A', surface2:'#242424', border:'#2A2A2A',
+            primary:'#CCFF00', secondary:'#00E0FF', ink:'#ECECEC', ink2:'#9A9A9A',
+            ink3:'#7C7C7C', success:'#00FF66',
+          },
+          fontFamily: {
+            sans: ['Inter','system-ui','sans-serif'],
+            mono: ['"JetBrains Mono"','ui-monospace','monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root { color-scheme: dark; }
+    html { scroll-behavior: smooth; }
+    body { background:#0E0E0E; }
+    .label { font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.22em; font-weight:600; }
+    .grain::after {
+      content:""; position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.035;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .grid-bg {
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size:64px 64px;
+      -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+              mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+    }
+    .glow { filter:blur(90px); }
+    #progress { position:fixed; top:0; left:0; height:2px; width:0; z-index:70; background:#CCFF00; box-shadow:0 0 12px #CCFF00; }
+    .btn-primary { background:#CCFF00; color:#0E0E0E; transition:transform .2s, box-shadow .25s, background .2s; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 40px -8px rgba(204,255,0,.45); background:#d6ff26; }
+    .btn-primary:active { transform:translateY(0) scale(.98); }
+    .btn-ghost { border:1px solid #2A2A2A; color:#ECECEC; transition:border-color .2s, background .2s, transform .2s; }
+    .btn-ghost:hover { border-color:#4a4a4a; background:#161616; transform:translateY(-2px); }
+    .phone { position:relative; border-radius:42px; background:#050505; padding:8px; border:1px solid #2A2A2A;
+      box-shadow:0 2px 0 rgba(255,255,255,.04) inset, 0 40px 80px -24px rgba(0,0,0,.9); }
+    .phone video { display:block; width:100%; height:auto; aspect-ratio:750 / 1624; border-radius:34px; background:#0E0E0E; }
+    .tile { position:relative; background:linear-gradient(180deg,#181818,#141414); border:1px solid #232323; border-radius:22px; }
+    .icon-chip { background:rgba(204,255,0,.08); border:1px solid rgba(204,255,0,.22); color:#CCFF00; }
+    .reveal { opacity:0; transform:translateY(22px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+    .reveal.in { opacity:1; transform:none; }
+    details > summary { cursor:pointer; list-style:none; }
+    details > summary::-webkit-details-marker { display:none; }
+    details[open] .faq-plus { transform:rotate(45deg); }
+    .faq-plus { transition:transform .25s; }
+    a:focus-visible, button:focus-visible, summary:focus-visible { outline:2px solid #CCFF00; outline-offset:3px; border-radius:6px; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior:auto; }
+      .reveal { opacity:1 !important; transform:none !important; transition:none; }
+      #progress { display:none; }
+      .faq-plus { transition:none; }
+    }
+  </style>
+</head>
+
+<body class="grain bg-bg text-ink font-sans antialiased selection:bg-primary selection:text-bg overflow-x-hidden">
+
+  <div id="progress"></div>
+
+  <header class="fixed top-0 inset-x-0 z-50">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <nav class="mt-3 flex items-center justify-between rounded-2xl border border-border/80 bg-bg/70 backdrop-blur-xl px-4 py-3">
+        <a href="index.html" class="flex items-center gap-2.5" aria-label="Aura home">
+          <img src="assets/aura_logo.png" alt="Aura" class="h-8 w-8" />
+          <span class="hidden min-[420px]:inline font-mono font-extrabold tracking-[0.18em] text-[15px]">AURA</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8 text-sm text-ink2">
+          <a href="#como" class="hover:text-ink transition-colors">How it works</a>
+          <a href="#faq" class="hover:text-ink transition-colors">FAQ</a>
+        </div>
+        <div class="flex items-center gap-3 sm:gap-4">
+          <span class="label text-[11px] whitespace-nowrap"><span class="text-primary">EN</span> <span class="text-ink3">·</span> <a href="coaches.es.html" class="text-ink2 hover:text-ink transition-colors">ES</a></span>
+          <a href="mailto:info@pampaiter.com?subject=Aura%20for%20coaches" class="btn-primary cursor-pointer rounded-full px-3 sm:px-4 py-2 text-xs label whitespace-nowrap">Talk to me</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+  <section id="top" class="relative pt-36 sm:pt-44 pb-16 overflow-hidden">
+    <div class="grid-bg absolute inset-0 -z-10"></div>
+    <div class="glow absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-primary/20 -z-10"></div>
+    <div class="glow absolute top-40 right-10 h-72 w-72 rounded-full bg-secondary/10 -z-10"></div>
+
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-2 gap-16 items-center">
+      <div>
+        <div class="reveal inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-3 py-1.5 mb-7">
+          <span class="h-1.5 w-1.5 rounded-full bg-primary animate-pulse"></span>
+          <span class="label text-[11px] text-ink2">For coaches · CrossFit · Hybrid</span>
+        </div>
+        <h1 class="font-mono font-extrabold leading-[1.04] text-[2.3rem] sm:text-[3.4rem] tracking-tight">
+          <span class="reveal block">Program the <span class="text-primary">week</span>.</span>
+          <span class="reveal block">It <span class="text-primary">just reaches</span> them.</span>
+          <span class="reveal block">See <span class="text-primary">how it landed</span>.</span>
+        </h1>
+        <p class="reveal mt-7 max-w-md text-lg text-ink2 leading-relaxed">Aura is where your athletes train what you program: with the clock, loads worked out from their own PRs and their history. You write the week the way you always do; Aura builds it.</p>
+        <div class="reveal mt-9 flex flex-wrap items-center gap-3">
+          <a href="mailto:info@pampaiter.com?subject=Aura%20for%20coaches" class="btn-primary cursor-pointer rounded-xl px-6 py-3.5 text-sm font-semibold">Try it with my team</a>
+          <a href="#como" class="btn-ghost cursor-pointer rounded-xl px-6 py-3.5 text-sm font-semibold">See how it works</a>
+        </div>
+        <p class="reveal mt-4 label text-[10px] text-ink3">Free up to 3 athletes · iOS and Android</p>
+      </div>
+
+      <div class="reveal relative mx-auto w-full max-w-[300px]">
+        <div class="glow absolute inset-0 -z-10 rounded-full bg-primary/15"></div>
+        <div class="phone"><video autoplay muted playsinline loop preload="auto" poster="assets/coach/en/1-invite.jpg" aria-label="The five stages of a coach's week in Aura, from inviting to seeing how it landed" data-clip><source src="assets/coach/en/all.mp4" type="video/mp4" /></video></div>
+        <p class="mt-4 text-center text-xs text-ink3">Real app screens, with sample data.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="como" class="relative pt-10">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <p class="reveal label text-[11px] text-primary">How it works</p>
+      <h2 class="reveal font-mono font-extrabold text-3xl sm:text-5xl leading-tight mt-4 max-w-2xl">Five steps, from invite to how it landed.</h2>
+    </div>
+
+  <section id="paso-1" class="relative py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+      <div class="reveal">
+        <p class="label text-[11px] text-primary">01 · Invite</p>
+        <h3 class="font-mono font-extrabold text-[1.9rem] sm:text-4xl leading-tight mt-4">One link. Your team is in.</h3>
+        <p class="mt-5 max-w-lg text-lg text-ink2 leading-relaxed">Share it wherever you already talk: WhatsApp, Instagram, the box group. Whoever opens it joins your team, and you watch them arrive.</p>
+        <ul class="mt-7 space-y-3 max-w-lg">
+            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>One link for the whole team</span></li>
+            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>A heads-up when someone joins</span></li>
+            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>See who got in, and when</span></li>
+        </ul>
+      </div>
+      <div class="reveal mx-auto w-full max-w-[290px]">
+        <div class="phone"><video muted playsinline loop preload="none" poster="assets/coach/en/1-invite.jpg" aria-label="A coach invites the team with a link and the athletes show up on the list one by one" data-clip><source src="assets/coach/en/1-invite.mp4" type="video/mp4" /></video></div>
+      </div>
+    </div>
+  </section>
+  <section id="paso-2" class="relative py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+      <div class="reveal">
+        <p class="label text-[11px] text-primary">02 · Group</p>
+        <h3 class="font-mono font-extrabold text-[1.9rem] sm:text-4xl leading-tight mt-4">RX, Scaled, Masters… or one to one.</h3>
+        <p class="mt-5 max-w-lg text-lg text-ink2 leading-relaxed">Make the groups you already have in your head and tick who is in each. Programming a group weighs the same as programming one athlete.</p>
+        <ul class="mt-7 space-y-3 max-w-lg">
+            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Every group has its own week</span></li>
+            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>An athlete can be in several groups</span></li>
+            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>1:1 coaching when you need it</span></li>
+        </ul>
+      </div>
+      <div class="reveal mx-auto w-full max-w-[290px] lg:order-first">
+        <div class="phone"><video muted playsinline loop preload="none" poster="assets/coach/en/2-groups.jpg" aria-label="A coach creates the RX group by ticking five athletes and ends up with three groups" data-clip><source src="assets/coach/en/2-groups.mp4" type="video/mp4" /></video></div>
+      </div>
+    </div>
+  </section>
+  <section id="paso-3" class="relative py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+      <div class="reveal">
+        <p class="label text-[11px] text-primary">03 · Program</p>
+        <h3 class="font-mono font-extrabold text-[1.9rem] sm:text-4xl leading-tight mt-4">Write it the way you always do. Aura builds it.</h3>
+        <p class="mt-5 max-w-lg text-lg text-ink2 leading-relaxed">Paste the text, dictate it or snap the whiteboard. Aura reads it and turns it into blocks, clocks and loads. You decide when they see it.</p>
+        <ul class="mt-7 space-y-3 max-w-lg">
+            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Text, voice or photo</span></li>
+            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Blocks and clocks: AMRAP, EMOM, For Time…</span></li>
+            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>On save, or the evening before at the hour you pick</span></li>
+        </ul>
+      </div>
+      <div class="reveal mx-auto w-full max-w-[290px]">
+        <div class="phone"><video muted playsinline loop preload="none" poster="assets/coach/en/3-program.jpg" aria-label="A coach writes Monday's session in the chat and Aura turns it into a two-block session" data-clip><source src="assets/coach/en/3-program.mp4" type="video/mp4" /></video></div>
+      </div>
+    </div>
+  </section>
+  <section id="paso-4" class="relative py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+      <div class="reveal">
+        <p class="label text-[11px] text-primary">04 · It lands</p>
+        <h3 class="font-mono font-extrabold text-[1.9rem] sm:text-4xl leading-tight mt-4">An instant heads-up. Their kilos, already worked out.</h3>
+        <p class="mt-5 max-w-lg text-lg text-ink2 leading-relaxed">As soon as the session is in view, the athlete gets the alert and sees it in their Pulse. Loads come from their own PR: 75 % of 80 kg is 60 kg, no calculator.</p>
+        <ul class="mt-7 space-y-3 max-w-lg">
+            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Clock and logger that fit each block</span></li>
+            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Their history and PRs, always with them</span></li>
+            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Planning is included: your athletes do not pay for PRO</span></li>
+        </ul>
+      </div>
+      <div class="reveal mx-auto w-full max-w-[290px] lg:order-first">
+        <div class="phone"><video muted playsinline loop preload="none" poster="assets/coach/en/4-arrives.jpg" aria-label="An athlete gets the alert from their coach, opens the session and sees 60 kilos on the first set" data-clip><source src="assets/coach/en/4-arrives.mp4" type="video/mp4" /></video></div>
+        <p class="mt-4 text-center text-xs text-ink3">The alert is a recreation of the one Aura sends.</p>
+      </div>
+    </div>
+  </section>
+  <section id="paso-5" class="relative py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+      <div class="reveal">
+        <p class="label text-[11px] text-primary">05 · How it landed</p>
+        <h3 class="font-mono font-extrabold text-[1.9rem] sm:text-4xl leading-tight mt-4">Who did it, and what to look at first.</h3>
+        <p class="mt-5 max-w-lg text-lg text-ink2 leading-relaxed">By day and by week: how many trained, how hard it felt and which block got away from them. “Watch” tells you where to start.</p>
+        <ul class="mt-7 space-y-3 max-w-lg">
+            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>RPE and feeling by block</span></li>
+            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Group loads, from the lightest to the heaviest</span></li>
+            <li class="flex gap-3 text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>The week against the one before</span></li>
+        </ul>
+      </div>
+      <div class="reveal mx-auto w-full max-w-[290px]">
+        <div class="phone"><video muted playsinline loop preload="none" poster="assets/coach/en/5-landed.jpg" aria-label="A group's summary: how many trained, RPE by block and the list of things to watch" data-clip><source src="assets/coach/en/5-landed.mp4" type="video/mp4" /></video></div>
+      </div>
+    </div>
+  </section>
+  </section>
+
+  <section id="faq" class="relative py-20 sm:py-28">
+    <div class="mx-auto max-w-3xl px-5 sm:px-8">
+      <p class="reveal label text-[11px] text-primary">FAQ</p>
+      <h2 class="reveal font-mono font-extrabold text-3xl sm:text-4xl leading-tight mt-4">What coaches usually ask.</h2>
+      <div class="reveal mt-10 space-y-3">
+        <details class="tile px-5 py-4">
+          <summary class="flex items-center justify-between gap-4 text-ink font-semibold">
+            <span>Do my athletes have to pay?</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="faq-plus h-5 w-5 text-primary shrink-0" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </summary>
+          <p class="mt-3 text-ink2 leading-relaxed">No. They join with your link and planning is included, no PRO needed.</p>
+        </details>
+        <details class="tile px-5 py-4">
+          <summary class="flex items-center justify-between gap-4 text-ink font-semibold">
+            <span>What does it cost me?</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="faq-plus h-5 w-5 text-primary shrink-0" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </summary>
+          <p class="mt-3 text-ink2 leading-relaxed">Up to 3 athletes is free. Bigger teams have plans by number of athletes. If you run a large group and want to try it properly, write to me.</p>
+        </details>
+        <details class="tile px-5 py-4">
+          <summary class="flex items-center justify-between gap-4 text-ink font-semibold">
+            <span>What do I need to start?</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="faq-plus h-5 w-5 text-primary shrink-0" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </summary>
+          <p class="mt-3 text-ink2 leading-relaxed">The app on iOS or Android. When you create the account you pick “I coach others” and your team link is ready.</p>
+        </details>
+        <details class="tile px-5 py-4">
+          <summary class="flex items-center justify-between gap-4 text-ink font-semibold">
+            <span>Can I keep writing the week the way I do now?</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="faq-plus h-5 w-5 text-primary shrink-0" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </summary>
+          <p class="mt-3 text-ink2 leading-relaxed">Yes. Paste the text, dictate it or take a photo and Aura builds it. You can adjust any block in the editor.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="relative py-20 sm:py-28 overflow-hidden">
+    <div class="glow absolute left-1/2 -translate-x-1/2 top-10 h-72 w-72 rounded-full bg-primary/15 -z-10"></div>
+    <div class="mx-auto max-w-3xl px-5 sm:px-8 text-center">
+      <h2 class="reveal font-mono font-extrabold text-3xl sm:text-5xl leading-tight">Shall we try it with your team?</h2>
+      <p class="reveal mt-6 text-lg text-ink2 leading-relaxed">Start free with up to 3 athletes. If you run a bigger group, write to me and we will set it up together.</p>
+      <div class="reveal mt-9 flex flex-wrap items-center justify-center gap-3">
+        <a href="mailto:info@pampaiter.com?subject=Aura%20for%20coaches" class="btn-primary cursor-pointer rounded-xl px-6 py-3.5 text-sm font-semibold">Talk to me</a>
+      </div>
+      <div class="reveal mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a href="https://play.google.com/store/apps/details?id=com.pampa.aura" target="_blank" rel="noopener" class="cursor-pointer flex items-center gap-3 rounded-xl border border-border bg-surface hover:bg-surface2 transition-colors px-4 py-2.5">
+            <svg viewBox="0 0 24 24" class="h-7 w-7" aria-hidden="true">
+              <path d="M3.6 2.2c-.3.2-.5.6-.5 1.1v17.4c0 .5.2.9.5 1.1l9.3-9.8L3.6 2.2z" fill="#00E0FF"/>
+              <path d="M16.5 8.6 12.9 12l3.6 3.4 4.3-2.4c.7-.4.7-1.6 0-2L16.5 8.6z" fill="#CCFF00"/>
+              <path d="M3.6 2.2 12.9 12l3.6-3.4L5.1 2.4c-.6-.3-1.1-.4-1.5-.2z" fill="#fff"/>
+              <path d="M3.6 21.8c.4.2.9.1 1.5-.2l11.4-6.2L12.9 12 3.6 21.8z" fill="#9A9A9A"/>
+            </svg>
+            <span class="text-left leading-tight"><span class="block text-[10px] text-ink3">Get it on</span><span class="block text-sm font-semibold text-ink">Google Play</span></span>
+          </a>
+          <a href="https://apps.apple.com/us/app/aura-ai-training-coach/id6773849897" target="_blank" rel="noopener" class="cursor-pointer flex items-center gap-3 rounded-xl border border-border bg-surface hover:bg-surface2 transition-colors px-4 py-2.5">
+            <svg viewBox="0 0 24 24" class="h-7 w-7 fill-ink" aria-hidden="true"><path d="M17.05 12.04c-.03-2.5 2.04-3.7 2.13-3.76-1.16-1.7-2.97-1.93-3.61-1.96-1.54-.16-3 .9-3.78.9-.78 0-1.98-.88-3.25-.86-1.67.03-3.21.97-4.07 2.46-1.73 3-.44 7.46 1.25 9.9.82 1.2 1.8 2.54 3.08 2.49 1.24-.05 1.71-.8 3.21-.8 1.5 0 1.92.8 3.23.78 1.33-.03 2.18-1.22 3-2.42.94-1.39 1.33-2.73 1.35-2.8-.03-.01-2.59-1-2.62-3.93zM14.6 4.8c.69-.83 1.15-1.99 1.02-3.14-.99.04-2.18.66-2.89 1.49-.64.73-1.2 1.9-1.05 3.02 1.1.09 2.23-.56 2.92-1.37z"/></svg>
+            <span class="text-left leading-tight"><span class="block text-[10px] text-ink3">Download on the</span><span class="block text-sm font-semibold text-ink">App Store</span></span>
+          </a>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <footer class="border-t border-border">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 py-12">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+        <a href="index.html" class="flex items-center gap-2.5">
+          <img src="assets/aura_logo.png" alt="Aura" class="h-8 w-8" />
+          <span class="font-mono font-extrabold tracking-[0.18em] text-[15px]">AURA</span>
+        </a>
+        <div class="flex flex-wrap items-center justify-center gap-x-7 gap-y-2 text-sm text-ink2">
+          <a href="index.html" class="hover:text-ink transition-colors">Aura</a>
+          <a href="coaches.html" class="hover:text-ink transition-colors">Coaches</a>
+          <a href="terms.html" class="hover:text-ink transition-colors">Terms</a>
+          <a href="privacy.html" class="hover:text-ink transition-colors">Privacy</a>
+          <a href="support.html" class="hover:text-ink transition-colors">Support</a>
+          <a href="legal.html" class="hover:text-ink transition-colors">Legal notice</a>
+          <a href="mailto:info@pampaiter.com" class="hover:text-ink transition-colors">Contact</a>
+        </div>
+      </div>
+      <div class="mt-10 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-ink3">
+        <p>© 2026 PAMPA ITER SL. All rights reserved.</p>
+        <p class="label text-[10px]">An Aura product · Made for athletes</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      var bar = document.getElementById('progress');
+      if (bar && !reduce) {
+        var ticking = false;
+        window.addEventListener('scroll', function () {
+          if (ticking) return; ticking = true;
+          requestAnimationFrame(function () {
+            var h = document.documentElement;
+            bar.style.width = ((h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100) + '%';
+            ticking = false;
+          });
+        }, { passive: true });
+      }
+
+      var animated = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+      var check = function () {
+        var vh = window.innerHeight;
+        animated = animated.filter(function (el) {
+          if (reduce || el.getBoundingClientRect().top < vh * 0.9) { el.classList.add('in'); return false; }
+          return true;
+        });
+      };
+      check();
+      var q = false;
+      window.addEventListener('scroll', function () { if (q) return; q = true; requestAnimationFrame(function () { check(); q = false; }); }, { passive: true });
+      window.addEventListener('resize', check);
+
+      /* A clip plays only while it is on screen, so five of them never run at once. */
+      var clips = Array.prototype.slice.call(document.querySelectorAll('video[data-clip]'));
+      if (reduce) {
+        clips.forEach(function (v) { v.removeAttribute('autoplay'); v.pause(); v.setAttribute('controls', ''); });
+      } else if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            var v = e.target;
+            if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+            else { v.pause(); }
+          });
+        }, { threshold: 0.45 });
+        clips.forEach(function (v) { io.observe(v); });
+      } else {
+        clips.forEach(function (v) { v.setAttribute('controls', ''); });
+      }
+    })();
+  </script>
+</body>
+</html>
