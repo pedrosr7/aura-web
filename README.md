@@ -6,6 +6,7 @@ real brand (neon yellow `#CCFF00` on dark `#0E0E0E`, JetBrains Mono headings, Ta
 ```
 aura-web/
 ├── index.html              # landing / early-access (the marketing page)
+├── coaches.html            # for coaches: the five-step flow with clips (EN) · coaches.es.html (ES)
 ├── privacy.html            # privacy policy   (EN) · privacy.es.html (ES)
 ├── terms.html              # terms of service (EN) · terms.es.html (ES)
 ├── support.html            # support + FAQ    (EN) · support.es.html (ES)
@@ -15,6 +16,7 @@ aura-web/
 ├── .well-known/            # app deeplink verification (Android + iOS)
 └── assets/
     ├── aura_logo.png
+    ├── coach/{es,en}/      # the coaches page's clips: MP4 + JPG poster per step, and all.mp4 for the hero
     └── captures/           # real in-app screenshots used on the landing page
         ├── cap-pulse.png       # hero — daily home
         ├── cap-planning.png    # showcase — weekly plan
@@ -30,6 +32,14 @@ Screenshots are localized: `assets/captures/*.png` (Spanish app UI) feed `index.
 `assets/captures/en/*.png` (English app UI) feed `index.html`.
 `WEB_HANDOFF.md` and the `appstore-*` files are internal tooling and are
 **excluded from the repo** via `.gitignore`.
+
+## Coaches page clips
+
+The clips on `coaches.html` are not screen recordings: they are the app's real composables
+rendered frame by frame with invented people (Aura repo, `CoachFlowWebShotTest` and
+`AthleteFlowWebShotTest`, assembled by `scripts/webshot-coach-reels.sh`). To refresh them after a
+UI change, rerender there and copy `clips/{es,en}/*.mp4` and `*.jpg` into `assets/coach/{es,en}/`.
+The page says they show sample data, and that the alert in step 4 is a recreation.
 
 ## Capturas de tienda (App Store / Play)
 
