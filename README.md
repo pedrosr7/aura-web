@@ -6,7 +6,7 @@ real brand (neon yellow `#CCFF00` on dark `#0E0E0E`, JetBrains Mono headings, Ta
 ```
 aura-web/
 ├── index.html              # landing / early-access (the marketing page)
-├── coaches.html            # for coaches: the five-step flow with clips (EN) · coaches.es.html (ES)
+├── coaches.html            # for coaches: the five-step tour, pricing and FAQ (EN) · coaches.es.html (ES)
 ├── privacy.html            # privacy policy   (EN) · privacy.es.html (ES)
 ├── terms.html              # terms of service (EN) · terms.es.html (ES)
 ├── support.html            # support + FAQ    (EN) · support.es.html (ES)
@@ -16,7 +16,7 @@ aura-web/
 ├── .well-known/            # app deeplink verification (Android + iOS)
 └── assets/
     ├── aura_logo.png
-    ├── coach/{es,en}/      # the coaches page's clips: MP4 + JPG poster per step, and all.mp4 for the hero
+    ├── coach/{es,en}/      # the coaches page's clips: MP4 + JPG poster per step
     └── captures/           # real in-app screenshots used on the landing page
         ├── cap-pulse.png       # hero — daily home
         ├── cap-planning.png    # showcase — weekly plan
@@ -38,8 +38,13 @@ Screenshots are localized: `assets/captures/*.png` (Spanish app UI) feed `index.
 The clips on `coaches.html` are not screen recordings: they are the app's real composables
 rendered frame by frame with invented people (Aura repo, `CoachFlowWebShotTest` and
 `AthleteFlowWebShotTest`, assembled by `scripts/webshot-coach-reels.sh`). To refresh them after a
-UI change, rerender there and copy `clips/{es,en}/*.mp4` and `*.jpg` into `assets/coach/{es,en}/`.
+UI change, rerender there and copy `clips/{es,en}/[1-5]-*.mp4` and `*.jpg` into `assets/coach/{es,en}/`.
 The page says they show sample data, and that the alert in step 4 is a recreation.
+
+The page plays them as a tour on one phone: each clip runs to the end and hands over to the next,
+and only the clip on screen and the next one are downloaded. The script's `all.mp4` overview is not
+used. The prices are the app's coach plans (free up to 3 athletes, then 19,99 / 39,99 / 79,99 € a
+month for 20 / 60 / 200); if they change in the app, change them on both pages, FAQ included.
 
 ## Capturas de tienda (App Store / Play)
 
