@@ -55,6 +55,30 @@ month for 20 / 60 / 200); if they change in the app, change them on both pages, 
 headline or that screen changes, remake them. Chat apps cache a link's preview, so to see a new one on a URL
 that was already shared, add a throwaway parameter (`?v=2`).
 
+## Analytics
+
+Visits are counted with Umami Cloud (free Hobby plan, no cookies). Its tag is in the `<head>` of `index` and
+`coaches` (ES and EN); the Website ID is the UUID in that tag, and the dashboard is at cloud.umami.is. The tag has
+`data-domains` so local previews are not counted and `data-do-not-track` so a browser's Do Not Track is honored.
+Section 10 of the privacy policy describes it; if the provider changes, change that text too.
+
+To know who opened a link, tag it with who it is for: `coaches.es.html?utm_source=<instagram-handle>` (a new URL
+also makes chat apps fetch a fresh link preview). The dashboard's UTM report then splits the visits by source.
+
+The coaches pages also send these events, from `data-umami-event` attributes and the page script. Each one fires
+once per page view, except the clicks:
+
+| Event | Props | When |
+|---|---|---|
+| `tour_step` | `step` 1-5, `by` auto or tap | the clip on the phone changes, or the phone is first on screen |
+| `tour_end` | | the last clip plays to the end |
+| `view_pricing` | | the prices are a quarter on screen |
+| `start_click` | `loc` nav, hero or pricing | «Empezar» (on a phone it goes straight to its store) |
+| `store_click` | `os` | a store badge |
+| `mail_click` | `loc` pricing, faq or footer | any of the mail links |
+
+If the Umami script is blocked or late, the events are dropped or held until it loads; the page does not care.
+
 ## Capturas de tienda (App Store / Play)
 
 `appstore-build.py` (gitignored) genera las capturas compuestas de tienda
