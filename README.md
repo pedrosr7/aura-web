@@ -121,21 +121,24 @@ https://aura.pampaiter.com/plan?c=<id>&d=<date>&t=<type>&cat=<id>&lvl=<level>&da
 ```
 
 Every parameter is optional. A value the app cannot read is left out of the prefill, and the onboarding asks that step.
+A link in which the app can read nothing (only `src`, or only values it does not know) is dropped: the app opens as it
+was, and the onboarding does not.
 
 | Parameter | Value | What the app does |
 |---|---|---|
-| `c` | The competition's id in CatchUp's list (`hyrox-madrid`): letters, digits, `.`, `_` and `-`. | Picks the competition. If it is not in the list the app refreshes the list once, and if it is still missing it asks. |
+| `c` | The competition's id in CatchUp's list (`hyrox-madrid`): letters, digits, `.`, `_` and `-`, up to 100 of them. | Picks the competition. If it is not in the list the app refreshes the list once, and if it is still missing it asks. |
 | `d` | The competition's date, `YYYY-MM-DD`. | Used only when `c` is not in the list: with a valid `t` and a date of today or later, the competition is added as «not listed». |
 | `t` | The type: `CROSSFIT_OPEN`, `HYROX`, `HYBRID`, `OLYMPIC_LIFTING`, `POWERLIFTING` or `OCR`. | The type of a competition that is not listed (see `d`). |
-| `cat` | The category's id inside that competition (`pro`, `open`). | Picks the category, ignoring case. |
+| `cat` | The category's id inside that competition (`pro`, `open`), up to 100 characters. | Picks the category, ignoring case, in a competition that is in the list. |
 | `lvl` | `BEGINNER`, `INTERMEDIATE`, `ADVANCED` or `COMPETITOR`. | Answers the level. |
 | `days` | The training days as ISO weekdays, `1` Monday to `7` Sunday, comma-separated (`1,3,5`): two to six different days. | Answers the days. |
 | `dur` | The session length in minutes: `45`, `60`, `90` or `120`. | Answers the duration. |
 | `eq` | `box`, `gym` or `home`. | Answers the equipment with that place's kit. |
 | `hard` | What costs the athlete most: up to two of `running`, `strength`, `gymnastics` and `engine`, comma-separated. An empty value (`hard=`) means «no one in particular». | Answers «¿qué te cuesta más?». |
-| `src` | Who sent the visit (`catchupheats`): letters, digits, `.`, `_` and `-`. | Read, and not used yet. |
+| `src` | Who sent the visit (`catchupheats`): letters, digits, `.`, `_` and `-`, up to 100 of them. | Read, and not used yet. |
 
-- Keys are read in any case and the first one of a key wins. Anything else in the link (`utm_source`, `fbclid`) is ignored.
+- Keys are read in any case, and so are the values of `t`, `lvl`, `eq` and `hard` and the category in `cat`; the id in `c`
+  is not. The first one of a key wins. Anything else in the link (`utm_source`, `fbclid`) is ignored.
 - The start of the plan is not in the link: the app works it out from the competition's date and the level. There is no
   `int` parameter.
 - The link carries no personal data, only what the athlete picked on CatchUp's page.

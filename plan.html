@@ -6,14 +6,8 @@
   <title>Aura</title>
   <meta name="robots" content="noindex, nofollow" />
   <meta name="color-scheme" content="dark" />
-
-  <!-- The preview is static (crawlers do not run the script), so it speaks the site's main language. -->
-  <meta property="og:title" content="Tu plan te espera en Aura" />
-  <meta property="og:description" content="Prepara tu competición con Aura: abre este enlace en tu móvil." />
-  <meta property="og:image" content="https://aura.pampaiter.com/assets/aura_icon.png" />
-  <meta property="og:image:width" content="512" />
-  <meta property="og:image:height" content="512" />
-  <meta name="twitter:card" content="summary" />
+  <!-- The query holds the athlete's answers: nothing but the origin leaves with a request to the font service. -->
+  <meta name="referrer" content="strict-origin" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -91,7 +85,7 @@
         <a class="btn btn-primary" id="store-first" href="#"></a>
         <a class="btn btn-ghost" id="store-second" href="#"></a>
       </div>
-      <div class="installed">
+      <div class="installed" id="reopen-box">
         <span class="hint" data-i18n="installedHint"></span>
         <a class="btn btn-ghost" id="reopen" href="#" data-i18n="reopen"></a>
       </div>
@@ -116,57 +110,12 @@
   <script src="/assets/js/qrcode.js"></script>
   <script src="/assets/js/plan-bridge.js"></script>
   <script>
-    (function () {
-      var bridge = window.PlanBridge;
-      var language = bridge.languageOf(navigator.language);
-      var texts = bridge.TEXTS[language];
-      var platform = bridge.platformOf(navigator.userAgent, navigator.maxTouchPoints);
-      var view = bridge.viewFor(platform);
-      var matrix = view === "qr" ? bridge.qrMatrix(bridge.webLink(location.search)) : null;
-      // A link too long for a QR code, on a computer, falls back to the stores.
-      if (view === "qr" && !matrix) { view = "stores"; platform = "ios"; }
-
-      document.documentElement.lang = language;
-      Array.prototype.forEach.call(document.querySelectorAll("[data-i18n]"), function (element) {
-        element.textContent = texts[element.getAttribute("data-i18n")];
-      });
-
-      if (view === "stores") {
-        var stores = bridge.storesFor(platform);
-        [document.getElementById("store-first"), document.getElementById("store-second")].forEach(function (button, index) {
-          button.setAttribute("href", stores[index].url);
-          button.textContent = texts[stores[index].textKey];
-        });
-        document.getElementById("reopen").setAttribute("href", bridge.reopenLink(location.search));
-        document.getElementById("stores").hidden = false;
-      } else {
-        var quiet = 4;
-        var size = matrix.length + quiet * 2;
-        var path = "";
-        matrix.forEach(function (row, y) {
-          row.forEach(function (dark, x) {
-            if (dark) path += "M" + (x + quiet) + " " + (y + quiet) + "h1v1h-1z";
-          });
-        });
-        var namespace = "http://www.w3.org/2000/svg";
-        var svg = document.createElementNS(namespace, "svg");
-        svg.setAttribute("viewBox", "0 0 " + size + " " + size);
-        svg.setAttribute("role", "img");
-        svg.setAttribute("aria-label", texts.qrLabel);
-        svg.setAttribute("shape-rendering", "crispEdges");
-        var background = document.createElementNS(namespace, "rect");
-        background.setAttribute("width", size);
-        background.setAttribute("height", size);
-        background.setAttribute("fill", "#fff");
-        var modules = document.createElementNS(namespace, "path");
-        modules.setAttribute("d", path);
-        modules.setAttribute("fill", "#000");
-        svg.appendChild(background);
-        svg.appendChild(modules);
-        document.getElementById("qr-code").appendChild(svg);
-        document.getElementById("qr").hidden = false;
-      }
-    })();
+    PlanBridge.render(document, {
+      search: location.search,
+      userAgent: navigator.userAgent,
+      maxTouchPoints: navigator.maxTouchPoints,
+      language: navigator.language,
+    });
   </script>
 </body>
 </html>
