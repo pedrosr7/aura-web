@@ -12,9 +12,12 @@ aura-web/
 ├── support.html            # support + FAQ    (EN) · support.es.html (ES)
 ├── delete-account.html     # account deletion (EN) · delete-account.es.html (ES)
 ├── 404.html                # 404 + doubles as the /share/<token> deeplink landing
+├── plan.html               # the /plan link's bridge page: stores on a phone, a QR on a computer
 ├── .nojekyll               # REQUIRED — without it Jekyll hides .well-known/
 ├── .well-known/            # app deeplink verification (Android + iOS)
+├── tests/                  # node --test tests/*.test.mjs (Node 22 or newer, no dependencies)
 └── assets/
+    ├── js/                 # plan-bridge.js (the /plan page's logic) and qrcode.js (qrcode-generator, vendored)
     ├── aura_logo.png
     ├── coach/{es,en}/      # the coaches page's clips: MP4 + JPG poster per step
     ├── og/                 # link-preview images (1200×630 JPG) for og:image / twitter:image of the coaches pages
@@ -107,6 +110,64 @@ when the app isn't installed (GitHub Pages doesn't map dynamic paths, so the
 Setup + troubleshooting playbook: `agents/docs/share_deeplink_setup.md` in the
 **Aura** repo.
 
+## The /plan link (contract with the app)
+
+The link CatchUp's «Prepárala con Aura» page hands to the app, so the onboarding opens with the athlete's answers in
+place. CatchUp writes it, the app reads it (`PlanLink.kt` in the Aura repo), and this site is only the bridge: `plan.html`
+serves `/plan` and reads none of the answers.
+
+```
+https://aura.pampaiter.com/plan?c=<id>&d=<date>&t=<type>&cat=<id>&lvl=<level>&days=<days>&dur=<minutes>&eq=<kit>&hard=<parts>&src=<origin>
+```
+
+Every parameter is optional. A value the app cannot read is left out of the prefill, and the onboarding asks that step.
+A link in which the app can read nothing (only `src`, or only values it does not know) is dropped: the app opens as it
+was, and the onboarding does not.
+
+| Parameter | Value | What the app does |
+|---|---|---|
+| `c` | The competition's id in CatchUp's list (`hyrox-madrid`): letters, digits, `.`, `_` and `-`, up to 100 of them. | Picks the competition. If it is not in the list the app refreshes the list once, and if it is still missing it asks. |
+| `d` | The competition's date, `YYYY-MM-DD`. | Used only when `c` is not in the list: with a valid `t` and a date of today or later, the competition is added as «not listed». |
+| `t` | The type: `CROSSFIT_OPEN`, `HYROX`, `HYBRID`, `OLYMPIC_LIFTING`, `POWERLIFTING` or `OCR`. | The type of a competition that is not listed (see `d`). |
+| `cat` | The category's id inside that competition (`pro`, `open`), up to 100 characters. | Picks the category, ignoring case, in a competition that is in the list. |
+| `lvl` | `BEGINNER`, `INTERMEDIATE`, `ADVANCED` or `COMPETITOR`. | Answers the level. |
+| `days` | The training days as ISO weekdays, `1` Monday to `7` Sunday, comma-separated (`1,3,5`): two to six different days. | Answers the days. |
+| `dur` | The session length in minutes: `45`, `60`, `90` or `120`. | Answers the duration. |
+| `eq` | `box`, `gym` or `home`. | Answers the equipment with that place's kit. |
+| `hard` | What costs the athlete most: up to two of `running`, `strength`, `gymnastics` and `engine`, comma-separated. An empty value (`hard=`) means «no one in particular». | Answers «¿qué te cuesta más?». |
+| `src` | Who sent the visit (`catchupheats`): letters, digits, `.`, `_` and `-`, up to 100 of them. | Read, and not used yet. |
+
+- Keys are read in any case, and so are the values of `t`, `lvl`, `eq` and `hard` and the category in `cat`; the id in `c`
+  is not. The first one of a key wins. Anything else in the link (`utm_source`, `fbclid`) is ignored.
+- The start of the plan is not in the link: the app works it out from the competition's date and the level. There is no
+  `int` parameter.
+- The link carries no personal data, only what the athlete picked on CatchUp's page.
+- Two forms open the app: the https link above (App Links and Universal Links) and the same query on `aura://plan`.
+  The bridge page's «already installed» button uses the second, because iOS does not hand a link of the page's own
+  site to the app.
+
+Examples:
+
+```
+https://aura.pampaiter.com/plan?c=hyrox-madrid&d=2026-12-05&t=HYROX&cat=pro&lvl=intermediate&days=1,3,5&dur=60&eq=box&hard=running,strength&src=catchupheats
+https://aura.pampaiter.com/plan?c=hyrox-madrid&src=catchupheats
+https://aura.pampaiter.com/plan?c=hyrox-madrid&lvl=advanced&days=2,4&dur=90&eq=gym&hard=
+https://aura.pampaiter.com/plan?d=2026-12-05&t=OCR&lvl=beginner&days=2,4,6&dur=45&eq=home&src=catchupheats
+```
+
+What the link does where it lands:
+
+- **Aura installed:** the phone opens the app, not this site. Android: the `/plan` path in the app's manifest, verified
+  through `assetlinks.json`. iPhone: `/plan` in `.well-known/apple-app-site-association`; Apple refreshes that file on its
+  own, so a phone that already has Aura may open the page for a while, and its «already installed» button covers it.
+- **A phone without Aura:** `plan.html` shows the visitor's store first, then the other, and the button «¿Ya la
+  instalaste? Vuelve a abrirla aquí», which opens `aura://plan?…` with the same answers, untouched.
+- **A computer:** a QR code of the whole https link, drawn in the browser by `assets/js/qrcode.js` (qrcode-generator 1.4.4,
+  MIT, unchanged: sha-256 `18ae399f81182bc9de916e9c77b195df20cc58d6f2d55a62b085a299f1bf1780`), so the answers reach no
+  other service.
+- The page is Spanish for a browser in Spanish and English for the rest, keeps nothing, counts nothing, and is `noindex`
+  and out of the sitemap.
+
 ## Store URLs
 
 GitHub Pages serves clean paths (`/terms` → `terms.html`), so use these in
@@ -134,6 +195,8 @@ The landing has a **Download** section (`#download`) plus hero store buttons.
 ```bash
 npx serve aura-web
 ```
+
+`/plan` needs the clean path, which `npx serve` gives (`/plan?c=hyrox-madrid`). The tests: `node --test tests/*.test.mjs`.
 
 ## Deploy — DONE (GitHub Pages)
 
