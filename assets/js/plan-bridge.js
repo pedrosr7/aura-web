@@ -112,5 +112,7 @@
     reopenLink: reopenLink,
     webLink: webLink,
     qrMatrix: qrMatrix,
+    qrPath: function () { return ""; },
+    render: function () {},
   };
 });
