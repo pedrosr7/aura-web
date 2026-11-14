@@ -16,6 +16,10 @@
           {
             "/": "/team/*",
             "comment": "Coach team invite: joins the coach's roster"
+          },
+          {
+            "/": "/plan",
+            "comment": "Plan link from CatchUp: opens the onboarding with its answers in place"
           }
         ]
       }
