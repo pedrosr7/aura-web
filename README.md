@@ -78,6 +78,8 @@ once per page view, except the clicks:
 | `view_pricing` | | the prices are a quarter on screen |
 | `start_click` | `loc` nav, hero or pricing | «Empezar» (on a phone it goes straight to its store) |
 | `store_click` | `os` | a store badge |
+| `web_click` | `loc` hero or section | a link to the coach web app (coach.pampaiter.com/app) |
+| `web_click` | `loc` hero or section | a link to the coach web app (coach.pampaiter.com/app) |
 | `mail_click` | `loc` pricing, faq or footer | any of the mail links |
 
 If the Umami script is blocked or late, the events are dropped or held until it loads; the page does not care.
